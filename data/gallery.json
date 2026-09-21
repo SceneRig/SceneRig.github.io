@@ -116,35 +116,35 @@
         {
           "id": "ours",
           "label": "SceneRig",
-          "source": "assets/gallery/main/scene-01/ours_source.webp",
-          "novel": "assets/gallery/main/scene-01/ours_novel.webp"
+          "source": "assets/gallery/main/scene-01/ours_source.webp?v=edited-input",
+          "novel": "assets/gallery/main/scene-01/ours_novel.webp?v=edited-input"
         },
         {
           "id": "simfoundry",
           "label": "SimFoundry",
-          "source": "assets/gallery/main/scene-01/simfoundry_source.webp",
-          "novel": "assets/gallery/main/scene-01/simfoundry_novel.webp"
+          "source": "assets/gallery/main/scene-01/simfoundry_source.webp?v=edited-input",
+          "novel": "assets/gallery/main/scene-01/simfoundry_novel.webp?v=edited-input"
         },
         {
           "id": "rest3d",
           "label": "REST3D",
-          "source": "assets/gallery/main/scene-01/rest3d_source.webp",
-          "novel": "assets/gallery/main/scene-01/rest3d_novel.webp"
+          "source": "assets/gallery/main/scene-01/rest3d_source.webp?v=edited-input",
+          "novel": "assets/gallery/main/scene-01/rest3d_novel.webp?v=edited-input"
         },
         {
           "id": "sc",
           "label": "SceneConductor",
-          "source": "assets/gallery/main/scene-01/sc_source.webp",
-          "novel": "assets/gallery/main/scene-01/sc_novel.webp"
+          "source": "assets/gallery/main/scene-01/sc_source.webp?v=edited-input",
+          "novel": "assets/gallery/main/scene-01/sc_novel.webp?v=edited-input"
         },
         {
           "id": "viga",
           "label": "VIGA*",
-          "source": "assets/gallery/main/scene-01/viga_source.webp",
-          "novel": "assets/gallery/main/scene-01/viga_novel.webp"
+          "source": "assets/gallery/main/scene-01/viga_source.webp?v=edited-input",
+          "novel": "assets/gallery/main/scene-01/viga_novel.webp?v=edited-input"
         }
       ],
-      "input": "assets/gallery/main/scene-01/input.webp"
+      "input": "assets/gallery/main/scene-01/input.webp?v=edited-input"
     },
     {
       "id": "main-scene-02",
@@ -1064,23 +1064,23 @@
         {
           "id": "ours",
           "label": "SceneRig",
-          "source": "assets/gallery/gpt6/scene-01/ours_source.webp",
-          "novel": "assets/gallery/gpt6/scene-01/ours_novel.webp"
+          "source": "assets/gallery/gpt6/scene-01/ours_source.webp?v=edited-input",
+          "novel": "assets/gallery/gpt6/scene-01/ours_novel.webp?v=edited-input"
         },
         {
           "id": "viga",
           "label": "VIGA*",
-          "source": "assets/gallery/gpt6/scene-01/viga_source.webp",
-          "novel": "assets/gallery/gpt6/scene-01/viga_novel.webp"
+          "source": "assets/gallery/gpt6/scene-01/viga_source.webp?v=edited-input",
+          "novel": "assets/gallery/gpt6/scene-01/viga_novel.webp?v=edited-input"
         },
         {
           "id": "codex",
           "label": "Codex",
-          "source": "assets/gallery/gpt6/scene-01/codex_source.webp",
-          "novel": "assets/gallery/gpt6/scene-01/codex_novel.webp"
+          "source": "assets/gallery/gpt6/scene-01/codex_source.webp?v=edited-input",
+          "novel": "assets/gallery/gpt6/scene-01/codex_novel.webp?v=edited-input"
         }
       ],
-      "input": "assets/gallery/gpt6/scene-01/input.webp"
+      "input": "assets/gallery/gpt6/scene-01/input.webp?v=edited-input"
     },
     {
       "id": "gpt6-scene-02",
