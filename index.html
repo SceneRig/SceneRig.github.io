@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f8f9fc" />
+    <meta
+      name="description"
+      content="SceneRig reconstructs editable, simulation-ready 3D scenes from a single image for real-to-sim policy evaluation and open-loop trajectory replay."
+    />
+    <meta
+      property="og:title"
+      content="SceneRig — Single-image simulation-ready 3D scene reconstruction"
+    />
+    <meta
+      property="og:description"
+      content="An agentic system for single-image simulation-ready 3D scene reconstruction."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://scenerig.github.io/assets/social.jpg"
+    />
+    <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="#" aria-label="SceneRig home"
+        ><img
+          src="assets/icon.svg"
+          width="28"
+          height="28"
+          alt=""
+        />SceneRig<span class="wordmark-dot">.</span></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#reconstructions">Reconstructions</a
+        ><a href="#robotics">Robotics</a><a href="#method">Method</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero section-wrap" aria-labelledby="hero-title">
+        <h1 id="hero-title">Scene<span>Rig</span></h1>
+        <h2 class="hero-subtitle">
+          Simulation-ready 3D reconstruction from a single image
+        </h2>
+        <p class="paper-title">
+          An Agentic System for Single-Image Simulation-Ready 3D Scene
+          Reconstruction
+        </p>
+        <p class="hero-description">
+          SceneRig reconstructs individual objects and refines their placement
+          using geometric and physical feedback.
+        </p>
+        <div class="hero-links">
+          <a class="button primary" href="#reconstructions"
+            >Reconstruction results <span aria-hidden="true">↗</span></a
+          ><a class="button secondary" href="#robotics"
+            ><span aria-hidden="true">▷</span> Robotics experiments</a
+          >
+        </div>
+
+        <div class="teaser" id="teaser">
+          <div class="teaser-reconstruction">
+            <figure class="input-panel">
+              <figcaption class="step-title">
+                <span class="step-number">01</span
+                ><span
+                  >Input image<small>Single-view RGB observation</small></span
+                >
+              </figcaption>
+              <div class="input-image">
+                <img
+                  src="assets/teaser/input.webp"
+                  alt="Input photograph of a coffee workspace with mugs, a coffee machine, and a kettle."
+                  fetchpriority="high"
+                  width="1280"
+                  height="720"
+                /><span class="image-tag">Input</span>
+              </div>
+            </figure>
+            <figure class="closeup-panel">
+              <figcaption class="step-title">
+                <span class="step-number">02</span
+                ><span
+                  >Reconstruction closeups<small
+                    >Object geometry &amp; placement</small
+                  ></span
+                >
+              </figcaption>
+              <div class="detail-pair">
+                <div>
+                  <img
+                    src="assets/teaser/closeup-simfoundry.webp"
+                    alt="SimFoundry reconstruction closeup: the rear black mug lies on its side."
+                    width="400"
+                    height="300"
+                  /><span>SimFoundry</span>
+                </div>
+                <div>
+                  <img
+                    src="assets/teaser/closeup-scenerig.webp"
+                    alt="SceneRig reconstruction closeup: the rear black mug remains upright, matching the input."
+                    width="400"
+                    height="300"
+                  /><span class="ours-text">SceneRig</span>
+                </div>
+              </div>
+            </figure>
+            <figure class="scene-panel">
+              <figcaption class="step-title">
+                <span class="step-number">03</span
+                ><span
+                  >Simulation-ready 3D scene<small
+                    >Textured and clay renderings</small
+                  ></span
+                >
+              </figcaption>
+              <div class="clay-slider" id="clay-slider" style="--split: 52%">
+                <img
+                  class="clay-base"
+                  src="assets/teaser/scene-clay.webp"
+                  alt="Textureless clay rendering of the reconstructed coffee workspace from a novel viewpoint."
+                  width="1472"
+                  height="948"
+                />
+                <div class="texture-reveal">
+                  <img
+                    src="assets/teaser/scene-textured.webp"
+                    alt="Textured rendering of the same reconstructed scene, with identical geometry and viewpoint."
+                    width="1472"
+                    height="948"
+                  />
+                </div>
+                <div class="slider-labels" aria-hidden="true">
+                  <span>Textured</span><span>Clay</span>
+                </div>
+                <span class="slider-seam" aria-hidden="true"
+                  ><span>‹ ›</span></span
+                >
+                <input
+                  id="clay-range"
+                  class="clay-range"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="52"
+                  aria-label="Reveal textured rendering over clay geometry"
+                  aria-valuetext="52 percent textured"
+                />
+              </div>
+              <div class="slider-caption">
+                <button
+                  id="clay-motion"
+                  class="text-button"
+                  type="button"
+                  aria-pressed="true"
+                >
+                  Pause animation
+                </button>
+              </div>
+            </figure>
+          </div>
+          <div class="teaser-applications">
+            <div class="application-intro">
+              <div class="step-title">
+                <span class="step-number">04</span
+                ><span
+                  >Robotics applications<small
+                    >Experiments in reconstructed robot workspaces</small
+                  ></span
+                >
+              </div>
+              <span class="small-note"
+                >Robot experiments use separate input images</span
+              >
+            </div>
+            <div class="hero-robotics-grid" id="hero-robotics">
+              <p class="loading">Loading recorded robot demonstrations…</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="results-section section-wrap"
+        id="reconstructions"
+        aria-labelledby="reconstruction-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / Reconstruction</p>
+            <h2 id="reconstruction-title">Reconstruction comparisons</h2>
+          </div>
+          <p>
+            Source-view and nearby-view renders compare object geometry,
+            appearance, and placement across SceneRig and reconstruction
+            baselines.
+          </p>
+        </div>
+        <div class="gallery-browser">
+          <div class="gallery-toolbar">
+            <div
+              id="model-groups"
+              class="segmented"
+              role="group"
+              aria-label="Model comparison"
+            ></div>
+            <div
+              id="gallery-views"
+              class="segmented"
+              role="group"
+              aria-label="Reconstruction viewpoint"
+            ></div>
+          </div>
+          <div class="scene-controls">
+            <div class="select-field">
+              <label for="scene-select">Scene</label
+              ><select
+                id="scene-select"
+                aria-label="Choose a reconstruction scene"
+              ></select>
+            </div>
+            <div class="select-field">
+              <label for="category-select">Collection</label
+              ><select id="category-select">
+                <option value="all">All collections</option>
+              </select>
+            </div>
+            <div class="scene-pagination">
+              <button
+                id="scene-prev"
+                class="icon-button"
+                aria-label="Previous reconstruction"
+              >
+                ←</button
+              ><span id="scene-count" aria-live="polite"></span
+              ><button
+                id="scene-next"
+                class="icon-button"
+                aria-label="Next reconstruction"
+              >
+                →
+              </button>
+            </div>
+          </div>
+          <div id="comparison-grid" class="comparison-grid" aria-live="polite">
+            <p class="loading">Loading reconstruction comparisons…</p>
+          </div>
+          <p id="gallery-note" class="protocol-note"></p>
+          <div class="thumbnail-heading">
+            <span>Scene selection</span><span id="gallery-total"></span>
+          </div>
+          <div
+            class="scene-thumbnails"
+            id="scene-thumbnails"
+            aria-label="Scene thumbnails"
+          ></div>
+        </div>
+        <div class="metric-grid" aria-label="Aggregate reconstruction results">
+          <article class="metric-card">
+            <span class="metric-label"
+              >Instance segmentation <span>ARI ↑</span></span
+            >
+            <div class="metric-value">0.878 <small>vs. 0.676</small></div>
+            <p>Agreement with ground-truth instance segmentation.</p>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label"
+              >3D object placement <span>OSPA@5 ↓</span></span
+            >
+            <div class="metric-value">
+              2.4<span class="unit"> cm</span> <small>vs. 3.3 cm</small>
+            </div>
+            <p>3D position error, including unmatched objects.</p>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label"
+              >Scene stability <span>Pass rate ↑</span></span
+            >
+            <div class="metric-value">
+              100<span class="unit">%</span> <small>vs. 98.8%</small>
+            </div>
+            <p>Scenes with every object passing the stability test.</p>
+          </article>
+        </div>
+        <p class="metric-note">
+          SceneRig vs. SimFoundry, both using Claude Opus 5. Segmentation and
+          placement: 44 simulator-grounded scenes. Stability: 80 scenes; every
+          object must move less than 50 mm in the simulation test. OSPA uses a 5
+          cm cutoff.
+        </p>
+      </section>
+
+      <section
+        class="robotics-section"
+        id="robotics"
+        aria-labelledby="robotics-title"
+      >
+        <div class="section-wrap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 / Robotics</p>
+              <h2 id="robotics-title">Robotics applications</h2>
+            </div>
+            <p>
+              We evaluate whether reconstructed scenes predict real-robot policy
+              outcomes and reproduce recorded manipulations through open-loop
+              trajectory replay.
+            </p>
+          </div>
+          <div class="application-cards">
+            <article>
+              <div class="application-card-top">
+                <span class="mini-number">A</span>
+                <h3>Real-to-sim policy evaluation</h3>
+              </div>
+              <p>
+                The same policy runs independently in the real workspace and its
+                reconstruction. We measure agreement between real and simulated
+                episode outcomes.
+              </p>
+              <div class="score-comparison">
+                <div>
+                  <strong>72<span>%</span></strong
+                  ><span>SceneRig</span>
+                </div>
+                <span class="versus">vs.</span>
+                <div class="baseline-score">
+                  <strong>48<span>%</span></strong
+                  ><span>SimFoundry</span>
+                </div>
+                <p>
+                  Agreement with real outcomes<br /><span
+                    >50 episodes · five tasks</span
+                  >
+                </p>
+              </div>
+            </article>
+            <article>
+              <div class="application-card-top">
+                <span class="mini-number">B</span>
+                <h3>Open-loop trajectory replay</h3>
+              </div>
+              <p>
+                Recorded joint and gripper commands are replayed in simulation
+                without policy queries or trajectory adaptation. We measure task
+                success after replay.
+              </p>
+              <div class="score-comparison">
+                <div>
+                  <strong>80<span>%</span></strong
+                  ><span>SceneRig</span>
+                </div>
+                <span class="versus">vs.</span>
+                <div class="baseline-score">
+                  <strong>36<span>%</span></strong
+                  ><span>SimFoundry</span>
+                </div>
+                <p>
+                  Successful simulated replays<br /><span
+                    >25 demonstrations · five tasks</span
+                  >
+                </p>
+              </div>
+            </article>
+          </div>
+          <div class="robotics-browser">
+            <div class="robot-toolbar">
+              <div
+                class="segmented"
+                role="group"
+                aria-label="Robotics application"
+              >
+                <button
+                  data-robot-kind="replay"
+                  class="active"
+                  aria-pressed="true"
+                >
+                  Trajectory replay</button
+                ><button data-robot-kind="policy" aria-pressed="false">
+                  Policy evaluation
+                </button>
+              </div>
+              <div class="select-field">
+                <label for="episode-select">Example</label
+                ><select id="episode-select"></select>
+              </div>
+            </div>
+            <div class="episode-heading">
+              <div>
+                <h3 id="episode-title">Recorded robot interactions</h3>
+                <p id="episode-description"></p>
+              </div>
+              <div class="playback-actions">
+                <button
+                  class="button primary small"
+                  id="robot-play"
+                  type="button"
+                >
+                  ▶ Play all</button
+                ><button
+                  class="button secondary small"
+                  id="robot-restart"
+                  type="button"
+                >
+                  ↺ Restart
+                </button>
+              </div>
+            </div>
+            <div id="robot-videos" class="robot-video-grid"></div>
+            <p class="protocol-note" id="robot-timing"></p>
+            <div
+              class="episode-thumbnails"
+              id="episode-thumbnails"
+              aria-label="Robot episode thumbnails"
+            ></div>
+          </div>
+          <p class="metric-note">
+            Representative videos illustrate individual episodes; the aggregate
+            scores above include all evaluated episodes. Both methods use the
+            same robot calibration, controllers, and physics. Policy agreement
+            and replay success measure different capabilities.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="method-section section-wrap"
+        id="method"
+        aria-labelledby="method-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 / Method</p>
+            <h2 id="method-title">Method overview</h2>
+          </div>
+        </div>
+        <p class="method-summary">
+          SceneRig reconstructs individual objects, supporting surfaces, and
+          their spatial relations from a single RGB image. Agents complete the
+          scene geometry, appearance, and lighting in a persistent Blender
+          scene. During object pose refinement, the agent identifies the object
+          and pose component to adjust; the backend searches bounded updates and
+          tests their geometric alignment and physical feasibility.
+        </p>
+        <div class="method-flow">
+          <article>
+            <div class="method-image">
+              <img
+                src="assets/method/perception.webp"
+                width="640"
+                height="360"
+                loading="lazy"
+                alt="Color-coded object and surface masks recovered from an input image."
+              />
+            </div>
+            <span class="method-index">01 / Perception</span>
+            <h3>Agentic relational perception</h3>
+            <p>
+              Identify object instances and supporting surfaces, estimate
+              monocular geometry, and reconstruct individual meshes.
+            </p>
+          </article>
+          <article>
+            <div class="method-image">
+              <img
+                src="assets/method/settlement.webp"
+                width="640"
+                height="360"
+                loading="lazy"
+                alt="Reconstructed objects physically settled on their supports under gravity."
+              />
+            </div>
+            <span class="method-index">02 / Settlement</span>
+            <h3>Hierarchical physical settlement</h3>
+            <p>
+              Place objects after their supports and simulate them under gravity
+              to initialize physically plausible poses.
+            </p>
+          </article>
+          <article>
+            <div class="method-image">
+              <img
+                src="assets/method/appearance.webp"
+                width="640"
+                height="360"
+                loading="lazy"
+                alt="The persistent Blender scene after root-surface appearance and lighting refinement."
+              />
+            </div>
+            <span class="method-index">03 / Scene refinement</span>
+            <h3>Surface geometry, appearance, and lighting</h3>
+            <p>
+              Scoped agents refine surface geometry, appearance, and lighting,
+              with independent visual verification.
+            </p>
+          </article>
+          <article>
+            <div class="method-image">
+              <img
+                src="assets/method/refinement.webp"
+                width="640"
+                height="360"
+                loading="lazy"
+                alt="Paired object crops inspected by the pose agent to diagnose a spoon placement error."
+              />
+            </div>
+            <span class="method-index">04 / Pose refinement</span>
+            <h3>Physics-grounded object pose refinement</h3>
+            <p>
+              Agents diagnose pose errors. A bounded backend searches
+              adjustments and tests them in simulation; complex fixes use direct
+              code edits.
+            </p>
+            <a class="method-trace-link" href="#pose-trace"
+              >View recorded tool calls <span aria-hidden="true">↓</span></a
+            >
+          </article>
+        </div>
+        <section
+          class="pose-trace"
+          id="pose-trace"
+          aria-labelledby="pose-trace-title"
+        >
+          <div class="trace-heading">
+            <div>
+              <p class="eyebrow">04 / Pose refinement</p>
+              <h3 id="pose-trace-title">Tool-call trace</h3>
+            </div>
+            <p id="trace-context">
+              Recorded investigation, pose updates, and backend feedback.
+            </p>
+          </div>
+          <div
+            id="trace-steps"
+            class="trace-steps"
+            role="group"
+            aria-label="Recorded pose-refinement tool calls"
+          ></div>
+          <div id="trace-detail" class="trace-detail" aria-live="polite">
+            <p class="loading">Loading the recorded pose-refinement trace…</p>
+          </div>
+          <p id="trace-note" class="trace-note"></p>
+        </section>
+        <div class="delivery-strip">
+          <span class="export-symbol" aria-hidden="true">↗</span>
+          <p>
+            <strong>USD export.</strong> The exported scene includes meshes,
+            textures, lights, cameras, object identities, collision geometry,
+            and physical properties.
+          </p>
+          <span class="file-badge">.usd</span>
+        </div>
+      </section>
+    </main>
+    <footer class="section-wrap">
+      <a class="wordmark" href="#"
+        >SceneRig<span class="wordmark-dot">.</span></a
+      >
+      <p>Single-image simulation-ready 3D scene reconstruction</p>
+      <a href="#main">Back to top ↑</a>
+    </footer>
+    <noscript
+      ><p class="noscript-notice">
+        Enable JavaScript to browse all reconstruction comparisons, control the
+        material slider, and load the robot video gallery.
+      </p></noscript
+    >
+  </body>
+</html>
