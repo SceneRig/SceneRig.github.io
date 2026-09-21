@@ -11,7 +11,7 @@ const escapeHTML = (value) =>
   );
 
 async function readData(name) {
-  const response = await fetch(`data/${name}.json`);
+  const response = await fetch(`data/${name}.json`, { cache: "no-cache" });
   if (!response.ok) throw new Error(`Cannot load ${name}`);
   return response.json();
 }
