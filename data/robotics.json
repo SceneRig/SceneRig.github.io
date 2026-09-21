@@ -1,5 +1,9 @@
 {
   "schema_version": 1,
+  "playback_rates": {
+    "policy": 3,
+    "replay": 1
+  },
   "methods": {
     "real": "Real robot",
     "ours": "SceneRig",
@@ -8,7 +12,7 @@
   "notes": [
     "Replay videos share a recorded command sequence and time axis; policy videos are independent executions with different durations.",
     "Selected qualitative examples are not an aggregate evaluation. Outcome labels follow the recorded task-specific scoring rules.",
-    "All clips retain their original playback speed. Website versions use H.264, 640 × 360, 15 frames per second, without audio."
+    "Video files retain recorded timing; policy rollouts play at 3× speed and trajectory replays at original speed. Selected simulated rollout clips omit idle endings. Website versions use H.264, 640 × 360, 15 frames per second, without audio."
   ],
   "items": [
     {
@@ -48,26 +52,29 @@
           "bytes": 436372
         },
         "ours": {
-          "src": "assets/robotics/policy-01-ours.mp4",
-          "poster": "assets/robotics/policy-01-ours.jpg",
+          "src": "assets/robotics/policy-01-ours-trimmed.mp4",
+          "poster": "assets/robotics/policy-01-ours-trimmed.jpg",
           "start_poster": "assets/robotics/policy-01-ours-start.jpg",
-          "duration": 73.2,
+          "duration": 30.134,
           "width": 640,
           "height": 360,
           "fps": 15,
-          "bytes": 424150
+          "bytes": 305686,
+          "untrimmed_duration": 73.2
         },
         "baseline": {
-          "src": "assets/robotics/policy-01-baseline.mp4",
-          "poster": "assets/robotics/policy-01-baseline.jpg",
+          "src": "assets/robotics/policy-01-baseline-trimmed.mp4",
+          "poster": "assets/robotics/policy-01-baseline-trimmed.jpg",
           "start_poster": "assets/robotics/policy-01-baseline-start.jpg",
-          "duration": 172.467,
+          "duration": 160.267,
           "width": 640,
           "height": 360,
           "fps": 15,
-          "bytes": 1776969
+          "bytes": 1736684,
+          "untrimmed_duration": 172.467
         }
-      }
+      },
+      "presentation_note": "Simulated idle endings trimmed"
     },
     {
       "id": "policy-02",

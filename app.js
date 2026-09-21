@@ -224,7 +224,7 @@ function videoHTML(media, label, controls = true) {
 }
 
 // Replay has a shared time axis. Policy videos retain independent clocks.
-function bindPlayback(container, button, synchronized) {
+function bindPlayback(container, button, synchronized, playbackRate = 1) {
   const videos = $$("video", container);
   let syncing = false;
   let disposed = false;
@@ -268,6 +268,8 @@ function bindPlayback(container, button, synchronized) {
   }
   for (const video of videos) {
     video.muted = true;
+    video.defaultPlaybackRate = playbackRate;
+    video.playbackRate = playbackRate;
     video.addEventListener(
       "play",
       () => {
@@ -357,7 +359,11 @@ function setupHeroVideos(data) {
   $("#hero-robotics").innerHTML = selections
     .map((selection) => {
       const item = data.items.find((episode) => episode.id === selection.id);
-      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p>${selection.note}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
+      const note =
+        item.kind === "policy"
+          ? `${selection.note} · ${data.playback_rates.policy}× speed${item.presentation_note ? ` · ${item.presentation_note}` : ""}`
+          : selection.note;
+      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
     })
     .join("");
   $$(".hero-application").forEach((container) => {
@@ -365,7 +371,12 @@ function setupHeroVideos(data) {
       (episode) => episode.id === container.dataset.hero,
     );
     const button = $(".hero-play", container);
-    const playback = bindPlayback(container, button, item.synchronized);
+    const playback = bindPlayback(
+      container,
+      button,
+      item.synchronized,
+      data.playback_rates[item.kind],
+    );
     let userPaused = false;
     let visible = false;
     let automaticPause = false;
@@ -441,12 +452,13 @@ function setupRobotics(data) {
       $("#robot-videos"),
       $("#robot-play"),
       item.synchronized,
+      data.playback_rates[item.kind],
     );
     const timing = item.synchronized
       ? "Synchronized replay at original speed. Playing, pausing, or seeking one video controls all three; each receives the same recorded joint and gripper commands."
-      : "Independent policy rollouts at original speed, with different durations. “Play all” starts them together for viewing; frames at the same time do not represent matched actions. Use each video’s controls to inspect its own trajectory.";
+      : `Independent policy rollouts at ${data.playback_rates.policy}× speed, with different durations. “Play all” starts them together for viewing; frames at the same time do not represent matched actions. Use each video’s controls to inspect its own trajectory.`;
     $("#robot-timing").textContent =
-      `${timing}${item.note ? ` ${item.note}` : ""}`;
+      `${timing}${item.presentation_note ? ` ${item.presentation_note}.` : ""}${item.note ? ` ${item.note}` : ""}`;
     $$(".episode-thumb").forEach((button) =>
       setActive(button, button.dataset.episode === currentId),
     );

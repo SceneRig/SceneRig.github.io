@@ -62,6 +62,8 @@ with sync_playwright() as playwright:
         for selector in [POLICY_HERO, REPLAY_HERO]:
             show_hero(page, selector)
             wait_playing(page, f'{selector} video')
+            expected_rate = 3 if selector == POLICY_HERO else 1
+            assert all(v['rate'] == expected_rate for v in state(page, f'{selector} video'))
         page.screenshot(path=str(OUTPUT / 'playback-hero.png'))
 
     check('each visible hero application autoplays real and both simulated episodes', hero_autoplay)
@@ -105,6 +107,7 @@ with sync_playwright() as playwright:
     page.locator('#robot-play').scroll_into_view_if_needed()
 
     def replay_play_pause():
+        assert all(v['rate'] == 1 for v in state(page))
         page.locator('#robot-play').click()
         wait_playing(page)
         page.wait_for_timeout(1200)
@@ -176,9 +179,14 @@ with sync_playwright() as playwright:
         page.locator('#robot-play').click()
         wait_playing(page)
         values = state(page)
-        assert max(v['duration'] for v in values) - min(v['duration'] for v in values) > 100, values
+        assert all(v['rate'] == 3 for v in values), values
+        assert max(v['duration'] for v in values) - min(v['duration'] for v in values) > 1, values
         page.locator('#robot-play').click()
         wait_paused(page)
+        page.locator(GROUP).nth(1).evaluate('(v) => v.playbackRate = 2')
+        page.wait_for_timeout(200)
+        assert [v['rate'] for v in state(page)] == [3, 2, 3]
+        page.locator(GROUP).nth(1).evaluate('(v) => v.playbackRate = 3')
         times = [v['time'] for v in state(page)]
         page.locator(GROUP).nth(1).evaluate('(v) => v.currentTime = 20')
         page.wait_for_timeout(400)
@@ -197,7 +205,7 @@ with sync_playwright() as playwright:
     def policy_restart():
         page.locator('#robot-restart').click()
         wait_playing(page)
-        assert all(v['time'] < 2 for v in state(page))
+        assert all(v['time'] < 2 and v['rate'] == 3 for v in state(page))
         page.screenshot(path=str(OUTPUT / 'playback-policy.png'))
         page.locator('#robot-play').click()
         wait_paused(page)
@@ -211,9 +219,20 @@ with sync_playwright() as playwright:
         page.select_option('#episode-select', 'policy-06')
         page.wait_for_timeout(300)
         assert page.evaluate('window.previousVideos.every(v => v.paused)')
-        assert all(v['paused'] for v in state(page))
+        assert all(v['paused'] and v['rate'] == 3 for v in state(page))
 
     check('switching episodes pauses and disposes previous playback', episode_switch_disposes)
+
+    def policy_default_rates():
+        items = json.loads((ROOT / 'data/robotics.json').read_text())['items']
+        for item in items:
+            if item['kind'] != 'policy':
+                continue
+            page.select_option('#episode-select', item['id'])
+            page.wait_for_function('() => { const videos = [...document.querySelectorAll("#robot-videos video")]; return videos.length === 3 && videos.every(v => v.playbackRate === 3); }')
+            assert all(v['paused'] for v in state(page)), item['id']
+
+    check('every policy episode starts at 3x after selection', policy_default_rates)
 
     def all_browser_codecs():
         files = [m for item in json.loads((ROOT / 'data/robotics.json').read_text())['items'] for m in item['media'].values()]
@@ -234,8 +253,9 @@ with sync_playwright() as playwright:
         }''', files)
         (OUTPUT / 'playback-codecs.json').write_text(json.dumps(records, indent=2) + '\n')
         assert len(records) == 48
-        for record in records:
+        for record, expected in zip(records, files):
             assert record.get('width') == 640 and record.get('height') == 360 and record.get('playable') and not record['error'], record
+            assert abs(record['duration'] - expected['duration']) < .15, {'actual': record, 'expected_duration': expected['duration']}
 
     check('all 48 H.264 videos decode in Chromium at 16:9', all_browser_codecs)
 
