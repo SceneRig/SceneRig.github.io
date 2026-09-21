@@ -439,7 +439,7 @@ section[id] {
   margin-bottom: 18px;
 }
 .small-note {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   padding-top: 4px;
 }
@@ -470,7 +470,7 @@ section[id] {
   line-height: 1.3;
 }
 .hero-application header p {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 3px;
 }
@@ -657,7 +657,7 @@ section[id] {
   color: var(--blue-dark);
 }
 .protocol-note {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.65;
   color: var(--muted);
   padding: 16px 20px;
@@ -778,7 +778,7 @@ section[id] {
   color: var(--muted);
 }
 .metric-note {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   line-height: 1.7;
   margin-top: 15px;
@@ -939,7 +939,7 @@ section[id] {
   margin-top: 8px;
 }
 .robot-video-card > p {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.6;
   color: var(--muted);
   margin-top: 5px;
@@ -1263,7 +1263,7 @@ section[id] {
   color: #8d9aad;
 }
 .trace-note {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.75;
   color: var(--muted);
   margin-top: 13px;
@@ -1489,7 +1489,7 @@ footer .wordmark {
     font-size: 11px;
   }
   .hero-application header p {
-    font-size: 9px;
+    font-size: 10px;
   }
   .hero-video-row {
     gap: 8px;
@@ -1533,7 +1533,7 @@ footer .wordmark {
   }
   .protocol-note {
     padding: 13px 14px;
-    font-size: 9px;
+    font-size: 10px;
   }
   .scene-thumbnails {
     padding-inline: 14px;
@@ -1610,7 +1610,7 @@ footer .wordmark {
     font-size: 8px;
   }
   .robot-video-card > p {
-    font-size: 9px;
+    font-size: 10px;
   }
   .episode-thumbnails {
     padding-inline: 14px;
@@ -1720,7 +1720,7 @@ footer .wordmark {
     font-size: 9px;
   }
   .trace-note {
-    font-size: 9px;
+    font-size: 10px;
   }
   .section-wrap {
     width: calc(100% - 28px);
@@ -1832,7 +1832,7 @@ footer .wordmark {
     display: block;
     padding: 0;
     margin: -5px 0 12px;
-    font-size: 8px;
+    font-size: 9px;
   }
   .teaser-applications {
     padding: 14px;
@@ -1845,7 +1845,7 @@ footer .wordmark {
     font-size: 12px;
   }
   .hero-application header p {
-    font-size: 9px;
+    font-size: 10px;
   }
   .hero-video-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1968,7 +1968,7 @@ footer .wordmark {
     margin-top: 5px;
   }
   .metric-note {
-    font-size: 9px;
+    font-size: 10px;
   }
   .results-section {
     padding-block: 42px;
@@ -2043,7 +2043,7 @@ footer .wordmark {
     font-size: 10px;
   }
   .robot-video-card > p {
-    font-size: 10px;
+    font-size: 11px;
   }
   .episode-thumbnails {
     grid-template-columns: repeat(3, minmax(0, 1fr));
