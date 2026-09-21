@@ -100,6 +100,8 @@ class ProjectPageTests(unittest.TestCase):
                     actual = self.page.locator("#comparison-grid img").evaluate_all("images => images.map(image => image.getAttribute('src'))")
                     self.assertEqual(set(actual), expected, (scene["id"], view["id"]))
                     self.assertEqual(len(actual), len(scene["methods"]) + 1)
+                    ours = next(method for method in scene["methods"] if method["id"] == "ours")
+                    self.assertEqual(actual[:2], [scene["input"], ours[view["id"]]], (scene["id"], view["id"]))
                     labels = self.page.locator("#comparison-grid figcaption").all_text_contents()
                     for method in scene["methods"]:
                         self.assertTrue(any(label.startswith(method["label"]) for label in labels))

@@ -129,8 +129,8 @@ function setupGallery(data) {
     sceneSelect.value = selectedId;
     const group = data.groups.find((item) => item.id === groupId);
     const viewLabel = viewId === "source" ? "Source view" : "Nearby view";
-    // Put the input first and SceneRig last in the matched comparison grid.
-    const order = ["viga", "rest3d", "sc", "simfoundry", "codex", "ours"];
+    // Put SceneRig immediately after the input in both comparison groups.
+    const order = ["ours", "viga", "rest3d", "sc", "simfoundry", "codex"];
     const methods = [...scene.methods].sort(
       (a, b) => order.indexOf(a.id) - order.indexOf(b.id),
     );
