@@ -67,6 +67,46 @@
   ],
   "scenes": [
     {
+      "id": "main-scene-21",
+      "sourceId": "scene-21",
+      "title": "Scene 21",
+      "category": "Simulator scenes",
+      "group": "main",
+      "methods": [
+        {
+          "id": "ours",
+          "label": "SceneRig",
+          "source": "assets/gallery/main/scene-21/ours_source.webp",
+          "novel": "assets/gallery/main/scene-21/ours_novel.webp"
+        },
+        {
+          "id": "simfoundry",
+          "label": "SimFoundry",
+          "source": "assets/gallery/main/scene-21/simfoundry_source.webp",
+          "novel": "assets/gallery/main/scene-21/simfoundry_novel.webp"
+        },
+        {
+          "id": "rest3d",
+          "label": "REST3D",
+          "source": "assets/gallery/main/scene-21/rest3d_source.webp",
+          "novel": "assets/gallery/main/scene-21/rest3d_novel.webp"
+        },
+        {
+          "id": "sc",
+          "label": "SceneConductor",
+          "source": "assets/gallery/main/scene-21/sc_source.webp",
+          "novel": "assets/gallery/main/scene-21/sc_novel.webp"
+        },
+        {
+          "id": "viga",
+          "label": "VIGA*",
+          "source": "assets/gallery/main/scene-21/viga_source.webp",
+          "novel": "assets/gallery/main/scene-21/viga_novel.webp"
+        }
+      ],
+      "input": "assets/gallery/main/scene-21/input.webp"
+    },
+    {
       "id": "main-scene-01",
       "sourceId": "scene-01",
       "title": "Scene 01",
@@ -867,46 +907,6 @@
       "input": "assets/gallery/main/scene-20/input.webp"
     },
     {
-      "id": "main-scene-21",
-      "sourceId": "scene-21",
-      "title": "Scene 21",
-      "category": "Simulator scenes",
-      "group": "main",
-      "methods": [
-        {
-          "id": "ours",
-          "label": "SceneRig",
-          "source": "assets/gallery/main/scene-21/ours_source.webp",
-          "novel": "assets/gallery/main/scene-21/ours_novel.webp"
-        },
-        {
-          "id": "simfoundry",
-          "label": "SimFoundry",
-          "source": "assets/gallery/main/scene-21/simfoundry_source.webp",
-          "novel": "assets/gallery/main/scene-21/simfoundry_novel.webp"
-        },
-        {
-          "id": "rest3d",
-          "label": "REST3D",
-          "source": "assets/gallery/main/scene-21/rest3d_source.webp",
-          "novel": "assets/gallery/main/scene-21/rest3d_novel.webp"
-        },
-        {
-          "id": "sc",
-          "label": "SceneConductor",
-          "source": "assets/gallery/main/scene-21/sc_source.webp",
-          "novel": "assets/gallery/main/scene-21/sc_novel.webp"
-        },
-        {
-          "id": "viga",
-          "label": "VIGA*",
-          "source": "assets/gallery/main/scene-21/viga_source.webp",
-          "novel": "assets/gallery/main/scene-21/viga_novel.webp"
-        }
-      ],
-      "input": "assets/gallery/main/scene-21/input.webp"
-    },
-    {
       "id": "main-scene-22",
       "sourceId": "scene-22",
       "title": "Scene 22",
@@ -1025,6 +1025,34 @@
         }
       ],
       "input": "assets/gallery/main/scene-24/input.webp"
+    },
+    {
+      "id": "gpt6-scene-21",
+      "sourceId": "scene-21",
+      "title": "Scene 21",
+      "category": "Simulator scenes",
+      "group": "gpt6",
+      "methods": [
+        {
+          "id": "ours",
+          "label": "SceneRig",
+          "source": "assets/gallery/gpt6/scene-21/ours_source.webp",
+          "novel": "assets/gallery/gpt6/scene-21/ours_novel.webp"
+        },
+        {
+          "id": "viga",
+          "label": "VIGA*",
+          "source": "assets/gallery/gpt6/scene-21/viga_source.webp",
+          "novel": "assets/gallery/gpt6/scene-21/viga_novel.webp"
+        },
+        {
+          "id": "codex",
+          "label": "Codex",
+          "source": "assets/gallery/gpt6/scene-21/codex_source.webp",
+          "novel": "assets/gallery/gpt6/scene-21/codex_novel.webp"
+        }
+      ],
+      "input": "assets/gallery/gpt6/scene-21/input.webp"
     },
     {
       "id": "gpt6-scene-01",
@@ -1585,34 +1613,6 @@
         }
       ],
       "input": "assets/gallery/gpt6/scene-20/input.webp"
-    },
-    {
-      "id": "gpt6-scene-21",
-      "sourceId": "scene-21",
-      "title": "Scene 21",
-      "category": "Simulator scenes",
-      "group": "gpt6",
-      "methods": [
-        {
-          "id": "ours",
-          "label": "SceneRig",
-          "source": "assets/gallery/gpt6/scene-21/ours_source.webp",
-          "novel": "assets/gallery/gpt6/scene-21/ours_novel.webp"
-        },
-        {
-          "id": "viga",
-          "label": "VIGA*",
-          "source": "assets/gallery/gpt6/scene-21/viga_source.webp",
-          "novel": "assets/gallery/gpt6/scene-21/viga_novel.webp"
-        },
-        {
-          "id": "codex",
-          "label": "Codex",
-          "source": "assets/gallery/gpt6/scene-21/codex_source.webp",
-          "novel": "assets/gallery/gpt6/scene-21/codex_novel.webp"
-        }
-      ],
-      "input": "assets/gallery/gpt6/scene-21/input.webp"
     },
     {
       "id": "gpt6-scene-22",
