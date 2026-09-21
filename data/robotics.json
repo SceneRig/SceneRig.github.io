@@ -2,7 +2,7 @@
   "schema_version": 1,
   "playback_rates": {
     "policy": 3,
-    "replay": 4
+    "replay": 3
   },
   "methods": {
     "real": "Real robot",
@@ -12,7 +12,7 @@
   "notes": [
     "Replay videos share a recorded command sequence and time axis; policy videos are independent executions with different durations.",
     "Selected qualitative examples are not an aggregate evaluation. Outcome labels follow the recorded task-specific scoring rules.",
-    "Video files retain recorded timing; policy rollouts play at 3× speed and trajectory replays at 4× speed. Selected simulated rollout clips omit idle endings. Website versions use H.264, 640 × 360, 15 frames per second, without audio."
+    "Video files retain recorded timing; policy rollouts and trajectory replays play at 3× speed. The teaser replay starts at 12 seconds to omit initialization; the robotics gallery retains the full replay. Selected simulated rollout clips omit idle endings. Website versions use H.264, 640 × 360, 15 frames per second, without audio."
   ],
   "items": [
     {

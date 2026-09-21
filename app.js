@@ -224,7 +224,7 @@ function videoHTML(media, label, controls = true) {
 }
 
 // Replay has a shared time axis. Policy videos retain independent clocks.
-function bindPlayback(container, button, synchronized, playbackRate = 1) {
+function bindPlayback(container, button, synchronized, playbackRate = 1, startTime = 0) {
   const videos = $$("video", container);
   let syncing = false;
   let disposed = false;
@@ -251,7 +251,7 @@ function bindPlayback(container, button, synchronized, playbackRate = 1) {
   }
   function restart() {
     videos.forEach((video) => {
-      video.currentTime = 0;
+      video.currentTime = startTime;
     });
     return play();
   }
@@ -270,6 +270,7 @@ function bindPlayback(container, button, synchronized, playbackRate = 1) {
     video.muted = true;
     video.defaultPlaybackRate = playbackRate;
     video.playbackRate = playbackRate;
+    if (startTime) video.currentTime = startTime;
     video.addEventListener(
       "play",
       () => {
@@ -373,6 +374,7 @@ function setupHeroVideos(data) {
       button,
       item.synchronized,
       data.playback_rates[item.kind],
+      item.kind === "replay" ? 12 : 0,
     );
     let userPaused = false;
     let visible = false;

@@ -62,8 +62,10 @@ with sync_playwright() as playwright:
         for selector in [POLICY_HERO, REPLAY_HERO]:
             show_hero(page, selector)
             wait_playing(page, f'{selector} video')
-            expected_rate = 3 if selector == POLICY_HERO else 4
-            assert all(v['rate'] == expected_rate for v in state(page, f'{selector} video'))
+            values = state(page, f'{selector} video')
+            assert all(v['rate'] == 3 for v in values), values
+            if selector == REPLAY_HERO:
+                assert all(12 <= v['time'] < 17 for v in values), values
         page.screenshot(path=str(OUTPUT / 'playback-hero.png'))
 
     check('each visible hero application autoplays real and both simulated episodes', hero_autoplay)
@@ -104,10 +106,25 @@ with sync_playwright() as playwright:
         wait_paused(page, f'{REPLAY_HERO} video')
 
     check('real hero replay controls synchronize all three episodes', hero_real_replay_controls)
+
+    def hero_replay_end_restart():
+        selector = f'{REPLAY_HERO} video'
+        page.locator(selector).first.evaluate('(video) => video.currentTime = video.duration - .3')
+        page.wait_for_function('(selector) => [...document.querySelectorAll(selector)].every(video => !video.seeking && video.duration - video.currentTime < .5)', arg=selector)
+        page.locator(f'{REPLAY_HERO} .hero-play').click()
+        page.wait_for_function('(selector) => [...document.querySelectorAll(selector)].every(video => video.ended)', arg=selector)
+        page.locator(f'{REPLAY_HERO} .hero-play').click()
+        wait_playing(page, selector)
+        values = state(page, selector)
+        assert all(12 <= v['time'] < 17 and v['rate'] == 3 for v in values), values
+        page.locator(f'{REPLAY_HERO} .hero-play').click()
+        wait_paused(page, selector)
+
+    check('completed teaser replay restarts all three clips at 12 seconds', hero_replay_end_restart)
     page.locator('#robot-play').scroll_into_view_if_needed()
 
     def replay_play_pause():
-        assert all(v['rate'] == 4 for v in state(page))
+        assert all(v['rate'] == 3 and v['time'] == 0 for v in state(page))
         page.locator('#robot-play').click()
         wait_playing(page)
         page.wait_for_timeout(1200)
@@ -135,8 +152,8 @@ with sync_playwright() as playwright:
     def replay_rate():
         page.locator(GROUP).nth(2).evaluate('(v) => v.playbackRate = 1.5')
         page.wait_for_function('() => [...document.querySelectorAll("#robot-videos video")].every(v => v.playbackRate === 1.5)')
-        page.locator(GROUP).first.evaluate('(v) => v.playbackRate = 4')
-        page.wait_for_function('() => [...document.querySelectorAll("#robot-videos video")].every(v => v.playbackRate === 4)')
+        page.locator(GROUP).first.evaluate('(v) => v.playbackRate = 3')
+        page.wait_for_function('() => [...document.querySelectorAll("#robot-videos video")].every(v => v.playbackRate === 3)')
 
     check('native replay playback rate synchronizes', replay_rate)
 
@@ -160,7 +177,7 @@ with sync_playwright() as playwright:
         page.locator('#robot-play').click()
         page.wait_for_timeout(800)
         after = state(page)
-        assert all(not v['paused'] and v['time'] < 6 and v['rate'] == 4 for v in after), {'before': before, 'after': after}
+        assert all(not v['paused'] and v['time'] < 6 and v['rate'] == 3 for v in after), {'before': before, 'after': after}
 
     check('play-all restarts a completed replay', replay_end_restart)
 
@@ -242,10 +259,10 @@ with sync_playwright() as playwright:
             if item['kind'] != 'replay':
                 continue
             page.select_option('#episode-select', item['id'])
-            page.wait_for_function('() => { const videos = [...document.querySelectorAll("#robot-videos video")]; return videos.length === 3 && videos.every(v => v.playbackRate === 4); }')
-            assert all(v['paused'] for v in state(page)), item['id']
+            page.wait_for_function('() => { const videos = [...document.querySelectorAll("#robot-videos video")]; return videos.length === 3 && videos.every(v => v.playbackRate === 3); }')
+            assert all(v['paused'] and v['time'] == 0 for v in state(page)), item['id']
 
-    check('every replay episode starts at 4x after selection', replay_default_rates)
+    check('every gallery replay episode starts at zero seconds and 3x after selection', replay_default_rates)
 
     def all_browser_codecs():
         files = [m for item in json.loads((ROOT / 'data/robotics.json').read_text())['items'] for m in item['media'].values()]
@@ -279,7 +296,9 @@ with sync_playwright() as playwright:
         reduced_page.locator('#hero-robotics video').first.wait_for(state='attached')
         reduced_page.locator('#hero-robotics').scroll_into_view_if_needed()
         reduced_page.wait_for_timeout(800)
-        assert all(v['paused'] and v['time'] == 0 for v in state(reduced_page, '#hero-robotics video'))
+        assert all(v['paused'] and v['time'] == 0 for v in state(reduced_page, f'{POLICY_HERO} video'))
+        reduced_page.wait_for_function('(selector) => [...document.querySelectorAll(selector)].every(video => !video.seeking && video.currentTime === 12)', arg=f'{REPLAY_HERO} video')
+        assert all(v['paused'] and v['time'] == 12 for v in state(reduced_page, f'{REPLAY_HERO} video'))
         initial = reduced_page.locator('#clay-range').input_value()
         reduced_page.wait_for_timeout(500)
         assert reduced_page.locator('#clay-range').input_value() == initial
