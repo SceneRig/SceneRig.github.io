@@ -359,10 +359,7 @@ function setupHeroVideos(data) {
   $("#hero-robotics").innerHTML = selections
     .map((selection) => {
       const item = data.items.find((episode) => episode.id === selection.id);
-      const note =
-        item.kind === "policy"
-          ? `${selection.note} · ${data.playback_rates.policy}× speed${item.presentation_note ? ` · ${item.presentation_note}` : ""}`
-          : selection.note;
+      const note = `${selection.note} · ${data.playback_rates[item.kind]}× speed${item.presentation_note ? ` · ${item.presentation_note}` : ""}`;
       return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
     })
     .join("");
@@ -455,7 +452,7 @@ function setupRobotics(data) {
       data.playback_rates[item.kind],
     );
     const timing = item.synchronized
-      ? "Synchronized replay at original speed. Playing, pausing, or seeking one video controls all three; each receives the same recorded joint and gripper commands."
+      ? `Synchronized replay at ${data.playback_rates.replay}× speed. Playing, pausing, or seeking one video controls all three; each receives the same recorded joint and gripper commands.`
       : `Independent policy rollouts at ${data.playback_rates.policy}× speed, with different durations. “Play all” starts them together for viewing; frames at the same time do not represent matched actions. Use each video’s controls to inspect its own trajectory.`;
     $("#robot-timing").textContent =
       `${timing}${item.presentation_note ? ` ${item.presentation_note}.` : ""}${item.note ? ` ${item.note}` : ""}`;
