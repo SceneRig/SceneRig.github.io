@@ -224,11 +224,28 @@ class ProjectPageTests(unittest.TestCase):
                 self.page.locator("#teaser").screenshot(path=str(OPTIONS.screenshots / f"teaser-{width}.png"), style=".site-header { visibility: hidden !important; }")
                 self.page.locator(".gallery-browser").screenshot(path=str(OPTIONS.screenshots / f"gallery-{width}.png"), style=".site-header { visibility: hidden !important; }")
 
+    def test_reconstruction_metric_baselines(self):
+        selector = self.page.locator("#metric-baseline")
+        self.assertEqual(selector.input_value(), "viga")
+        expected = {
+            "viga": ["vs. 0.283", "vs. 4.9 cm", "vs. 7.5%"],
+            "rest3d": ["vs. 0.210", "vs. 4.7 cm", "vs. 35.0%"],
+            "sceneconductor": ["vs. 0.197", "vs. 5.0 cm", "vs. 8.8%"],
+            "simfoundry": ["vs. 0.676", "vs. 3.3 cm", "vs. 98.8%"],
+        }
+        for method, values in expected.items():
+            selector.select_option(method)
+            self.assertEqual(self.page.locator("[data-baseline-metric]").all_text_contents(), values)
+            self.assertEqual(self.page.locator("#metric-baseline-name").inner_text(), selector.locator("option:checked").inner_text())
+        replay = self.page.locator(".replay-results-card tbody tr")
+        self.assertEqual(replay.nth(0).locator("td").all_text_contents(), ["80%", "36%"])
+        self.assertEqual(replay.nth(1).locator("td").all_text_contents(), ["39/45", "—"])
+
     def test_policy_correlation_dialog(self):
         trigger = self.page.get_by_role("button", name="View correlation plot")
         dialog = self.page.locator("#policy-correlation")
         self.assertFalse(dialog.is_visible())
-        rows = self.page.locator(".application-metrics tbody tr")
+        rows = self.page.locator(".policy-evaluation-card .application-metrics tbody tr")
         self.assertEqual(rows.nth(0).locator("td").all_text_contents(), ["69%", "54%"])
         self.assertEqual(rows.nth(1).locator("td").all_text_contents(), ["0.92", "0.84"])
         trigger.click()

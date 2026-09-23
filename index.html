@@ -23,8 +23,8 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=policy-metrics-preview" />
-    <script src="app.js?v=policy-metrics-preview" defer></script>
+    <link rel="stylesheet" href="styles.css?v=baseline-metrics-preview" />
+    <script src="app.js?v=baseline-metrics-preview" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -262,12 +262,24 @@
             aria-label="Scene thumbnails"
           ></div>
         </div>
-        <div class="metric-grid" aria-label="Aggregate reconstruction results">
+        <div class="metric-comparison-toolbar">
+          <h3>Reconstruction metrics</h3>
+          <div class="metric-baseline-control">
+            <label for="metric-baseline">SceneRig vs.</label>
+            <select id="metric-baseline" aria-label="Choose reconstruction metric baseline">
+              <option value="viga" selected>VIGA*</option>
+              <option value="rest3d">REST3D</option>
+              <option value="sceneconductor">SceneConductor</option>
+              <option value="simfoundry">SimFoundry</option>
+            </select>
+          </div>
+        </div>
+        <div class="metric-grid" aria-label="Aggregate reconstruction results" aria-live="polite" aria-atomic="true">
           <article class="metric-card">
             <span class="metric-label"
               >Instance segmentation <span>ARI ↑</span></span
             >
-            <div class="metric-value">0.878 <small>vs. 0.676</small></div>
+            <div class="metric-value">0.878 <small data-baseline-metric="ari">vs. 0.283</small></div>
             <p>Agreement with ground-truth instance segmentation.</p>
           </article>
           <article class="metric-card">
@@ -275,7 +287,7 @@
               >3D object placement <span>OSPA@5 ↓</span></span
             >
             <div class="metric-value">
-              2.4<span class="unit"> cm</span> <small>vs. 3.3 cm</small>
+              2.4<span class="unit"> cm</span> <small data-baseline-metric="ospa">vs. 4.9 cm</small>
             </div>
             <p>3D position error, including unmatched objects.</p>
           </article>
@@ -284,16 +296,16 @@
               >Scene stability <span>Pass rate ↑</span></span
             >
             <div class="metric-value">
-              100<span class="unit">%</span> <small>vs. 98.8%</small>
+              100<span class="unit">%</span> <small data-baseline-metric="stability">vs. 7.5%</small>
             </div>
             <p>Scenes with every object passing the stability test.</p>
           </article>
         </div>
         <p class="metric-note">
-          SceneRig vs. SimFoundry, both using Claude Opus 5. Segmentation and
+          SceneRig vs. <span id="metric-baseline-name">VIGA*</span>, using Claude Opus 5 where applicable. Segmentation and
           placement: 44 simulator-grounded scenes. Stability: 80 scenes; every
           object must move less than 50 mm in the simulation test. OSPA uses a 5
-          cm cutoff.
+          cm cutoff. VIGA* includes object-grouping instructions.
         </p>
       </section>
 
@@ -345,11 +357,22 @@
                 <h3>Open-loop trajectory replay</h3>
               </div>
               <p>Recorded joint and gripper commands are replayed in simulation without policy queries or trajectory adaptation. We measure task success after replay.</p>
-              <div class="score-comparison">
-                <div><strong>80<span>%</span></strong><span>SceneRig</span></div>
-                <span class="versus">vs.</span>
-                <div class="baseline-score"><strong>36<span>%</span></strong><span>SimFoundry</span></div>
-                <p>Successful simulated replays<br /><span>25 demonstrations · five tasks</span></p>
+              <table class="application-metrics" aria-label="Open-loop replay results">
+                <thead><tr><td></td><th scope="col">SceneRig</th><th scope="col">SimFoundry</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Successful replays<small>All task requirements met at the end of the replay.</small></th>
+                    <td>80<span>%</span></td><td>36<span>%</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Objects placed at target<small>Across all 25 replays, including partially successful episodes.</small></th>
+                    <td>39<span>/45</span></td><td class="unavailable-metric" aria-label="No comparable object count">—</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="application-card-footer replay-card-footer">
+                <p>25 demonstrations · five tasks</p>
+                <p>SimFoundry’s missing or fused objects prevent a comparable object count.</p>
               </div>
             </article>
           </div>
