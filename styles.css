@@ -875,46 +875,118 @@ section[id] {
   font-size: 10px;
   color: var(--muted);
 }
-.policy-correlation {
-  margin-bottom: 30px;
+.application-metrics {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  text-align: left;
+}
+.application-metrics thead th {
+  padding: 0 0 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.application-metrics tbody th {
+  padding: 13px 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.application-metrics small {
+  display: block;
+  margin-top: 4px;
+  max-width: 29ch;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.application-metrics tbody tr {
+  border-top: 1px solid var(--line);
+}
+.application-metrics td:not(:first-child) {
+  padding-left: 14px;
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+.application-metrics td span {
+  font-size: 18px;
+}
+.application-metrics tr > :nth-child(2) { color: var(--blue-dark); }
+.application-metrics tr > :nth-child(3) { color: #a26570; }
+.application-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 18px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.application-card-footer p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.correlation-trigger {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--blue-dark);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.replay-results-card .score-comparison {
+  margin-top: 32px;
+}
+.correlation-dialog {
+  width: min(1100px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
   padding: clamp(18px, 3vw, 32px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  color: var(--ink);
   background: #fff;
 }
-.policy-correlation-heading {
+.correlation-dialog::backdrop { background: #172338a6; }
+body:has(.correlation-dialog[open]) { overflow: hidden; }
+.correlation-dialog-heading {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-bottom: 22px;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
 }
-.policy-correlation-heading h3 {
-  font-size: clamp(17px, 2vw, 21px);
-  font-weight: 650;
-  letter-spacing: -0.35px;
+.correlation-dialog-heading h3 { font-size: clamp(18px, 2vw, 24px); }
+.correlation-close {
+  flex: 0 0 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--pale);
+  font-size: 25px;
+  line-height: 1;
 }
-.policy-correlation-heading a {
-  font-size: 13px;
-  color: var(--blue-dark);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.policy-correlation-image {
-  display: block;
-  max-width: 1040px;
-  margin-inline: auto;
-}
-.policy-correlation-image img {
-  width: 100%;
-}
-.policy-correlation figcaption {
-  max-width: 1040px;
-  margin: 20px auto 0;
+.correlation-dialog figcaption {
+  margin-top: 22px;
   font-size: 14px;
   line-height: 1.7;
   color: var(--muted);
+}
+@media (min-width: 801px) {
+  .application-cards { grid-template-columns: 1.2fr 1fr; }
+}
+@media (max-width: 800px) {
+  .application-cards { grid-template-columns: 1fr; }
+  .replay-results-card .score-comparison { margin-top: 0; }
+}
+@media (max-width: 420px) {
+  .application-metrics tbody th { font-size: 12px; }
+  .application-metrics small { font-size: 11px; }
+  .application-metrics thead th { font-size: 10px; padding-left: 8px; }
+  .application-metrics td:not(:first-child) { font-size: 24px; padding-left: 8px; }
 }
 .robotics-browser {
   background: white;

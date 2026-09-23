@@ -217,12 +217,29 @@ class ProjectPageTests(unittest.TestCase):
                         window.scrollTo(0, y);
                         await new Promise(resolve => setTimeout(resolve, 40));
                     }
-                    await Promise.all([...document.images].map(image => image.decode()));
+                    await Promise.all([...document.images].filter(image => image.getClientRects().length).map(image => image.decode()));
                     window.scrollTo(0, 0);
                 }""")
                 self.page.screenshot(path=str(OPTIONS.screenshots / f"page-{width}.png"), full_page=True)
                 self.page.locator("#teaser").screenshot(path=str(OPTIONS.screenshots / f"teaser-{width}.png"), style=".site-header { visibility: hidden !important; }")
                 self.page.locator(".gallery-browser").screenshot(path=str(OPTIONS.screenshots / f"gallery-{width}.png"), style=".site-header { visibility: hidden !important; }")
+
+    def test_policy_correlation_dialog(self):
+        trigger = self.page.get_by_role("button", name="View correlation plot")
+        dialog = self.page.locator("#policy-correlation")
+        self.assertFalse(dialog.is_visible())
+        rows = self.page.locator(".application-metrics tbody tr")
+        self.assertEqual(rows.nth(0).locator("td").all_text_contents(), ["69%", "54%"])
+        self.assertEqual(rows.nth(1).locator("td").all_text_contents(), ["0.92", "0.84"])
+        trigger.click()
+        self.assertTrue(dialog.is_visible())
+        dialog.locator("img").evaluate("image => image.decode()")
+        self.page.keyboard.press("Escape")
+        self.assertFalse(dialog.is_visible())
+        self.assertTrue(trigger.evaluate("element => element === document.activeElement"))
+        trigger.click()
+        self.page.get_by_role("button", name="Close correlation plot").click()
+        self.assertFalse(dialog.is_visible())
 
     def test_pose_trace_evidence_and_navigation(self):
         response = self.context.request.get(f"{OPTIONS.base_url.rstrip('/')}/data/pose-trace.json")

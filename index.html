@@ -23,8 +23,8 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=readable-notes" />
-    <script src="app.js?v=ours-first" defer></script>
+    <link rel="stylesheet" href="styles.css?v=policy-metrics-preview" />
+    <script src="app.js?v=policy-metrics-preview" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -315,102 +315,59 @@
             </p>
           </div>
           <div class="application-cards">
-            <article>
+            <article class="policy-evaluation-card">
               <div class="application-card-top">
                 <span class="mini-number">A</span>
                 <h3>Real-to-sim policy evaluation</h3>
               </div>
-              <p>
-                The same policy runs independently in the real workspace and its
-                reconstruction. We measure agreement between real and simulated
-                episode outcomes.
-              </p>
-              <div class="score-comparison">
-                <div>
-                  <strong>72<span>%</span></strong
-                  ><span>SceneRig</span>
-                </div>
-                <span class="versus">vs.</span>
-                <div class="baseline-score">
-                  <strong>48<span>%</span></strong
-                  ><span>SimFoundry</span>
-                </div>
-                <p>
-                  Agreement with real outcomes<br /><span
-                    >π₀.₅ · 50 episodes · five tasks</span
-                  >
-                </p>
+              <p>The same policy runs independently in the real workspace and its reconstruction. We compare outcomes at two levels.</p>
+              <table class="application-metrics" aria-label="Real-to-sim policy evaluation results">
+                <thead><tr><td></td><th scope="col">SceneRig</th><th scope="col">SimFoundry</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Episode-level agreement<small>Matching real and simulated success/failure outcomes.</small></th>
+                    <td>69<span>%</span></td><td>54<span>%</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Task success-rate correlation<small>Pearson’s <i>r</i> across 10 policy–task pairs.</small></th>
+                    <td>0.92</td><td>0.84</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="application-card-footer">
+                <p>π₀.₅ + LingBot-VLA 2.0 · 100 episodes · five tasks</p>
+                <button class="correlation-trigger" type="button" aria-haspopup="dialog" aria-controls="policy-correlation">View correlation plot <span aria-hidden="true">↗</span></button>
               </div>
             </article>
-            <article>
+            <article class="replay-results-card">
               <div class="application-card-top">
                 <span class="mini-number">B</span>
                 <h3>Open-loop trajectory replay</h3>
               </div>
-              <p>
-                Recorded joint and gripper commands are replayed in simulation
-                without policy queries or trajectory adaptation. We measure task
-                success after replay.
-              </p>
+              <p>Recorded joint and gripper commands are replayed in simulation without policy queries or trajectory adaptation. We measure task success after replay.</p>
               <div class="score-comparison">
-                <div>
-                  <strong>80<span>%</span></strong
-                  ><span>SceneRig</span>
-                </div>
+                <div><strong>80<span>%</span></strong><span>SceneRig</span></div>
                 <span class="versus">vs.</span>
-                <div class="baseline-score">
-                  <strong>36<span>%</span></strong
-                  ><span>SimFoundry</span>
-                </div>
-                <p>
-                  Successful simulated replays<br /><span
-                    >25 demonstrations · five tasks</span
-                  >
-                </p>
+                <div class="baseline-score"><strong>36<span>%</span></strong><span>SimFoundry</span></div>
+                <p>Successful simulated replays<br /><span>25 demonstrations · five tasks</span></p>
               </div>
             </article>
           </div>
-          <figure
-            class="policy-correlation"
-            id="policy-correlation"
-            aria-labelledby="policy-correlation-title"
-          >
-            <div class="policy-correlation-heading">
-              <h3 id="policy-correlation-title">
-                Real and simulated policy success rates
-              </h3>
-              <a
-                href="assets/robotics/policy-correlation.png"
-                target="_blank"
-                rel="noopener"
-              >
-                View full-size figure <span aria-hidden="true">↗</span>
-              </a>
+          <dialog class="correlation-dialog" id="policy-correlation" aria-labelledby="policy-correlation-title">
+            <div class="correlation-dialog-heading">
+              <div>
+                <p class="eyebrow">Task-level comparison</p>
+                <h3 id="policy-correlation-title">Real and simulated success rates</h3>
+              </div>
+              <button class="correlation-close" type="button" aria-label="Close correlation plot" autofocus>×</button>
             </div>
-            <a
-              class="policy-correlation-image"
-              href="assets/robotics/policy-correlation.png"
-              target="_blank"
-              rel="noopener"
-              aria-label="Open the policy success-rate correlation figure at full size"
-            >
-              <img
-                src="assets/robotics/policy-correlation.png"
-                width="2120"
-                height="975"
-                loading="lazy"
-                decoding="async"
-                alt="Real versus simulated task success rates for π₀.₅ and LingBot-VLA 2.0 across five tasks. SceneRig has pooled Pearson correlation r = 0.92; SimFoundry has r = 0.84. Circles and diamonds distinguish policies, and colors distinguish tasks."
-              />
-            </a>
-            <figcaption>
-              Each point compares real and simulated success rates for one policy
-              on one task, with 10 episodes per task. Pearson’s <i>r</i> pools
-              all 10 policy–task pairs across π₀.₅ and LingBot-VLA 2.0.
-              Dashed lines indicate equal success rates; nested markers show
-              overlapping results.
-            </figcaption>
-          </figure>
+            <figure>
+              <a href="assets/robotics/policy-correlation.png" target="_blank" rel="noopener" aria-label="Open full-resolution correlation figure">
+                <img src="assets/robotics/policy-correlation.png" width="2120" height="975" loading="lazy" alt="Real versus simulated task success rates for π₀.₅ and LingBot-VLA 2.0. SceneRig has pooled Pearson correlation r = 0.92; SimFoundry has r = 0.84. Shapes distinguish policies and colors distinguish tasks." />
+              </a>
+              <figcaption>Each point represents one policy on one task, with 10 episodes per task. Pearson’s <i>r</i> pools all 10 policy–task pairs; it measures how success rates vary together, rather than how often individual episode outcomes match. The dashed line indicates equal real and simulated success rates. Nested markers show overlapping results.</figcaption>
+            </figure>
+          </dialog>
           <div class="robotics-browser">
             <div class="robot-toolbar">
               <div

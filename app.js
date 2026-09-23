@@ -612,3 +612,13 @@ readData("robotics")
     $("#hero-robotics").innerHTML =
       '<p class="error-message">The video gallery could not load. Refresh the page to try again.</p>';
   });
+
+const correlationDialog = $("#policy-correlation");
+$(".correlation-trigger").addEventListener("click", () => correlationDialog.showModal());
+$(".correlation-close").addEventListener("click", () => correlationDialog.close());
+correlationDialog.addEventListener("click", (event) => {
+  if (event.target !== correlationDialog) return;
+  const rect = correlationDialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right ||
+      event.clientY < rect.top || event.clientY > rect.bottom) correlationDialog.close();
+});
