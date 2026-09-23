@@ -23,7 +23,7 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=replay-task-breakdown" />
+    <link rel="stylesheet" href="styles.css?v=replay-unified-table" />
     <script src="app.js?v=baseline-metrics-preview" defer></script>
   </head>
   <body>
@@ -358,15 +358,13 @@
               </div>
               <p>Recorded joint and gripper commands are replayed in simulation without policy queries or trajectory adaptation. We measure task success after replay.</p>
               <table class="application-metrics" aria-label="Open-loop replay results">
-                <thead><tr><td></td><th scope="col">SceneRig</th><th scope="col">SimFoundry</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Successful replays<small>All task requirements met at the end of the replay.</small></th>
-                    <td>80<span>%</span></td><td>36<span>%</span></td>
-                  </tr>
-                </tbody>
+                <thead><tr><th scope="col" class="replay-task-column">Task</th><th scope="col">SceneRig</th><th scope="col">SimFoundry</th></tr></thead>
                 <tbody class="replay-task-rows">
-                  <tr class="replay-task-heading"><th colspan="3">Replay success by task</th></tr>
+                  <tr class="replay-all-tasks">
+                    <th scope="row">All tasks</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>80<span class="replay-unit">%</span></span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 36%" aria-hidden="true"></span><span>36<span class="replay-unit">%</span></span></div></td>
+                  </tr>
                   <tr>
                     <th scope="row">Everything → bin</th>
                     <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 60%" aria-hidden="true"></span><span>3/5</span></div></td>

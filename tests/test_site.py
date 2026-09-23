@@ -239,7 +239,8 @@ class ProjectPageTests(unittest.TestCase):
             self.assertEqual(self.page.locator("#metric-baseline-name").inner_text(), selector.locator("option:checked").inner_text())
         replay = self.page.locator(".replay-results-card tbody tr")
         self.assertEqual(replay.nth(0).locator("td").all_text_contents(), ["80%", "36%"])
-        tasks = self.page.locator(".replay-task-rows tr:not(.replay-task-heading)")
+        self.assertEqual(replay.nth(0).locator("th").inner_text(), "All tasks")
+        tasks = self.page.locator(".replay-task-rows tr:not(.replay-all-tasks)")
         expected_replay = [("Everything → bin", 3, 0), ("Fruits → plate", 4, 3),
                            ("Fruits → bowl", 4, 2), ("Marker → cup", 4, 0),
                            ("Mustard → bin", 5, 4)]

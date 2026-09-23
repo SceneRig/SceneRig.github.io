@@ -961,19 +961,19 @@ section[id] {
 }
 /* Compact paired bars share the method columns with the overall replay score. */
 .replay-results-card .application-metrics { table-layout: fixed; }
-.replay-results-card .application-metrics thead th { width: 26%; }
+.replay-results-card .application-metrics thead th:not(:first-child) { width: 26%; }
+.replay-results-card .application-metrics .replay-task-column { padding-left: 0; color: var(--muted); }
 .application-metrics .replay-task-rows tr { border: 0; }
 .application-metrics .replay-task-rows th {
   padding-block: 5px;
   font-size: 12px;
   font-weight: 400;
 }
-.application-metrics .replay-task-heading th {
-  padding-top: 12px;
-  padding-bottom: 7px;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
-  font-weight: 600;
+.application-metrics .replay-task-rows .replay-all-tasks { border-top: 1px solid var(--line); }
+.application-metrics .replay-all-tasks th {
+  padding-block: 12px;
+  font-size: 14px;
+  font-weight: 650;
 }
 .application-metrics .replay-task-rows td {
   font-size: 12px;
@@ -986,10 +986,13 @@ section[id] {
   gap: 8px;
 }
 .application-metrics .replay-task-value span { font-size: 12px; }
+.replay-task-value > span:last-child { flex: 0 0 38px; min-width: 0; text-align: right; }
+.application-metrics .replay-all-tasks .replay-task-value > span:last-child { font-size: 18px; font-weight: 650; }
+.application-metrics .replay-all-tasks .replay-unit { font-size: 12px; }
 .replay-task-bar {
   flex: 1;
   height: 5px;
-  min-width: 12px;
+  min-width: 8px;
   background: #edf0f5;
   border-radius: 3px;
   overflow: hidden;
