@@ -23,7 +23,7 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=baseline-metrics-preview" />
+    <link rel="stylesheet" href="styles.css?v=replay-task-breakdown" />
     <script src="app.js?v=baseline-metrics-preview" defer></script>
   </head>
   <body>
@@ -364,15 +364,38 @@
                     <th scope="row">Successful replays<small>All task requirements met at the end of the replay.</small></th>
                     <td>80<span>%</span></td><td>36<span>%</span></td>
                   </tr>
+                </tbody>
+                <tbody class="replay-task-rows">
+                  <tr class="replay-task-heading"><th colspan="3">Replay success by task</th></tr>
                   <tr>
-                    <th scope="row">Objects placed at target<small>Across all 25 replays, including partially successful episodes.</small></th>
-                    <td>39<span>/45</span></td><td class="unavailable-metric" aria-label="No comparable object count">—</td>
+                    <th scope="row">Everything → bin</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 60%" aria-hidden="true"></span><span>3/5</span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 0%" aria-hidden="true"></span><span>0/5</span></div></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Fruits → plate</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>4/5</span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 60%" aria-hidden="true"></span><span>3/5</span></div></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Fruits → bowl</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>4/5</span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 40%" aria-hidden="true"></span><span>2/5</span></div></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Marker → cup</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>4/5</span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 0%" aria-hidden="true"></span><span>0/5</span></div></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mustard → bin</th>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 100%" aria-hidden="true"></span><span>5/5</span></div></td>
+                    <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>4/5</span></div></td>
                   </tr>
                 </tbody>
               </table>
               <div class="application-card-footer replay-card-footer">
-                <p>25 demonstrations · five tasks</p>
-                <p>SimFoundry’s missing or fused objects prevent a comparable object count.</p>
+                <p>25 demonstrations · five per task · identical recorded commands</p>
               </div>
             </article>
           </div>

@@ -239,7 +239,18 @@ class ProjectPageTests(unittest.TestCase):
             self.assertEqual(self.page.locator("#metric-baseline-name").inner_text(), selector.locator("option:checked").inner_text())
         replay = self.page.locator(".replay-results-card tbody tr")
         self.assertEqual(replay.nth(0).locator("td").all_text_contents(), ["80%", "36%"])
-        self.assertEqual(replay.nth(1).locator("td").all_text_contents(), ["39/45", "—"])
+        tasks = self.page.locator(".replay-task-rows tr:not(.replay-task-heading)")
+        expected_replay = [("Everything → bin", 3, 0), ("Fruits → plate", 4, 3),
+                           ("Fruits → bowl", 4, 2), ("Marker → cup", 4, 0),
+                           ("Mustard → bin", 5, 4)]
+        self.assertEqual(tasks.count(), 5)
+        for row, (name, ours, baseline) in zip(tasks.all(), expected_replay):
+            self.assertEqual(row.locator("th").inner_text(), name)
+            self.assertEqual(row.locator("td").all_text_contents(), [f"{ours}/5", f"{baseline}/5"])
+            self.assertEqual(row.locator(".replay-task-bar").evaluate_all(
+                "bars => bars.map(bar => bar.style.getPropertyValue('--success'))"),
+                [f"{ours * 20}%", f"{baseline * 20}%"])
+        self.assertNotIn("Objects placed at target", self.page.locator(".replay-results-card").inner_text())
 
     def test_policy_correlation_dialog(self):
         trigger = self.page.get_by_role("button", name="View correlation plot")
