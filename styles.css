@@ -875,6 +875,47 @@ section[id] {
   font-size: 10px;
   color: var(--muted);
 }
+.policy-correlation {
+  margin-bottom: 30px;
+  padding: clamp(18px, 3vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.policy-correlation-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 22px;
+}
+.policy-correlation-heading h3 {
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 650;
+  letter-spacing: -0.35px;
+}
+.policy-correlation-heading a {
+  font-size: 13px;
+  color: var(--blue-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.policy-correlation-image {
+  display: block;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+.policy-correlation-image img {
+  width: 100%;
+}
+.policy-correlation figcaption {
+  max-width: 1040px;
+  margin: 20px auto 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
 .robotics-browser {
   background: white;
   border: 1px solid var(--line);
@@ -2100,6 +2141,13 @@ footer .wordmark {
   }
   footer > a:last-child {
     font-size: 10px;
+  }
+}
+@media (max-width: 360px) {
+  .site-header nav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: 4px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

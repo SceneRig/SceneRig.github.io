@@ -337,7 +337,7 @@
                 </div>
                 <p>
                   Agreement with real outcomes<br /><span
-                    >50 episodes · five tasks</span
+                    >π₀.₅ · 50 episodes · five tasks</span
                   >
                 </p>
               </div>
@@ -370,6 +370,47 @@
               </div>
             </article>
           </div>
+          <figure
+            class="policy-correlation"
+            id="policy-correlation"
+            aria-labelledby="policy-correlation-title"
+          >
+            <div class="policy-correlation-heading">
+              <h3 id="policy-correlation-title">
+                Real and simulated policy success rates
+              </h3>
+              <a
+                href="assets/robotics/policy-correlation.png"
+                target="_blank"
+                rel="noopener"
+              >
+                View full-size figure <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <a
+              class="policy-correlation-image"
+              href="assets/robotics/policy-correlation.png"
+              target="_blank"
+              rel="noopener"
+              aria-label="Open the policy success-rate correlation figure at full size"
+            >
+              <img
+                src="assets/robotics/policy-correlation.png"
+                width="2120"
+                height="975"
+                loading="lazy"
+                decoding="async"
+                alt="Real versus simulated task success rates for π₀.₅ and LingBot-VLA 2.0 across five tasks. SceneRig has pooled Pearson correlation r = 0.92; SimFoundry has r = 0.84. Circles and diamonds distinguish policies, and colors distinguish tasks."
+              />
+            </a>
+            <figcaption>
+              Each point compares real and simulated success rates for one policy
+              on one task, with 10 episodes per task. Pearson’s <i>r</i> pools
+              all 10 policy–task pairs across π₀.₅ and LingBot-VLA 2.0.
+              Dashed lines indicate equal success rates; nested markers show
+              overlapping results.
+            </figcaption>
+          </figure>
           <div class="robotics-browser">
             <div class="robot-toolbar">
               <div
