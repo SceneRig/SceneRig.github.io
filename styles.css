@@ -353,8 +353,10 @@ section[id] {
   border-radius: 8px;
 }
 .clay-slider > img,
+.clay-slider > video,
 .texture-reveal,
-.texture-reveal img {
+.texture-reveal img,
+.texture-reveal video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -2304,3 +2306,24 @@ footer .wordmark {
 .comparison-grid.four-panels {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+
+/* Recorded physics shares one clock across the textured and clay views. */
+.simulation-source { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 10px 0; font-size: 11px; color: var(--muted); }
+.simulation-source select { min-width: 132px; max-width: 100%; padding: 5px 25px 5px 9px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--blue-dark); font: inherit; font-weight: 600; }
+.gravity-label { margin-left: auto; white-space: nowrap; }
+.gravity-label > span { display: inline-block; margin-right: 3px; font-size: 15px; color: var(--blue-dark); }
+.simulation-controls { display: flex; align-items: center; gap: 8px; margin-top: 10px; min-height: 30px; }
+.simulation-controls button { display: grid; place-items: center; flex: 0 0 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--blue-dark); font-size: 14px; cursor: pointer; }
+.simulation-controls button:hover { background: #edf2fa; }
+.simulation-controls button:disabled { opacity: .45; cursor: default; }
+.simulation-status { display: inline-flex; align-items: center; gap: 5px; min-width: 62px; color: var(--muted); font-size: 10px; }
+.simulation-dot { width: 6px; height: 6px; border-radius: 50%; background: #a8b0c0; }
+.simulation-status.playing .simulation-dot { background: #527bd0; animation: simulation-pulse 1.2s ease-in-out infinite; }
+@keyframes simulation-pulse { 50% { box-shadow: 0 0 0 4px #527bd020; } }
+#simulation-time { min-width: 25px; flex: 1; width: 100%; accent-color: #527bd0; cursor: pointer; }
+#simulation-clock { flex: 0 0 auto; font-size: 10px; font-variant-numeric: tabular-nums; color: var(--muted); }
+.simulation-note { margin: 6px 0 0; font-size: 10px; line-height: 1.5; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .simulation-status.playing .simulation-dot { animation: none; } }
+@media (max-width: 430px) { .simulation-controls { gap: 5px; } .simulation-status { min-width: 52px; font-size: 9px; } }
+
+.simulation-details { margin-right: auto; color: var(--muted); text-underline-offset: 3px; }

@@ -36,7 +36,7 @@ function setupClaySlider() {
     slider.style.setProperty("--split", `${value}%`);
   }
   function updateButton() {
-    button.textContent = enabled ? "Pause animation" : "Animate slider";
+    button.textContent = enabled ? "Pause divider" : "Animate divider";
     button.setAttribute("aria-pressed", String(enabled));
   }
   function animate(time) {

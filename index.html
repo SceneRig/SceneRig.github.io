@@ -23,8 +23,8 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=replay-unified-table" />
-    <script src="app.js?v=baseline-metrics-preview" defer></script>
+    <link rel="stylesheet" href="styles.css?v=teaser-physics-1" />
+    <script src="app.js?v=teaser-physics-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -116,26 +116,28 @@
               <figcaption class="step-title">
                 <span class="step-number">03</span
                 ><span
-                  >Simulation-ready 3D scene<small
-                    >Physically stable 3D reconstruction</small
+                  >3D scene under gravity<small
+                    >Five seconds of simulation · RGB &amp; clay</small
                   ></span
                 >
               </figcaption>
+              <div class="simulation-source">
+                <label for="simulation-source">Reconstruction</label>
+                <select id="simulation-source" aria-label="Simulation reconstruction method">
+                  <option value="scenerig">SceneRig (ours)</option>
+                  <option value="viga">VIGA*</option>
+                  <option value="simfoundry">SimFoundry</option>
+                </select>
+                <span class="gravity-label" title="Recorded gravity simulation"><span aria-hidden="true">↓</span> Gravity on</span>
+              </div>
               <div class="clay-slider" id="clay-slider" style="--split: 52%">
-                <img
-                  class="clay-base"
-                  src="assets/teaser/scene-clay.webp?v=edited-input"
-                  alt="Textureless clay rendering of the reconstructed coffee workspace from a novel viewpoint."
-                  width="1472"
-                  height="948"
-                />
+                <video id="simulation-clay" class="clay-base" muted playsinline preload="metadata"
+                  poster="assets/teaser/scene-clay.webp?v=edited-input"
+                  aria-label="Clay view of the recorded SceneRig gravity simulation"></video>
                 <div class="texture-reveal">
-                  <img
-                    src="assets/teaser/scene-textured.webp?v=edited-input"
-                    alt="Textured rendering of the same reconstructed scene, with identical geometry and viewpoint."
-                    width="1472"
-                    height="948"
-                  />
+                  <video id="simulation-rgb" muted playsinline preload="metadata"
+                    poster="assets/teaser/scene-textured.webp?v=edited-input"
+                    aria-label="RGB view of the recorded SceneRig gravity simulation"></video>
                 </div>
                 <div class="slider-labels" aria-hidden="true">
                   <span>Textured</span><span>Clay</span>
@@ -154,14 +156,23 @@
                   aria-valuetext="52 percent textured"
                 />
               </div>
+              <div class="simulation-controls" aria-label="Simulation playback">
+                <button id="simulation-play" type="button" aria-label="Play simulation" disabled><span aria-hidden="true">▶</span></button>
+                <button id="simulation-restart" type="button" aria-label="Restart simulation" title="Restart simulation" disabled><span aria-hidden="true">↻</span></button>
+                <span class="simulation-status" id="simulation-status"><span class="simulation-dot" aria-hidden="true"></span><span id="simulation-state">Loading</span></span>
+                <input id="simulation-time" type="range" min="0" max="5" step="0.033333" value="0" aria-label="Simulation time" aria-valuetext="0.0 of 5.0 seconds" disabled />
+                <output id="simulation-clock" for="simulation-time">0.0 / 5.0 s</output>
+              </div>
+              <p class="simulation-note" id="simulation-note">Recorded physics · 1× speed · drag the divider to compare materials.</p>
               <div class="slider-caption">
+                <a class="simulation-details" href="assets/teaser/simulation/recording-notes.txt" target="_blank" rel="noopener">Recording details ↗</a>
                 <button
                   id="clay-motion"
                   class="text-button"
                   type="button"
                   aria-pressed="true"
                 >
-                  Pause animation
+                  Pause divider
                 </button>
               </div>
             </figure>
@@ -614,5 +625,6 @@
         material slider, and load the robot video gallery.
       </p></noscript
     >
+    <script src="assets/js/teaser-simulation.js?v=physics-1" defer></script>
   </body>
 </html>
