@@ -58,9 +58,12 @@ with sync_playwright() as playwright:
     page.goto(BASE, wait_until='networkidle')
     page.locator('#episode-select option').first.wait_for(state='attached')
 
-    def hero_autoplay():
+    def hero_click_to_play():
         for selector in [POLICY_HERO, REPLAY_HERO]:
             show_hero(page, selector)
+            page.wait_for_timeout(500)
+            assert all(v['paused'] for v in state(page, f'{selector} video'))
+            page.locator(f'{selector} .hero-play').click()
             wait_playing(page, f'{selector} video')
             values = state(page, f'{selector} video')
             assert all(v['rate'] == 3 for v in values), values
@@ -68,7 +71,7 @@ with sync_playwright() as playwright:
                 assert all(12 <= v['time'] < 17 for v in values), values
         page.screenshot(path=str(OUTPUT / 'playback-hero.png'))
 
-    check('each visible hero application autoplays real and both simulated episodes', hero_autoplay)
+    check('both hero applications wait for explicit play', hero_click_to_play)
 
     def hero_visibility():
         page.locator('#robotics').scroll_into_view_if_needed()
@@ -78,11 +81,43 @@ with sync_playwright() as playwright:
         assert all(abs(a['time'] - b['time']) < .1 for a, b in zip(times, state(page, '#hero-robotics video')))
         for selector in [POLICY_HERO, REPLAY_HERO]:
             show_hero(page, selector)
+            page.wait_for_timeout(500)
+            assert all(v['paused'] for v in state(page, f'{selector} video'))
+            page.locator(f'{selector} .hero-play').click()
             wait_playing(page, f'{selector} video')
 
-    check('hero pauses offscreen and resumes when visible', hero_visibility)
+    check('hero pauses offscreen and needs another click to resume', hero_visibility)
+
+    def policy_first_native_play():
+        for index in range(3):
+            case = context.new_page()
+            try:
+                case.goto(BASE, wait_until='networkidle')
+                show_hero(case, POLICY_HERO)
+                case.wait_for_timeout(500)
+                assert all(v['paused'] for v in state(case, f'{POLICY_HERO} video'))
+                video = case.locator(f'{POLICY_HERO} video').nth(index)
+                box = video.bounding_box()
+                video.click(position={'x': 20, 'y': box['height'] - 48})
+                wait_playing(case, f'{POLICY_HERO} video')
+                case.locator(f'{POLICY_HERO} .hero-play').click()
+                wait_paused(case, f'{POLICY_HERO} video')
+                # Only the first individual play joins the group.
+                video.click(position={'x': 20, 'y': box['height'] - 48})
+                case.wait_for_function('(s) => !document.querySelectorAll(s.selector)[s.index].paused', arg={'selector': f'{POLICY_HERO} video', 'index': index})
+                case.wait_for_timeout(200)
+                values = state(case, f'{POLICY_HERO} video')
+                assert all(v['paused'] == (i != index) for i, v in enumerate(values)), values
+            finally:
+                case.close()
+
+    check('first native play on any policy video starts all three; later play is independent', policy_first_native_play)
 
     def hero_manual_pause():
+        show_hero(page, REPLAY_HERO)
+        if all(v['paused'] for v in state(page, f'{REPLAY_HERO} video')):
+            page.locator(f'{REPLAY_HERO} .hero-play').click()
+            wait_playing(page, f'{REPLAY_HERO} video')
         page.locator(f'{REPLAY_HERO} .hero-play').click()
         wait_paused(page, f'{REPLAY_HERO} video')
         page.locator('#robotics').scroll_into_view_if_needed()
@@ -315,10 +350,16 @@ with sync_playwright() as playwright:
         mobile_page.locator('#hero-robotics video').first.wait_for(state='attached')
         for selector in [POLICY_HERO, REPLAY_HERO]:
             show_hero(mobile_page, selector)
+            mobile_page.wait_for_timeout(400)
+            assert all(v['paused'] for v in state(mobile_page, f'{selector} video'))
+            mobile_page.locator(f'{selector} .hero-play').click()
             wait_playing(mobile_page, f'{selector} video')
             mobile_page.locator('#robotics').scroll_into_view_if_needed()
             wait_paused(mobile_page, '#hero-robotics video')
             show_hero(mobile_page, selector)
+            mobile_page.wait_for_timeout(400)
+            assert all(v['paused'] for v in state(mobile_page, f'{selector} video'))
+            mobile_page.locator(f'{selector} .hero-play').click()
             wait_playing(mobile_page, f'{selector} video')
         mobile_page.locator(f'{REPLAY_HERO} .hero-play').click()
         wait_paused(mobile_page, f'{REPLAY_HERO} video')
@@ -328,7 +369,7 @@ with sync_playwright() as playwright:
         assert all(video['paused'] for video in state(mobile_page, f'{REPLAY_HERO} video'))
         mobile.close()
 
-    check('mobile hero playback follows viewport visibility and preserves manual pause', mobile_hero_visibility)
+    check('mobile heroes require clicks and preserve pauses across visibility changes', mobile_hero_visibility)
     check('no uncaught browser errors', lambda: (_ for _ in ()).throw(AssertionError(page_errors)) if page_errors else None)
     browser.close()
 

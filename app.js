@@ -224,9 +224,10 @@ function videoHTML(media, label, controls = true) {
 }
 
 // Replay has a shared time axis. Policy videos retain independent clocks.
-function bindPlayback(container, button, synchronized, playbackRate = 1, startTime = 0) {
+function bindPlayback(container, button, synchronized, playbackRate = 1, startTime = 0, startTogetherOnce = false) {
   const videos = $$("video", container);
   let syncing = false;
+  let groupStarted = false;
   let disposed = false;
   const events = new AbortController();
   function updateButton() {
@@ -235,6 +236,7 @@ function bindPlayback(container, button, synchronized, playbackRate = 1, startTi
       : "▶ Play all";
   }
   async function play() {
+    groupStarted = true;
     const results = await Promise.allSettled(
       videos.filter((video) => !video.ended).map((video) => video.play()),
     );
@@ -276,8 +278,9 @@ function bindPlayback(container, button, synchronized, playbackRate = 1, startTi
       () => {
         // Loading queues media events; honor a newer pause before synchronizing.
         if (video.paused) return;
-        if (synchronized) {
-          alignTo(video);
+        if (synchronized || (startTogetherOnce && !groupStarted)) {
+          groupStarted = true;
+          if (synchronized) alignTo(video);
           videos
             .filter((other) => other !== video && other.paused && !other.ended)
             .forEach((other) => other.play().catch(() => {}));
@@ -377,41 +380,18 @@ function setupHeroVideos(data) {
       item.synchronized,
       data.playback_rates[item.kind],
       item.kind === "replay" ? 12 : 0,
+      item.kind === "policy",
     );
-    let userPaused = false;
-    let visible = false;
-    let automaticPause = false;
-    button.addEventListener("click", () => {
-      userPaused = playback.videos.every((video) => video.paused);
-    });
-    playback.videos.forEach((video) => {
-      video.addEventListener("pause", () => {
-        if (!automaticPause && visible && !document.hidden && !video.ended)
-          userPaused = true;
-      });
-      video.addEventListener("play", () => {
-        userPaused = false;
-      });
-    });
-    function update() {
-      automaticPause = true;
-      if (visible && !document.hidden && !reducedMotion.matches && !userPaused)
-        playback.play();
-      else playback.pause();
-      // Media events are queued by the browser.
-      setTimeout(() => {
-        automaticPause = false;
-      }, 100);
-    }
+    // Visibility can pause deliberate playback, but never starts it.
     new IntersectionObserver(
       (entries) => {
-        visible = entries[0].isIntersecting;
-        update();
+        if (!entries[0].isIntersecting) playback.pause();
       },
       { threshold: 0.3 },
     ).observe(container);
-    document.addEventListener("visibilitychange", update);
-    reducedMotion.addEventListener("change", update);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) playback.pause();
+    });
   });
 }
 
