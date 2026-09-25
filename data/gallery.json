@@ -35,7 +35,7 @@
     {
       "id": "gpt6",
       "label": "GPT-6 Astra",
-      "note": "Reconstructions before the additional post-reconstruction stability test. SceneRig uses GPT-6 reconstruction agents with Claude Opus 5 preprocessing and includes its own physics refinement. VIGA uses object grouping and medium reasoning; direct Codex uses ultra reasoning. Nearby views are relative +30° camera changes in each reconstructed scene, rather than identical ground-truth camera poses.",
+      "note": "These qualitative views show reconstructions before the additional post-reconstruction stability test; the paper’s quantitative GPT-6 comparison scores VIGA and direct Codex after five seconds of PhysX settling. SceneRig uses GPT-6 reconstruction agents with Claude Opus 5 preprocessing and includes its own physics refinement. VIGA uses object grouping and medium reasoning; direct Codex uses ultra reasoning. Nearby views are relative +30° camera changes in each reconstructed scene, rather than identical ground-truth camera poses.",
       "methods": [
         {
           "id": "ours",

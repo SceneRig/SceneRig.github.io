@@ -228,8 +228,8 @@ class ProjectPageTests(unittest.TestCase):
         selector = self.page.locator("#metric-baseline")
         self.assertEqual(selector.input_value(), "viga")
         expected = {
-            "viga": ["vs. 0.283", "vs. 4.9 cm", "vs. 7.5%"],
-            "rest3d": ["vs. 0.210", "vs. 4.7 cm", "vs. 35.0%"],
+            "viga": ["vs. 0.283", "vs. 4.9 cm", "vs. 10.0%"],
+            "rest3d": ["vs. 0.210", "vs. 4.7 cm", "vs. 31.3%"],
             "sceneconductor": ["vs. 0.197", "vs. 5.0 cm", "vs. 8.8%"],
             "simfoundry": ["vs. 0.676", "vs. 3.3 cm", "vs. 98.8%"],
         }
@@ -241,7 +241,7 @@ class ProjectPageTests(unittest.TestCase):
         self.assertEqual(replay.nth(0).locator("td").all_text_contents(), ["80%", "36%"])
         self.assertEqual(replay.nth(0).locator("th").inner_text(), "All tasks")
         tasks = self.page.locator(".replay-task-rows tr:not(.replay-all-tasks)")
-        expected_replay = [("Everything → bin", 3, 0), ("Fruits → plate", 4, 3),
+        expected_replay = [("Everything → bin", 3, 0), ("Cup → bowl", 4, 3),
                            ("Fruits → bowl", 4, 2), ("Marker → cup", 4, 0),
                            ("Mustard → bin", 5, 4)]
         self.assertEqual(tasks.count(), 5)

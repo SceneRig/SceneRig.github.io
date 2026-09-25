@@ -315,7 +315,7 @@
               >Scene stability <span>Pass rate ↑</span></span
             >
             <div class="metric-value">
-              100<span class="unit">%</span> <small data-baseline-metric="stability">vs. 7.5%</small>
+              100<span class="unit">%</span> <small data-baseline-metric="stability">vs. 10.0%</small>
             </div>
             <p>Scenes with every object passing the stability test.</p>
           </article>
@@ -323,7 +323,7 @@
         <p class="metric-note">
           SceneRig vs. <span id="metric-baseline-name">VIGA</span>, using Claude Opus 5 where applicable. Segmentation and
           placement: 44 simulator-grounded scenes. Stability: 80 scenes; every
-          object must move less than 50 mm in the simulation test. OSPA uses a 5
+          object must move less than 50 mm over five seconds of simulation. OSPA uses a 5
           cm cutoff. VIGA includes object-grouping instructions.
         </p>
       </section>
@@ -390,7 +390,7 @@
                     <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 0%" aria-hidden="true"></span><span>0/5</span></div></td>
                   </tr>
                   <tr>
-                    <th scope="row">Fruits → plate</th>
+                    <th scope="row">Cup → bowl</th>
                     <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 80%" aria-hidden="true"></span><span>4/5</span></div></td>
                     <td><div class="replay-task-value"><span class="replay-task-bar" style="--success: 60%" aria-hidden="true"></span><span>3/5</span></div></td>
                   </tr>
@@ -484,9 +484,12 @@
           </div>
           <p class="metric-note">
             Representative videos illustrate individual episodes; the aggregate
-            scores above include all evaluated episodes. Both methods use the
-            same robot calibration, controllers, and physics. Policy agreement
-            and replay success measure different capabilities.
+            scores above include all evaluated episodes. For these robotics
+            experiments, both methods reconstruct the same armless head-camera
+            image using measured metric depth and calibrated intrinsics in place
+            of monocular estimates. The calibrated head-camera pose registers
+            each scene to the robot. Both methods share controllers and physics.
+            Policy agreement and replay success measure different capabilities.
           </p>
         </div>
       </section>
@@ -514,35 +517,19 @@
           <article>
             <div class="method-image">
               <img
-                src="assets/method/perception.webp"
-                width="640"
-                height="360"
-                loading="lazy"
-                alt="Color-coded object and surface masks recovered from an input image."
-              />
-            </div>
-            <span class="method-index">01 / Perception</span>
-            <h3>Agentic relational perception</h3>
-            <p>
-              Identify object instances and supporting surfaces, estimate
-              monocular geometry, and reconstruct individual meshes.
-            </p>
-          </article>
-          <article>
-            <div class="method-image">
-              <img
                 src="assets/method/settlement.webp"
                 width="640"
                 height="360"
                 loading="lazy"
-                alt="Reconstructed objects physically settled on their supports under gravity."
+                alt="Reconstructed objects physically settled on their recovered supports under gravity."
               />
             </div>
-            <span class="method-index">02 / Settlement</span>
-            <h3>Hierarchical physical settlement</h3>
+            <span class="method-index">01 / Initialization</span>
+            <h3>Relational and metric initialization</h3>
             <p>
-              Place objects after their supports and simulate them under gravity
-              to initialize physically plausible poses.
+              Recover objects, surfaces, and support relations; reconstruct
+              individual meshes and initialize their metric placement. Settle
+              objects in support order, refining alignment with observed geometry.
             </p>
           </article>
           <article>
@@ -555,11 +542,12 @@
                 alt="The persistent Blender scene after root-surface appearance and lighting refinement."
               />
             </div>
-            <span class="method-index">03 / Scene refinement</span>
-            <h3>Surface geometry, appearance, and lighting</h3>
+            <span class="method-index">02 / Scene construction</span>
+            <h3>Agentic scene construction</h3>
             <p>
-              Scoped agents refine surface geometry, appearance, and lighting,
-              with independent visual verification.
+              Geometry, material, and lighting agents construct root surfaces
+              and their appearance, with geometric checks and independent visual
+              verification. Imported object geometry and appearance stay fixed.
             </p>
           </article>
           <article>
@@ -572,12 +560,12 @@
                 alt="Paired object crops inspected by the pose agent to diagnose a spoon placement error."
               />
             </div>
-            <span class="method-index">04 / Pose refinement</span>
+            <span class="method-index">03 / Pose refinement</span>
             <h3>Physics-grounded object pose refinement</h3>
             <p>
               Agents diagnose pose errors. A bounded backend searches
-              adjustments and tests them in simulation; complex fixes use direct
-              code edits.
+              adjustments and tests them in simulation. Complex fixes use direct
+              scene-code edits, followed by settling and review.
             </p>
             <a class="method-trace-link" href="#pose-trace"
               >View recorded tool calls <span aria-hidden="true">↓</span></a
@@ -591,7 +579,7 @@
         >
           <div class="trace-heading">
             <div>
-              <p class="eyebrow">04 / Pose refinement</p>
+              <p class="eyebrow">03 / Pose refinement</p>
               <h3 id="pose-trace-title">Tool-call trace</h3>
             </div>
             <p id="trace-context">
@@ -612,7 +600,8 @@
         <div class="delivery-strip">
           <span class="export-symbol" aria-hidden="true">↗</span>
           <p>
-            <strong>USD export.</strong> The exported scene includes meshes,
+            <strong>USD export.</strong> A final joint gravity simulation sets
+            object poses. The exported scene includes meshes,
             textures, lights, cameras, object identities, collision geometry,
             and physical properties.
           </p>
