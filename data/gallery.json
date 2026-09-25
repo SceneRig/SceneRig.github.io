@@ -3,7 +3,7 @@
     {
       "id": "main",
       "label": "Claude Opus 5",
-      "note": "Reconstruction comparisons with Claude Opus 5. VIGA* uses the paper's object-grouping instructions. Source cameras are estimated independently; REST3D uses an approximately recovered camera. Nearby views rotate each method's source camera by +30° in its own scene frame. REST3D and SimFoundry show the qualitative visualization variants with white support surfaces.",
+      "note": "Reconstruction comparisons with Claude Opus 5. VIGA uses the paper's object-grouping instructions. Source cameras are estimated independently; REST3D uses an approximately recovered camera. Nearby views rotate each method's source camera by +30° in its own scene frame. REST3D and SimFoundry show the qualitative visualization variants with white support surfaces.",
       "methods": [
         {
           "id": "ours",
@@ -27,7 +27,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "note": "Object-grouped Claude Opus 5 run used in the paper."
         }
       ]
@@ -35,7 +35,7 @@
     {
       "id": "gpt6",
       "label": "GPT-6 Astra",
-      "note": "Reconstructions before the additional post-reconstruction stability test. SceneRig uses GPT-6 reconstruction agents with Claude Opus 5 preprocessing and includes its own physics refinement. VIGA* uses object grouping and medium reasoning; direct Codex uses ultra reasoning. Nearby views are relative +30° camera changes in each reconstructed scene, rather than identical ground-truth camera poses.",
+      "note": "Reconstructions before the additional post-reconstruction stability test. SceneRig uses GPT-6 reconstruction agents with Claude Opus 5 preprocessing and includes its own physics refinement. VIGA uses object grouping and medium reasoning; direct Codex uses ultra reasoning. Nearby views are relative +30° camera changes in each reconstructed scene, rather than identical ground-truth camera poses.",
       "methods": [
         {
           "id": "ours",
@@ -44,7 +44,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "note": "GPT-6 Astra, medium reasoning; object-grouping instructions."
         },
         {
@@ -99,7 +99,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-21/viga_source.webp",
           "novel": "assets/gallery/main/scene-21/viga_novel.webp"
         }
@@ -139,7 +139,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-01/viga_source.webp?v=edited-input",
           "novel": "assets/gallery/main/scene-01/viga_novel.webp?v=edited-input"
         }
@@ -179,7 +179,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-02/viga_source.webp",
           "novel": "assets/gallery/main/scene-02/viga_novel.webp"
         }
@@ -219,7 +219,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-03/viga_source.webp",
           "novel": "assets/gallery/main/scene-03/viga_novel.webp"
         }
@@ -259,7 +259,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-04/viga_source.webp",
           "novel": "assets/gallery/main/scene-04/viga_novel.webp"
         }
@@ -299,7 +299,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-05/viga_source.webp",
           "novel": "assets/gallery/main/scene-05/viga_novel.webp"
         }
@@ -339,7 +339,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-06/viga_source.webp",
           "novel": "assets/gallery/main/scene-06/viga_novel.webp"
         }
@@ -379,7 +379,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-07/viga_source.webp",
           "novel": "assets/gallery/main/scene-07/viga_novel.webp"
         }
@@ -419,7 +419,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-08/viga_source.webp",
           "novel": "assets/gallery/main/scene-08/viga_novel.webp"
         }
@@ -459,7 +459,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-09/viga_source.webp",
           "novel": "assets/gallery/main/scene-09/viga_novel.webp"
         }
@@ -499,7 +499,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-10/viga_source.webp",
           "novel": "assets/gallery/main/scene-10/viga_novel.webp"
         }
@@ -539,7 +539,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-11/viga_source.webp",
           "novel": "assets/gallery/main/scene-11/viga_novel.webp"
         }
@@ -579,7 +579,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-12/viga_source.webp",
           "novel": "assets/gallery/main/scene-12/viga_novel.webp"
         }
@@ -619,7 +619,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-13/viga_source.webp",
           "novel": "assets/gallery/main/scene-13/viga_novel.webp"
         }
@@ -659,7 +659,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-14/viga_source.webp",
           "novel": "assets/gallery/main/scene-14/viga_novel.webp"
         }
@@ -699,7 +699,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-15/viga_source.webp",
           "novel": "assets/gallery/main/scene-15/viga_novel.webp"
         }
@@ -739,7 +739,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-16/viga_source.webp",
           "novel": "assets/gallery/main/scene-16/viga_novel.webp"
         }
@@ -779,7 +779,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-17/viga_source.webp",
           "novel": "assets/gallery/main/scene-17/viga_novel.webp"
         }
@@ -819,7 +819,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-18/viga_source.webp",
           "novel": "assets/gallery/main/scene-18/viga_novel.webp"
         }
@@ -859,7 +859,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-19/viga_source.webp",
           "novel": "assets/gallery/main/scene-19/viga_novel.webp"
         }
@@ -899,7 +899,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-20/viga_source.webp",
           "novel": "assets/gallery/main/scene-20/viga_novel.webp"
         }
@@ -939,7 +939,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-22/viga_source.webp",
           "novel": "assets/gallery/main/scene-22/viga_novel.webp"
         }
@@ -979,7 +979,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-23/viga_source.webp",
           "novel": "assets/gallery/main/scene-23/viga_novel.webp"
         }
@@ -1019,7 +1019,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/main/scene-24/viga_source.webp",
           "novel": "assets/gallery/main/scene-24/viga_novel.webp"
         }
@@ -1041,7 +1041,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-21/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-21/viga_novel.webp"
         },
@@ -1069,7 +1069,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-01/viga_source.webp?v=edited-input",
           "novel": "assets/gallery/gpt6/scene-01/viga_novel.webp?v=edited-input"
         },
@@ -1097,7 +1097,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-02/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-02/viga_novel.webp"
         },
@@ -1125,7 +1125,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-03/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-03/viga_novel.webp"
         },
@@ -1153,7 +1153,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-04/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-04/viga_novel.webp"
         },
@@ -1181,7 +1181,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-05/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-05/viga_novel.webp"
         },
@@ -1209,7 +1209,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-06/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-06/viga_novel.webp"
         },
@@ -1237,7 +1237,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-07/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-07/viga_novel.webp"
         },
@@ -1265,7 +1265,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-08/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-08/viga_novel.webp"
         },
@@ -1293,7 +1293,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-09/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-09/viga_novel.webp"
         },
@@ -1321,7 +1321,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-10/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-10/viga_novel.webp"
         },
@@ -1349,7 +1349,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-11/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-11/viga_novel.webp"
         },
@@ -1377,7 +1377,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-12/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-12/viga_novel.webp"
         },
@@ -1405,7 +1405,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-13/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-13/viga_novel.webp"
         },
@@ -1433,7 +1433,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-14/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-14/viga_novel.webp"
         },
@@ -1461,7 +1461,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-15/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-15/viga_novel.webp"
         },
@@ -1489,7 +1489,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-16/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-16/viga_novel.webp"
         },
@@ -1517,7 +1517,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-17/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-17/viga_novel.webp"
         },
@@ -1545,7 +1545,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-18/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-18/viga_novel.webp"
         },
@@ -1573,7 +1573,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-19/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-19/viga_novel.webp"
         },
@@ -1601,7 +1601,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-20/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-20/viga_novel.webp"
         },
@@ -1629,7 +1629,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-22/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-22/viga_novel.webp"
         },
@@ -1657,7 +1657,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-23/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-23/viga_novel.webp"
         },
@@ -1685,7 +1685,7 @@
         },
         {
           "id": "viga",
-          "label": "VIGA*",
+          "label": "VIGA",
           "source": "assets/gallery/gpt6/scene-24/viga_source.webp",
           "novel": "assets/gallery/gpt6/scene-24/viga_novel.webp"
         },

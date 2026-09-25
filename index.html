@@ -23,8 +23,8 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=teaser-physics-1" />
-    <script src="app.js?v=teaser-physics-1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=teaser-inset-1" />
+    <script src="app.js?v=teaser-inset-1" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -125,7 +125,7 @@
                 <label for="simulation-source">Reconstruction</label>
                 <select id="simulation-source" aria-label="Simulation reconstruction method">
                   <option value="scenerig">SceneRig (ours)</option>
-                  <option value="viga">VIGA*</option>
+                  <option value="viga">VIGA</option>
                   <option value="simfoundry">SimFoundry</option>
                 </select>
                 <span class="gravity-label" title="Recorded gravity simulation"><span aria-hidden="true">↓</span> Gravity on</span>
@@ -139,6 +139,12 @@
                     poster="assets/teaser/scene-textured.webp?v=edited-input"
                     aria-label="RGB view of the recorded SceneRig gravity simulation"></video>
                 </div>
+                <aside class="simulation-inset" id="simulation-inset" aria-label="VIGA RGB comparison at the same simulation time">
+                  <video id="simulation-viga" muted playsinline preload="metadata"
+                    poster="assets/teaser/simulation/viga-rgb.webp"
+                    aria-label="VIGA RGB gravity simulation, synchronized with the main view"></video>
+                  <span class="simulation-inset-label"><strong>VIGA</strong><span>RGB · gravity ↓</span></span>
+                </aside>
                 <div class="slider-labels" aria-hidden="true">
                   <span>Textured</span><span>Clay</span>
                 </div>
@@ -278,7 +284,7 @@
           <div class="metric-baseline-control">
             <label for="metric-baseline">SceneRig vs.</label>
             <select id="metric-baseline" aria-label="Choose reconstruction metric baseline">
-              <option value="viga" selected>VIGA*</option>
+              <option value="viga" selected>VIGA</option>
               <option value="rest3d">REST3D</option>
               <option value="sceneconductor">SceneConductor</option>
               <option value="simfoundry">SimFoundry</option>
@@ -313,10 +319,10 @@
           </article>
         </div>
         <p class="metric-note">
-          SceneRig vs. <span id="metric-baseline-name">VIGA*</span>, using Claude Opus 5 where applicable. Segmentation and
+          SceneRig vs. <span id="metric-baseline-name">VIGA</span>, using Claude Opus 5 where applicable. Segmentation and
           placement: 44 simulator-grounded scenes. Stability: 80 scenes; every
           object must move less than 50 mm in the simulation test. OSPA uses a 5
-          cm cutoff. VIGA* includes object-grouping instructions.
+          cm cutoff. VIGA includes object-grouping instructions.
         </p>
       </section>
 
@@ -625,6 +631,6 @@
         material slider, and load the robot video gallery.
       </p></noscript
     >
-    <script src="assets/js/teaser-simulation.js?v=physics-1" defer></script>
+    <script src="assets/js/teaser-simulation.js?v=inset-1" defer></script>
   </body>
 </html>

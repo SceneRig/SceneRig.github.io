@@ -27,10 +27,15 @@ with sync_playwright() as pw:
     page.locator('#simulation-play').wait_for()
     page.wait_for_function('!document.querySelector("#simulation-play").disabled')
     assert page.locator('#simulation-state').inner_text()=='Paused'
+    assert page.locator('#simulation-inset').is_visible()
+    assert page.locator('#clay-slider video').count()==3
+    if not args.fixture_media:
+        assert page.locator('#simulation-viga').evaluate('v=>v.currentSrc.endsWith("/viga-rgb.mp4")')
+    assert 'VIGA*' not in page.locator('body').inner_text()
     page.screenshot(path=str(output / 'simulation-desktop.png'))
     page.locator('#simulation-play').click()
-    page.wait_for_function('document.querySelector("#simulation-rgb").currentTime > .4')
-    assert page.locator('#simulation-state').inner_text()=='Playing'
+    # The first decoded frames may briefly exhaust the initial network buffer.
+    page.wait_for_function('document.querySelector("#simulation-rgb").currentTime > .4 && document.querySelector("#simulation-state").textContent === "Playing"')
     page.locator('#simulation-play').click()
     page.wait_for_timeout(200)
     assert page.locator('#simulation-state').inner_text()=='Paused'
@@ -45,9 +50,12 @@ with sync_playwright() as pw:
         page.locator('#simulation-source').select_option(method)
         page.wait_for_function('!document.querySelector("#simulation-play").disabled')
         assert page.locator('#simulation-rgb').evaluate('(v)=>v.paused')
+        assert page.locator('#simulation-inset').is_visible()==(method!='viga')
+        if not args.fixture_media:
+            assert page.locator('#simulation-viga').evaluate('v=>v.currentSrc.endsWith("/viga-rgb.mp4")')
     page.locator('#simulation-play').click()
     page.wait_for_function('document.querySelector("#simulation-rgb").currentTime > .3')
-    # The two decoders must cross the loop boundary together.
+    # All three decoders must cross the loop boundary together.
     page.locator('#simulation-time').evaluate("v=>{v.value='4.8';v.dispatchEvent(new Event('input',{bubbles:true}));}")
     page.wait_for_function('[...document.querySelectorAll("#clay-slider video")].every(v=>!v.seeking && v.currentTime>4.7)')
     page.locator('#simulation-play').click()

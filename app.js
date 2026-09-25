@@ -624,7 +624,7 @@ correlationDialog.addEventListener("click", (event) => {
 });
 
 const reconstructionBaselines = {
-  viga: { label: "VIGA*", ari: "0.283", ospa: "4.9 cm", stability: "7.5%" },
+  viga: { label: "VIGA", ari: "0.283", ospa: "4.9 cm", stability: "7.5%" },
   rest3d: { label: "REST3D", ari: "0.210", ospa: "4.7 cm", stability: "35.0%" },
   sceneconductor: { label: "SceneConductor", ari: "0.197", ospa: "5.0 cm", stability: "8.8%" },
   simfoundry: { label: "SimFoundry", ari: "0.676", ospa: "3.3 cm", stability: "98.8%" },

@@ -13,12 +13,12 @@
       "note": "Recorded physics \u00b7 1\u00d7 speed \u00b7 RGB and clay share the same motion."
     },
     "viga": {
-      "label": "VIGA*",
+      "label": "VIGA",
       "rgb": "assets/teaser/simulation/viga-rgb.mp4",
       "clay": "assets/teaser/simulation/viga-clay.mp4",
       "rgb_poster": "assets/teaser/simulation/viga-rgb.webp",
       "clay_poster": "assets/teaser/simulation/viga-clay.webp",
-      "note": "Recorded physics \u00b7 1\u00d7 speed \u00b7 VIGA* uses object grouping; supports remain fixed."
+      "note": "Recorded physics \u00b7 1\u00d7 speed \u00b7 VIGA uses object grouping; supports remain fixed."
     },
     "simfoundry": {
       "label": "SimFoundry",

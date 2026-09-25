@@ -10,7 +10,7 @@ collision proxies and physical properties. Physics runs at 60 Hz; recorded poses
 are rendered in Blender from the existing teaser camera. The RGB/clay material
 change does not alter geometry or motion.
 
-VIGA*: the page's Claude Opus 5 object-grouped reconstruction, with one dynamic
+VIGA: the page's Claude Opus 5 object-grouped reconstruction, with one dynamic
 body per object group. The desk, wall and whiteboard are static. Gravity is aligned
 to the desk; static surfaces use their original triangle geometry, avoiding an
 enclosing convex hull across the desk's open spaces. Dynamic parts use the

@@ -1,8 +1,10 @@
-// Both material passes replay the same recorded rigid-body trajectory.
+// Material passes share a trajectory; the VIGA inset follows the same simulation clock.
 (() => {
   const find = (id) => document.getElementById(id);
-  const videos = [find('simulation-rgb'), find('simulation-clay')];
-  const [master, clay] = videos;
+  const videos = [find('simulation-rgb'), find('simulation-clay'), find('simulation-viga')];
+  const [master] = videos;
+  const followers = videos.slice(1);
+  const inset = find('simulation-inset');
   const source = find('simulation-source');
   const play = find('simulation-play');
   const restart = find('simulation-restart');
@@ -51,7 +53,9 @@
     const request = generation;
     starting = true;
     if (master.ended || master.currentTime >= duration()) seek(0);
-    if (Math.abs(master.currentTime - clay.currentTime) > .06) clay.currentTime = master.currentTime;
+    followers.forEach(v => {
+      if (Math.abs(master.currentTime - v.currentTime) > .06) v.currentTime = master.currentTime;
+    });
     try {
       await Promise.all(videos.map(v => v.play()));
       if (request !== generation) return;
@@ -73,8 +77,9 @@
   function tick() {
     if (!active()) { pause(); return; }
     // A delayed decoder must not leave one material at a different physical state.
-    if (!videos.some(v => v.seeking) && Math.abs(master.currentTime - clay.currentTime) > .08)
-      clay.currentTime = master.currentTime;
+    if (!videos.some(v => v.seeking)) followers.forEach(v => {
+      if (Math.abs(master.currentTime - v.currentTime) > .08) v.currentTime = master.currentTime;
+    });
     update();
     frame = requestAnimationFrame(tick);
   }
@@ -88,6 +93,7 @@
   }
   function load() {
     const method = manifest.methods[source.value];
+    inset.hidden = source.value === 'viga';
     generation++;
     ready = false;
     waiting = false;
@@ -96,10 +102,11 @@
     play.disabled = restart.disabled = scrub.disabled = true;
     note.textContent = method.note || 'Recorded physics · 1× speed · drag the divider to compare materials.';
     videos.forEach((v, i) => {
-      const material = i === 0 ? 'rgb' : 'clay';
-      v.poster = method[`${material}_poster`];
-      v.setAttribute('aria-label', `${material === 'rgb' ? 'RGB' : 'Clay'} view of the recorded ${method.label} gravity simulation`);
-      v.src = method[material];
+      const recording = i === 2 ? manifest.methods.viga : method;
+      const material = i === 1 ? 'clay' : 'rgb';
+      v.poster = recording[`${material}_poster`];
+      v.setAttribute('aria-label', `${material === 'rgb' ? 'RGB' : 'Clay'} view of the recorded ${recording.label} gravity simulation`);
+      v.src = recording[material];
       v.load();
     });
     update();
