@@ -2346,3 +2346,5 @@ footer .wordmark {
 .simulation-inset-show:hover { background: #edf2fa; }
 .simulation-inset-close:focus-visible, .simulation-inset-show:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 @media (max-width: 600px) { .simulation-inset-show { right: 7px; bottom: 7px; font-size: 10px; } }
+
+.hero-application header .hero-task { margin-top: 5px; color: var(--ink); font-size: 12px; font-weight: 600; }

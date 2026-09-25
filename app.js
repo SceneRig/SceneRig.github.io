@@ -349,11 +349,13 @@ function setupHeroVideos(data) {
     {
       id: "policy-01",
       title: "Real-to-sim policy evaluation",
+      task: "Put mustard bottle in the left bin",
       note: "Same policy · independent executions",
     },
     {
       id: "replay-01",
       title: "Open-loop trajectory replay",
+      task: "Put everything into the bin",
       note: "Same recorded commands · shared timeline",
     },
   ];
@@ -361,7 +363,7 @@ function setupHeroVideos(data) {
     .map((selection) => {
       const item = data.items.find((episode) => episode.id === selection.id);
       const note = `${selection.note} · ${data.playback_rates[item.kind]}× speed${item.presentation_note ? ` · ${item.presentation_note}` : ""}`;
-      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
+      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p class="hero-task">Task: ${escapeHTML(selection.task)}</p><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}: ${selection.task}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
     })
     .join("");
   $$(".hero-application").forEach((container) => {
