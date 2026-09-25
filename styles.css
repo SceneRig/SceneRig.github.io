@@ -2338,3 +2338,11 @@ footer .wordmark {
   .simulation-inset { right: 7px; bottom: 7px; width: 40%; border-radius: 5px; }
   .simulation-inset-label { padding: 4px 5px; gap: 3px; font-size: 8px; }
 }
+
+.simulation-inset-close { position: absolute; z-index: 1; top: 4px; right: 4px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid #ffffff80; border-radius: 50%; background: #222936d9; color: #fff; font-size: 23px; line-height: 1; cursor: pointer; pointer-events: auto; }
+.simulation-inset-close:hover { background: #111827; }
+.simulation-inset-show { position: absolute; z-index: 2; right: 12px; bottom: 12px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; background: #fffffff2; color: var(--blue-dark); font: inherit; font-size: 11px; cursor: pointer; box-shadow: 0 2px 8px #17244220; }
+.simulation-inset-show[hidden] { display: none; }
+.simulation-inset-show:hover { background: #edf2fa; }
+.simulation-inset-close:focus-visible, .simulation-inset-show:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 600px) { .simulation-inset-show { right: 7px; bottom: 7px; font-size: 10px; } }

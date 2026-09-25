@@ -23,8 +23,8 @@
     />
     <title>SceneRig · Single-image, simulation-ready 3D scenes</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=teaser-inset-1" />
-    <script src="app.js?v=teaser-inset-1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=teaser-inset-2" />
+    <script src="app.js?v=teaser-inset-2" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -140,11 +140,13 @@
                     aria-label="RGB view of the recorded SceneRig gravity simulation"></video>
                 </div>
                 <aside class="simulation-inset" id="simulation-inset" aria-label="VIGA RGB comparison at the same simulation time">
+                  <button id="simulation-inset-close" class="simulation-inset-close" type="button" aria-label="Close VIGA comparison" title="Close VIGA comparison"><span aria-hidden="true">×</span></button>
                   <video id="simulation-viga" muted playsinline preload="metadata"
                     poster="assets/teaser/simulation/viga-rgb.webp"
                     aria-label="VIGA RGB gravity simulation, synchronized with the main view"></video>
                   <span class="simulation-inset-label"><strong>VIGA</strong><span>RGB · gravity ↓</span></span>
                 </aside>
+                <button id="simulation-inset-show" class="simulation-inset-show" type="button" aria-controls="simulation-inset" aria-expanded="false" hidden>Show VIGA comparison</button>
                 <div class="slider-labels" aria-hidden="true">
                   <span>Textured</span><span>Clay</span>
                 </div>
@@ -631,6 +633,6 @@
         material slider, and load the robot video gallery.
       </p></noscript
     >
-    <script src="assets/js/teaser-simulation.js?v=inset-1" defer></script>
+    <script src="assets/js/teaser-simulation.js?v=inset-2" defer></script>
   </body>
 </html>

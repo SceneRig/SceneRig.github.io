@@ -5,6 +5,9 @@
   const [master] = videos;
   const followers = videos.slice(1);
   const inset = find('simulation-inset');
+  const closeInset = find('simulation-inset-close');
+  const showInset = find('simulation-inset-show');
+  let insetDismissed = false;
   const source = find('simulation-source');
   const play = find('simulation-play');
   const restart = find('simulation-restart');
@@ -25,6 +28,23 @@
   let starting = false;
   const duration = () => manifest?.seconds || 5;
   const active = () => ready && wanted && visible && !document.hidden;
+
+  function updateInset() {
+    const available = source.value !== 'viga';
+    inset.hidden = !available || insetDismissed;
+    showInset.hidden = !available || !insetDismissed;
+    showInset.setAttribute('aria-expanded', String(!inset.hidden));
+  }
+  closeInset.addEventListener('click', () => {
+    insetDismissed = true;
+    updateInset();
+    showInset.focus({ preventScroll: true });
+  });
+  showInset.addEventListener('click', () => {
+    insetDismissed = false;
+    updateInset();
+    closeInset.focus({ preventScroll: true });
+  });
 
   function update() {
     const running = active() && videos.every(v => !v.paused && v.readyState >= 3);
@@ -93,7 +113,7 @@
   }
   function load() {
     const method = manifest.methods[source.value];
-    inset.hidden = source.value === 'viga';
+    updateInset();
     generation++;
     ready = false;
     waiting = false;
