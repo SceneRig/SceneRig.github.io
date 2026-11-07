@@ -11,3 +11,6 @@ CHANGELOG.md
 README.md
 CLAUDE.md
 deploy/
+
+# Local slide provenance contains author-specific workspace paths.
+slides/references/

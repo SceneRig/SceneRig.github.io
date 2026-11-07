@@ -183,14 +183,20 @@ class ProjectPageTests(unittest.TestCase):
 
         for width in [1440, 768, 390]:
             self.page.set_viewport_size({"width": width, "height": 1000})
-            panels = {name: self.page.locator(f".{name}-panel").bounding_box() for name in ["input", "closeup", "scene"]}
-            self.assertAlmostEqual(panels["input"]["x"], panels["closeup"]["x"], delta=1)
-            self.assertGreaterEqual(panels["closeup"]["y"], panels["input"]["y"] + panels["input"]["height"], width)
+            panels = {name: self.page.locator(f".{name}-panel").bounding_box() for name in ["input", "scene"]}
+            divider = self.page.locator("#teaser-divider")
             if width >= 768:
+                self.assertTrue(divider.is_visible())
                 self.assertGreater(panels["scene"]["x"], panels["input"]["x"] + panels["input"]["width"])
-                self.assertAlmostEqual(panels["scene"]["y"], panels["input"]["y"], delta=1)
+                self.assertGreater(panels["scene"]["width"], panels["input"]["width"])
+                divider.focus()
+                divider.press("ArrowRight")
+                self.assertGreater(self.page.locator(".input-panel").bounding_box()["width"], panels["input"]["width"])
+                self.assertEqual(divider.get_attribute("aria-valuenow"), "32")
+                divider.press("ArrowLeft")
             else:
-                self.assertGreater(panels["scene"]["y"], panels["closeup"]["y"] + panels["closeup"]["height"])
+                self.assertFalse(divider.is_visible())
+                self.assertGreater(panels["scene"]["y"], panels["input"]["y"] + panels["input"]["height"])
             applications = self.page.locator(".hero-application")
             first, second = applications.nth(0).bounding_box(), applications.nth(1).bounding_box()
             self.assertAlmostEqual(first["x"], second["x"], delta=1)

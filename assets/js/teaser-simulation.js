@@ -9,10 +9,13 @@
   const showInset = find('simulation-inset-show');
   let insetDismissed = false;
   const source = find('simulation-source');
+  const viewer = find('simulation-viewer');
+  const viewerDialog = find('teaser-viewer');
   const play = find('simulation-play');
   const restart = find('simulation-restart');
   const scrub = find('simulation-time');
   const status = find('simulation-status');
+  const gravity = document.querySelector('.gravity-label');
   const state = find('simulation-state');
   const clock = find('simulation-clock');
   const note = find('simulation-note');
@@ -27,7 +30,7 @@
   let waiting = false;
   let starting = false;
   const duration = () => manifest?.seconds || 5;
-  const active = () => ready && wanted && visible && !document.hidden;
+  const active = () => ready && wanted && visible && !document.hidden && !viewerDialog.open;
 
   function updateInset() {
     const available = source.value !== 'viga';
@@ -49,6 +52,7 @@
   function update() {
     const running = active() && videos.every(v => !v.paused && v.readyState >= 3);
     status.classList.toggle('playing', running);
+    gravity.classList.toggle('is-playing', running);
     if (ready) state.textContent = running ? 'Playing' : waiting ? 'Loading' : 'Paused';
     play.innerHTML = `<span aria-hidden="true">${wanted ? 'Ⅱ' : '▶'}</span>`;
     play.setAttribute('aria-label', wanted ? 'Pause simulation' : 'Play simulation');
@@ -113,6 +117,8 @@
   }
   function load() {
     const method = manifest.methods[source.value];
+    viewer.dataset.viewer = method.viewer;
+    viewer.setAttribute('aria-label', `View ${method.label} headline reconstruction in 3D`);
     updateInset();
     generation++;
     ready = false;
@@ -168,6 +174,7 @@
     reconcile();
   }, { threshold: .15 }).observe(find('clay-slider'));
   document.addEventListener('visibilitychange', reconcile);
+  viewerDialog.addEventListener('close', reconcile);
   reduced.addEventListener('change', () => {
     if (reduced.matches) wanted = false;
     reconcile();

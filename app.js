@@ -16,6 +16,58 @@ async function readData(name) {
   return response.json();
 }
 
+// This divider resizes the two teaser panels, independently of the RGB/clay reveal.
+function setupTeaserDivider() {
+  const divider = $("#teaser-divider");
+  const layout = $(".teaser-reconstruction");
+  let share = 30;
+  let drag = null;
+
+  function resize(value) {
+    share = Math.max(22, Math.min(45, value));
+    layout.style.setProperty("--input-column", `${share}fr`);
+    layout.style.setProperty("--scene-column", `${100 - share}fr`);
+    divider.setAttribute("aria-valuenow", String(Math.round(share)));
+    divider.setAttribute("aria-valuetext",
+      `Input image ${Math.round(share)} percent, 3D scene ${100 - Math.round(share)} percent`);
+  }
+  divider.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    event.preventDefault();
+    divider.focus({ preventScroll: true });
+    drag = {
+      id: event.pointerId,
+      x: event.clientX,
+      share,
+      width: $("#teaser-input").getBoundingClientRect().width +
+        $("#teaser-scene").getBoundingClientRect().width,
+    };
+    divider.setPointerCapture(event.pointerId);
+    layout.classList.add("is-resizing");
+  });
+  divider.addEventListener("pointermove", (event) => {
+    if (drag?.id === event.pointerId)
+      resize(drag.share + (event.clientX - drag.x) / drag.width * 100);
+  });
+  function stopDrag(event) {
+    if (drag?.id !== event.pointerId) return;
+    drag = null;
+    layout.classList.remove("is-resizing");
+    if (divider.hasPointerCapture(event.pointerId))
+      divider.releasePointerCapture(event.pointerId);
+  }
+  divider.addEventListener("pointerup", stopDrag);
+  divider.addEventListener("pointercancel", stopDrag);
+  divider.addEventListener("lostpointercapture", stopDrag);
+  divider.addEventListener("dblclick", () => resize(30));
+  divider.addEventListener("keydown", (event) => {
+    const values = { ArrowLeft: share - 2, ArrowRight: share + 2, Home: 22, End: 45 };
+    if (!(event.key in values)) return;
+    event.preventDefault();
+    resize(values[event.key]);
+  });
+}
+
 // The reveal uses the same render dimensions and camera for both materials.
 function setupClaySlider() {
   const slider = $("#clay-slider");
@@ -80,10 +132,12 @@ function setupClaySlider() {
 }
 
 function setupGallery(data) {
-  let groupId = data.groups[0].id;
+  const params = new URLSearchParams(location.search);
+  let groupId = data.groups.some((group) => group.id === params.get("group"))
+    ? params.get("group") : data.groups[0].id;
   let viewId = "source";
   let category = "all";
-  let selectedId = data.scenes[0].sourceId;
+  let selectedId = params.get("scene") || data.scenes[0].sourceId;
   const sceneSelect = $("#scene-select");
   const categorySelect = $("#category-select");
   const groups = $("#model-groups");
@@ -118,8 +172,12 @@ function setupGallery(data) {
         (category === "all" || scene.category === category),
     );
 
-  function comparisonCard(image, label, type, subtitle) {
-    return `<figure class="comparison-card ${type}"><img class="comparison-image" src="${image}" width="720" height="450" alt="${escapeHTML(label)}${subtitle ? `: ${escapeHTML(subtitle)}` : ""}"><figcaption>${escapeHTML(label)}${subtitle ? `<small>${escapeHTML(subtitle)}</small>` : ""}</figcaption></figure>`;
+  function comparisonCard(image, label, type, subtitle, viewerURL) {
+    const img = `<img class="comparison-image" src="${image}" width="720" height="450" alt="${escapeHTML(label)}${subtitle ? `: ${escapeHTML(subtitle)}` : ""}">`;
+    const content = viewerURL
+      ? `<a class="scene-viewer-link" href="${escapeHTML(viewerURL)}" aria-label="Explore ${escapeHTML(label)} reconstruction in 3D">${img}<span class="scene-viewer-badge"><span aria-hidden="true">⤢</span> Explore in 3D</span></a>`
+      : img;
+    return `<figure class="comparison-card ${type}">${content}<figcaption>${escapeHTML(label)}${subtitle ? `<small>${escapeHTML(subtitle)}</small>` : ""}</figcaption></figure>`;
   }
   function renderScene() {
     const scenes = filteredScenes();
@@ -138,7 +196,8 @@ function setupGallery(data) {
       comparisonCard(scene.input, "Input image", "input", "") +
       methods
         .map((method) =>
-          comparisonCard(method[viewId], method.label, method.id, viewLabel),
+          comparisonCard(method[viewId], method.label, method.id, viewLabel,
+            method.model ? `viewer.html?${new URLSearchParams({ group: groupId, scene: scene.sourceId, method: method.id })}` : null),
         )
         .join("");
     $("#comparison-grid").classList.toggle("four-panels", methods.length === 3);
@@ -293,7 +352,8 @@ function bindPlayback(container, button, synchronized, playbackRate = 1, startTi
       "pause",
       () => {
         if (!video.paused) return;
-        if (synchronized)
+        // A natural end must let the remaining clips reach their own final frame.
+        if (synchronized && !video.ended)
           videos
             .filter((other) => other !== video && !other.paused)
             .forEach((other) => other.pause());
@@ -348,25 +408,30 @@ function bindPlayback(container, button, synchronized, playbackRate = 1, startTi
 }
 
 function setupHeroVideos(data) {
+  const labels = {
+    real: "Real episode",
+    baseline: `${data.methods.baseline} (sim)`,
+    ours: `${data.methods.ours} (sim, ours)`,
+  };
   const selections = [
     {
       id: "policy-01",
       title: "Real-to-sim policy evaluation",
       task: "Put mustard bottle in the left bin",
-      note: "Same policy · independent executions",
+      note: "Same policy rollout in real/sim · independent executions",
     },
     {
       id: "replay-01",
       title: "Open-loop trajectory replay",
       task: "Put everything into the bin",
-      note: "Same recorded commands · shared timeline",
+      note: "Same recorded commands in real and sim · shared timeline",
     },
   ];
   $("#hero-robotics").innerHTML = selections
     .map((selection) => {
       const item = data.items.find((episode) => episode.id === selection.id);
       const note = `${selection.note} · ${data.playback_rates[item.kind]}× speed${item.presentation_note ? ` · ${item.presentation_note}` : ""}`;
-      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p class="hero-task">Task: ${escapeHTML(selection.task)}</p><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${role === "real" ? "Real episode" : data.methods[role]} — ${selection.title}: ${selection.task}`, true)}<figcaption><span>${role === "real" ? "Real episode" : data.methods[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
+      return `<article class="hero-application" data-hero="${selection.id}"><header><div><h3>${selection.title}</h3><p class="hero-task">Task: ${escapeHTML(selection.task)}</p><p>${escapeHTML(note)}</p></div><button class="hero-play" type="button">▶ Play all</button></header><div class="hero-video-row">${["real", "baseline", "ours"].map((role) => `<figure data-role="${role}">${videoHTML(item.media[role], `${labels[role]} — ${selection.title}: ${selection.task}`, true)}<figcaption><span>${labels[role]}</span>${outcomeHTML(item.outcomes[role])}</figcaption></figure>`).join("")}</div></article>`;
     })
     .join("");
   $$(".hero-application").forEach((container) => {
@@ -572,6 +637,7 @@ function setupPoseTrace(data) {
   render(0);
 }
 
+setupTeaserDivider();
 setupClaySlider();
 readData("pose-trace")
   .then(setupPoseTrace)
