@@ -43,6 +43,10 @@
       .ok { color: var(--pass); }
       .no { color: var(--fail); }
       video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #10141b; border-radius: 6px; cursor: pointer; }
+      .bar { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+      .bar button { font: inherit; font-size: 14px; font-weight: 700; width: 72px; padding: 4px 0; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+      .bar input { flex: 1; min-width: 0; margin: 0; accent-color: var(--blue); cursor: pointer; }
+      .bar .time { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
       @media (max-width: 720px) { .trio { grid-template-columns: minmax(0, 1fr); } }
     </style>
   </head>
@@ -56,7 +60,7 @@
 
     <main class="wrap">
       <h1>Rebuttal videos for Reviewer Xv61</h1>
-      <p class="how">Videos play at 8× speed. The three videos in each row start together; one that ends early holds its last frame. Click a video to pause or resume its row.</p>
+      <p class="how">Videos play at 8× speed. The slider under each row moves all three videos together; a video that ends early holds its last frame.</p>
 
       <h2 id="q1">Question 1: Is the SimFoundry mustard failure a coincidence?</h2>
       <p class="answer">
@@ -117,25 +121,57 @@
     </main>
 
     <script>
-      // Play the three videos of each row together; restart the row once all three have ended.
+      // Each row shares one timeline, set by its longest video. Seeking moves all three videos;
+      // a video shorter than the target time holds its last frame. The row restarts after it ends.
+      const BAR = '<div class="bar"><button type="button">Pause</button>' +
+        '<input type="range" min="0" max="1" step="0.01" value="0" aria-label="Position of all three videos">' +
+        '<span class="time">0:00 / 0:00</span></div>';
+      const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
       for (const row of document.querySelectorAll('.trio')) {
+        row.insertAdjacentHTML('afterend', BAR);
+        const bar = row.nextElementSibling;
+        const [btn, range, time] = [bar.querySelector('button'), bar.querySelector('input'), bar.querySelector('.time')];
         const vids = [...row.querySelectorAll('video')];
-        let timer;
-        const start = () => { for (const v of vids) { v.currentTime = 0; v.play().catch(() => {}); } };
-        const ready = v => v.readyState >= 3 ? Promise.resolve()
-          : new Promise(r => v.addEventListener('canplay', r, { once: true }));
-        const wait = new Promise(r => setTimeout(r, 3000));
-        Promise.race([Promise.all(vids.map(ready)), wait]).then(start);
+        let playing = false, dragging = false, wasPlaying = false, timer;
+        const master = () => vids.reduce((a, b) => ((b.duration || 0) > (a.duration || 0) ? b : a));
+        const atEnd = v => v.currentTime >= v.duration - 0.05;
+        const show = t => { time.textContent = `${fmt(t)} / ${fmt(master().duration || 0)}`; };
+        const setPlaying = p => { playing = p; btn.textContent = p ? 'Pause' : 'Play'; };
+        const seek = t => { for (const v of vids) if (v.duration) v.currentTime = Math.min(t, v.duration - 0.02); };
+        const pause = () => { clearTimeout(timer); setPlaying(false); for (const v of vids) v.pause(); };
+        const play = () => {
+          clearTimeout(timer);
+          if (atEnd(master())) seek(0);
+          setPlaying(true);
+          for (const v of vids) if (!atEnd(v)) v.play().catch(() => setPlaying(false));
+        };
+        btn.addEventListener('click', () => (playing ? pause() : play()));
+        range.addEventListener('input', () => {
+          if (!dragging) { dragging = true; wasPlaying = playing; pause(); }
+          seek(+range.value); show(+range.value);
+        });
+        range.addEventListener('change', () => {
+          dragging = false;
+          if (wasPlaying && +range.value < master().duration - 0.05) play();
+        });
         for (const v of vids) {
           v.muted = true;
-          v.addEventListener('ended', () => { if (vids.every(x => x.ended)) timer = setTimeout(start, 1500); });
-          v.addEventListener('click', () => {
-            clearTimeout(timer);
-            if (vids.some(x => !x.paused)) { for (const x of vids) x.pause(); }
-            else if (vids.every(x => x.ended)) start();
-            else { for (const x of vids) if (!x.ended) x.play().catch(() => {}); }
-          });
+          v.addEventListener('click', () => (playing ? pause() : play()));
+          v.addEventListener('ended', () => { if (v === master() && playing) timer = setTimeout(play, 1500); });
         }
+        const tick = () => {
+          const m = master();
+          if (!dragging && m.duration) {
+            range.max = m.duration; range.value = m.currentTime; show(m.currentTime);
+            if (playing) for (const v of vids)  // correct drift against the longest video
+              if (v !== m && !v.paused && Math.abs(v.currentTime - m.currentTime) > 0.3) v.currentTime = m.currentTime;
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        const ready = v => v.readyState >= 3 ? Promise.resolve()
+          : new Promise(r => v.addEventListener('canplay', r, { once: true }));
+        Promise.race([Promise.all(vids.map(ready)), new Promise(r => setTimeout(r, 3000))]).then(play);
       }
     </script>
   </body>
