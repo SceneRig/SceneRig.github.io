@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Video for Reviewer GrF1: a failed open-loop trajectory replay in SceneRig next to the real episode." />
+    <title>SceneRig · Rebuttal video for Reviewer GrF1</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #202b3e;
+        --muted: #647087;
+        --blue: #537fbc;
+        --coral: #c96a72;
+        --line: #dfe5ee;
+        --pass: #2f7d5b;
+        --fail: #b0424f;
+        font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #fcfdff; }
+      a { color: var(--blue); }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      main { padding-block: 8px 56px; }
+      h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
+      .how { margin: 0; color: var(--muted); }
+      h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); }
+      .answer { margin: 0; }
+      h3 { font-size: 17px; margin: 24px 0 2px; }
+      .why { margin: 0 0 10px; }
+      .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      figure { margin: 0; min-width: 0; }
+      figcaption { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+      .ok { color: var(--pass); }
+      .no { color: var(--fail); }
+      video { display: block; width: 100%; aspect-ratio: 640 / 332; background: #10141b; border-radius: 6px; cursor: pointer; }
+      .bar { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+      .bar button { font: inherit; font-size: 14px; font-weight: 700; width: 72px; padding: 4px 0; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+      .bar input { flex: 1; min-width: 0; margin: 0; accent-color: var(--blue); cursor: pointer; }
+      .bar .time { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      @media (max-width: 720px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../#robotics">← Project page</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <h1>Rebuttal video for Reviewer GrF1</h1>
+      <p class="how">Both videos execute the same recorded robot commands and play in sync at real speed. The slider under them moves both together.</p>
+
+      <h2>Question: What prevents open-loop trajectory replay from reaching 100% success?</h2>
+      <p class="answer">
+        Open-loop replay executes the recorded commands without feedback, so a small geometric error in
+        the reconstruction can change the outcome. Below is one such failure.
+      </p>
+
+      <h3>Example: Marker-to-cup</h3>
+      <p class="why"><b>Task:</b> put the marker into the cup. <b>Watch the marker as it is lowered toward the cup.</b> In the real episode, the marker goes into the cup; in the SceneRig replay, the same commands leave it beside the cup. <b>Why:</b> the image-to-3D model generates the marker with a slightly different height-to-width ratio than the real one. SceneRig rescales each object uniformly, which matches its overall size but cannot correct its proportions. Because the marker is small and placing it into the cup requires high accuracy, this small shape error is enough to make the replay fail.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/marker-ep01-real.mp4" poster="media/marker-ep01-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="no">failure</span></figcaption>
+          <video src="media/marker-ep01-scenerig.mp4" poster="media/marker-ep01-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+    </main>
+
+    <script>
+      // The videos of a row share one timeline, set by the longest video; seeking moves all of them,
+      // and a shorter video holds its last frame. The row restarts 1.5 s after it ends.
+      const BAR = '<div class="bar"><button type="button">Pause</button>' +
+        '<input type="range" min="0" max="1" step="0.01" value="0" aria-label="Position of both videos">' +
+        '<span class="time">0:00 / 0:00</span></div>';
+      const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+      for (const row of document.querySelectorAll('.duo')) {
+        row.insertAdjacentHTML('afterend', BAR);
+        const bar = row.nextElementSibling;
+        const [btn, range, time] = [bar.querySelector('button'), bar.querySelector('input'), bar.querySelector('.time')];
+        const vids = [...row.querySelectorAll('video')];
+        let playing = false, dragging = false, wasPlaying = false, timer;
+        const master = () => vids.reduce((a, b) => ((b.duration || 0) > (a.duration || 0) ? b : a));
+        const atEnd = v => v.currentTime >= v.duration - 0.05;
+        const show = t => { time.textContent = `${fmt(t)} / ${fmt(master().duration || 0)}`; };
+        const setPlaying = p => { playing = p; btn.textContent = p ? 'Pause' : 'Play'; };
+        const seek = t => { for (const v of vids) if (v.duration) v.currentTime = Math.min(t, v.duration - 0.02); };
+        const pause = () => { clearTimeout(timer); setPlaying(false); for (const v of vids) v.pause(); };
+        const play = () => {
+          clearTimeout(timer);
+          if (atEnd(master())) seek(0);
+          setPlaying(true);
+          for (const v of vids) if (!atEnd(v)) v.play().catch(() => setPlaying(false));
+        };
+        btn.addEventListener('click', () => (playing ? pause() : play()));
+        range.addEventListener('input', () => {
+          if (!dragging) { dragging = true; wasPlaying = playing; pause(); }
+          seek(+range.value); show(+range.value);
+        });
+        range.addEventListener('change', () => {
+          dragging = false;
+          if (wasPlaying && +range.value < master().duration - 0.05) play();
+        });
+        for (const v of vids) {
+          v.muted = true;
+          v.addEventListener('click', () => (playing ? pause() : play()));
+          v.addEventListener('ended', () => { if (v === master() && playing) timer = setTimeout(play, 1500); });
+        }
+        const tick = () => {
+          const m = master();
+          if (!dragging && m.duration) {
+            range.max = m.duration; range.value = m.currentTime; show(m.currentTime);
+            if (playing) for (const v of vids)  // correct drift against the longest video
+              if (v !== m && !v.paused && Math.abs(v.currentTime - m.currentTime) > 0.3) v.currentTime = m.currentTime;
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        const ready = v => v.readyState >= 3 ? Promise.resolve()
+          : new Promise(r => v.addEventListener('canplay', r, { once: true }));
+        Promise.race([Promise.all(vids.map(ready)), new Promise(r => setTimeout(r, 3000))]).then(play);
+      }
+    </script>
+  </body>
+</html>
