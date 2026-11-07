@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f8f9fc" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="Real-world and simulated policy rollouts in SceneRig and SimFoundry reconstructions, shown side by side."
+    />
+    <title>SceneRig · Real vs. simulated policy rollouts</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #202b3e;
+        --muted: #647087;
+        --blue: #537fbc;
+        --blue-dark: #365f96;
+        --coral: #c96a72;
+        --line: #dfe5ee;
+        --pale: #f4f7fc;
+        --pass: #2f7d5b;
+        --pass-bg: #e5f3ec;
+        --fail: #b0424f;
+        --fail-bg: #f8e7e9;
+        --radius: 15px;
+        --shadow: 0 14px 44px #273b5910;
+        font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+        font-synthesis: none;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #fcfdff; }
+      a { color: var(--blue-dark); }
+      button { font: inherit; color: inherit; cursor: pointer; }
+      button:focus-visible, a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      .intro { padding-block: 44px 10px; display: grid; gap: 12px; }
+      .eyebrow { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+      h1 { margin: 0; font-size: clamp(28px, 4vw, 40px); line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+      .lede { margin: 0; max-width: 70ch; color: var(--muted); font-size: 16px; }
+      .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 4px; font-size: 14px; color: var(--muted); }
+      .legend b { color: var(--ink); }
+      section { padding-block: 34px 6px; }
+      h2 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.01em; }
+      .section-lede { margin: 0 0 20px; max-width: 72ch; color: var(--muted); }
+      .example { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; display: grid; gap: 14px; margin-bottom: 22px; }
+      .ex-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; }
+      .ex-title { margin: 0; font-size: 19px; }
+      .ex-title small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+      .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+      .btn { border: 1px solid var(--line); background: var(--pale); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
+      .btn:hover { border-color: var(--blue); }
+      .speed { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+      .speed button { border: 0; background: #fff; padding: 6px 11px; font-size: 13px; color: var(--muted); }
+      .speed button + button { border-left: 1px solid var(--line); }
+      .speed button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+      .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+      figure { margin: 0; display: grid; gap: 7px; min-width: 0; }
+      figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; font-weight: 700; font-size: 15px; }
+      .src { display: inline-flex; align-items: center; gap: 7px; }
+      .src::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+      .real { --c: #3b4352; } .ours { --c: var(--blue); } .sf { --c: #c08a3e; }
+      .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px 2px 8px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+      .pill svg { width: 11px; height: 11px; }
+      .pill.pass { color: var(--pass); background: var(--pass-bg); }
+      .pill.fail { color: var(--fail); background: var(--fail-bg); }
+      video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #10141b; border-radius: 10px; }
+      .analysis { margin: 0; padding: 12px 14px; background: var(--pale); border-radius: 10px; max-width: none; }
+      .analysis b { color: var(--ink); }
+      footer { padding-block: 26px 48px; color: var(--muted); font-size: 13px; }
+      @media (max-width: 760px) { .trio { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../#robotics">← Project page</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap intro">
+        <p class="eyebrow">Rebuttal · Real-to-sim policy evaluation</p>
+        <h1>Real vs. simulated policy rollouts</h1>
+        <p class="lede">
+          Each example shows a real-world policy rollout next to rollouts of the same policy in the
+          SceneRig and SimFoundry reconstructions of that episode’s initial scene. Real and simulated
+          rollouts are closed-loop and run independently, so their timing and motions differ.
+          Outcomes follow the scoring protocol in the paper.
+        </p>
+        <div class="legend">
+          <span><b>Real</b> top-camera recording</span>
+          <span><b>SceneRig</b> ours</span>
+          <span><b>SimFoundry</b> baseline</span>
+        </div>
+      </div>
+
+      <section class="wrap" aria-labelledby="mustard-title">
+        <h2 id="mustard-title">Mustard-to-bin: two more episodes</h2>
+        <p class="section-lede">
+          Two further Mustard-to-bin episodes. In both, SceneRig’s outcome matches the real outcome
+          and SimFoundry’s does not.
+        </p>
+
+        <article class="example" data-example="mustard-pi05-ep09">
+          <div class="ex-head">
+            <h3 class="ex-title">π<sub>0.5</sub> · Mustard-to-bin · episode 9<small>“Put the mustard into the left bin.”</small></h3>
+            <div class="controls"></div>
+          </div>
+          <div class="trio">
+            <figure class="real"><figcaption><span class="src">Real</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/mustard-pi05-ep09-real.mp4" poster="media/mustard-pi05-ep09-real.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="ours"><figcaption><span class="src">SceneRig</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/mustard-pi05-ep09-scenerig.mp4" poster="media/mustard-pi05-ep09-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="sf"><figcaption><span class="src">SimFoundry</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/mustard-pi05-ep09-simfoundry.mp4" poster="media/mustard-pi05-ep09-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          </div>
+          <p class="analysis">The real robot and SceneRig both place the mustard in the left bin. In SimFoundry, the left bin tips over and the mustard comes to rest on top of it.</p>
+        </article>
+
+        <article class="example" data-example="mustard-lingbot-ep07">
+          <div class="ex-head">
+            <h3 class="ex-title">LingBot-VLA 2.0 · Mustard-to-bin · episode 7<small>“Put the mustard into the left bin.”</small></h3>
+            <div class="controls"></div>
+          </div>
+          <div class="trio">
+            <figure class="real"><figcaption><span class="src">Real</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/mustard-lingbot-ep07-real.mp4" poster="media/mustard-lingbot-ep07-real.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="ours"><figcaption><span class="src">SceneRig</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/mustard-lingbot-ep07-scenerig.mp4" poster="media/mustard-lingbot-ep07-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="sf"><figcaption><span class="src">SimFoundry</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/mustard-lingbot-ep07-simfoundry.mp4" poster="media/mustard-lingbot-ep07-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          </div>
+          <p class="analysis">Here the real arm also pushes the left bin aside, and the mustard is not placed. SceneRig reproduces this failure, while SimFoundry reports a success.</p>
+        </article>
+      </section>
+
+      <section class="wrap" aria-labelledby="mismatch-title">
+        <h2 id="mismatch-title">Simulated success, real failure</h2>
+        <p class="section-lede">Two episodes in which a simulator reports success but the real robot fails, with our analysis.</p>
+
+        <article class="example" data-example="everything-lingbot-ep03">
+          <div class="ex-head">
+            <h3 class="ex-title">LingBot-VLA 2.0 · Everything-to-bin · episode 3<small>“Put everything into the bin.”</small></h3>
+            <div class="controls"></div>
+          </div>
+          <div class="trio">
+            <figure class="real"><figcaption><span class="src">Real</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/everything-lingbot-ep03-real.mp4" poster="media/everything-lingbot-ep03-real.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="ours"><figcaption><span class="src">SceneRig</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/everything-lingbot-ep03-scenerig.mp4" poster="media/everything-lingbot-ep03-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="sf"><figcaption><span class="src">SimFoundry</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/everything-lingbot-ep03-simfoundry.mp4" poster="media/everything-lingbot-ep03-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          </div>
+          <p class="analysis"><b>Analysis.</b> The pear starts near the far edge of the robot’s reach. In the real rollout, the gripper pushes it farther away, out of reach; SceneRig reproduces this, and both fail. SimFoundry reconstructs the pear smaller, which makes it easier to grasp, so its rollout succeeds. The simulated success here comes from a reconstruction error that SceneRig avoids.</p>
+        </article>
+
+        <article class="example" data-example="fruit-pi05-ep00">
+          <div class="ex-head">
+            <h3 class="ex-title">π<sub>0.5</sub> · Fruit-to-plate · episode 0<small>“Put all fruits in the red plate.”</small></h3>
+            <div class="controls"></div>
+          </div>
+          <div class="trio">
+            <figure class="real"><figcaption><span class="src">Real</span><span class="pill fail">Failure</span></figcaption>
+              <video src="media/fruit-pi05-ep00-real.mp4" poster="media/fruit-pi05-ep00-real.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="ours"><figcaption><span class="src">SceneRig</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/fruit-pi05-ep00-scenerig.mp4" poster="media/fruit-pi05-ep00-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+            <figure class="sf"><figcaption><span class="src">SimFoundry</span><span class="pill pass">Success</span></figcaption>
+              <video src="media/fruit-pi05-ep00-simfoundry.mp4" poster="media/fruit-pi05-ep00-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          </div>
+          <p class="analysis"><b>Analysis.</b> The real robot places the banana and the pear but leaves the apple beside the plate, while both simulations succeed. A possible reason is appearance: in the real image, the red apple and the red plate look similar, which may make it hard for the policy to notice that the apple is still outside the plate. Both simulated renderings show slightly higher contrast between them.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="wrap">Videos are compressed previews (640 px, 15 fps).</footer>
+
+    <script>
+      (() => {
+        const ICON = {
+          pass: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.5l2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+          fail: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+        };
+        document.querySelectorAll('.pill').forEach(p => p.insertAdjacentHTML('afterbegin', p.classList.contains('pass') ? ICON.pass : ICON.fail));
+        const all = [...document.querySelectorAll('video')];
+        document.querySelectorAll('.example').forEach(ex => {
+          const vids = [...ex.querySelectorAll('video')];
+          const ctrl = ex.querySelector('.controls');
+          ctrl.innerHTML = '<button type="button" class="btn">Play all three</button>' +
+            '<div class="speed" role="group" aria-label="Playback speed">' +
+            [1, 2, 4].map(r => `<button type="button" data-rate="${r}" aria-pressed="${r === 1}">${r}×</button>`).join('') + '</div>';
+          const rate = () => Number(ctrl.querySelector('[aria-pressed="true"]').dataset.rate);
+          ctrl.querySelector('.btn').addEventListener('click', () => {
+            all.forEach(v => { if (!vids.includes(v)) v.pause(); });
+            vids.forEach(v => { v.currentTime = 0; v.playbackRate = rate(); v.play().catch(() => {}); });
+          });
+          ctrl.querySelector('.speed').addEventListener('click', e => {
+            const b = e.target.closest('button'); if (!b) return;
+            ctrl.querySelectorAll('.speed button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+            vids.forEach(v => { v.defaultPlaybackRate = v.playbackRate = rate(); });
+          });
+          vids.forEach(v => {
+            v.addEventListener('play', () => { v.playbackRate = rate(); });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
