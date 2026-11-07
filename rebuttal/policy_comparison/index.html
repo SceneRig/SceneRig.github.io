@@ -14,7 +14,6 @@
         --blue: #537fbc;
         --coral: #c96a72;
         --line: #dfe5ee;
-        --pale: #f4f7fc;
         --pass: #2f7d5b;
         --fail: #b0424f;
         font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -24,105 +23,121 @@
       * { box-sizing: border-box; }
       body { margin: 0; background: #fcfdff; }
       a { color: var(--blue); }
-      main { max-width: 1120px; margin: 0 auto; padding: 28px max(20px, env(safe-area-inset-left, 0px)) 56px; }
-      .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; }
-      .top b { font-size: 18px; }
-      .top b i { font-style: normal; color: var(--coral); }
-      h1 { font-size: 28px; line-height: 1.2; margin: 22px 0 8px; }
-      .intro { margin: 0 0 8px; color: var(--muted); max-width: 75ch; }
-      h2 { font-size: 21px; margin: 40px 0 10px; padding-top: 20px; border-top: 1px solid var(--line); }
-      blockquote { margin: 0 0 14px; padding: 10px 16px; border-left: 4px solid var(--blue); background: var(--pale); }
-      blockquote p { margin: 0; }
-      blockquote cite { display: block; margin-top: 4px; font-size: 13px; font-style: normal; color: var(--muted); }
-      .answer { margin: 0 0 6px; max-width: 80ch; }
-      h3 { font-size: 17px; margin: 26px 0 4px; }
-      .why { margin: 0 0 10px; max-width: 80ch; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      main { padding-block: 8px 56px; }
+      h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
+      .how { margin: 0; color: var(--muted); }
+      h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); scroll-margin-top: 70px; }
+      .answer { margin: 0; max-width: 85ch; }
+      h3 { font-size: 17px; margin: 24px 0 2px; }
+      .why { margin: 0 0 10px; max-width: 85ch; }
       .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
       figure { margin: 0; min-width: 0; }
       figcaption { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
       .ok { color: var(--pass); }
       .no { color: var(--fail); }
-      video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #10141b; border-radius: 6px; }
-      .note { margin-top: 36px; font-size: 13px; color: var(--muted); }
+      video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #10141b; border-radius: 6px; cursor: pointer; }
       @media (max-width: 720px) { .trio { grid-template-columns: minmax(0, 1fr); } }
     </style>
   </head>
   <body>
-    <main>
-      <div class="top"><b>SceneRig<i>.</i></b><a href="../../">← Project page</a></div>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../#robotics">← Project page</a>
+      </div>
+    </header>
 
+    <main class="wrap">
       <h1>Rebuttal videos for Reviewer Xv61</h1>
-      <p class="intro">
-        Each example shows a real-world policy rollout and rollouts of the same policy in the SceneRig
-        (ours) and SimFoundry reconstructions of that episode’s initial scene. Real and simulated
-        rollouts run independently, so their timing differs.
-      </p>
+      <p class="how">Videos play at 8× speed. The three videos in each row start together; one that ends early holds its last frame. Click a video to pause or resume its row.</p>
 
-      <h2>Question 1: Is the SimFoundry mustard failure a coincidence?</h2>
-      <blockquote>
-        <p>“The video ‘Put mustard bottle in the left bin’ of SimFoundry looks like a coincidence: the
-        left robot arm accidentally pushed the left bin, which fell over and caused the task to fail.
-        I would like to see another video of this.”</p>
-        <cite>Reviewer Xv61</cite>
-      </blockquote>
+      <h2 id="q1">Question 1: Is the SimFoundry mustard failure a coincidence?</h2>
       <p class="answer">
-        Below are two more Mustard-to-bin episodes. In both, SceneRig’s outcome matches the real
-        outcome and SimFoundry’s does not.
+        We show two more episodes of the same task, “put the mustard into the left bin.” In Episode 1,
+        SimFoundry’s left bin is knocked over again. In both episodes, SceneRig matches the real
+        outcome and SimFoundry does not.
       </p>
 
-      <h3>π<sub>0.5</sub>, episode 9</h3>
-      <p class="why">The real robot and SceneRig both place the mustard in the left bin. In SimFoundry, the left bin tips over again and the mustard comes to rest on top of it.</p>
+      <h3>Episode 1 (π<sub>0.5</sub>)</h3>
+      <p class="why"><b>Watch the left bin.</b> The real robot and SceneRig put the mustard in the left bin. In SimFoundry, the left arm knocks the left bin over at the start; the mustard is first set on the fallen bin and finally ends up in the right bin.</p>
       <div class="trio">
-        <figure><figcaption>Real: <span class="ok">success</span></figcaption>
-          <video src="media/mustard-pi05-ep09-real.mp4" poster="media/mustard-pi05-ep09-real.jpg" preload="none" controls muted playsinline></video></figure>
-        <figure><figcaption>SceneRig: <span class="ok">success</span></figcaption>
-          <video src="media/mustard-pi05-ep09-scenerig.mp4" poster="media/mustard-pi05-ep09-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/mustard-pi05-ep09-real-8x.mp4" poster="media/mustard-pi05-ep09-real-8x.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours): <span class="ok">success</span></figcaption>
+          <video src="media/mustard-pi05-ep09-scenerig-8x.mp4" poster="media/mustard-pi05-ep09-scenerig-8x.jpg" preload="auto" muted playsinline></video></figure>
         <figure><figcaption>SimFoundry: <span class="no">failure</span></figcaption>
-          <video src="media/mustard-pi05-ep09-simfoundry.mp4" poster="media/mustard-pi05-ep09-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          <video src="media/mustard-pi05-ep09-simfoundry-8x.mp4" poster="media/mustard-pi05-ep09-simfoundry-8x.jpg" preload="auto" muted playsinline></video></figure>
       </div>
 
-      <h3>LingBot-VLA 2.0, episode 7</h3>
-      <p class="why">The real arm pushes the left bin aside and the mustard is not placed. SceneRig reproduces this failure, while SimFoundry reports a success.</p>
+      <h3>Episode 2 (LingBot-VLA 2.0)</h3>
+      <p class="why"><b>Watch the left bin.</b> The real arms push the left bin around until it tips onto its side, and the mustard stays on the table. In SceneRig, the left arm also pushes the left bin away, and the mustard ends up beside the right bin. In SimFoundry, the robot puts the mustard into the left bin.</p>
       <div class="trio">
-        <figure><figcaption>Real: <span class="no">failure</span></figcaption>
-          <video src="media/mustard-lingbot-ep07-real.mp4" poster="media/mustard-lingbot-ep07-real.jpg" preload="none" controls muted playsinline></video></figure>
-        <figure><figcaption>SceneRig: <span class="no">failure</span></figcaption>
-          <video src="media/mustard-lingbot-ep07-scenerig.mp4" poster="media/mustard-lingbot-ep07-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+        <figure><figcaption>Real robot: <span class="no">failure</span></figcaption>
+          <video src="media/mustard-lingbot-ep07-real-8x.mp4" poster="media/mustard-lingbot-ep07-real-8x.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours): <span class="no">failure</span></figcaption>
+          <video src="media/mustard-lingbot-ep07-scenerig-8x.mp4" poster="media/mustard-lingbot-ep07-scenerig-8x.jpg" preload="auto" muted playsinline></video></figure>
         <figure><figcaption>SimFoundry: <span class="ok">success</span></figcaption>
-          <video src="media/mustard-lingbot-ep07-simfoundry.mp4" poster="media/mustard-lingbot-ep07-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          <video src="media/mustard-lingbot-ep07-simfoundry-8x.mp4" poster="media/mustard-lingbot-ep07-simfoundry-8x.jpg" preload="auto" muted playsinline></video></figure>
       </div>
 
-      <h2>Question 2: Why does a simulator succeed when the real robot fails?</h2>
-      <blockquote>
-        <p>“I would like to see one sample of where SimFoundry/SceneRig succeeded but did not meet the
-        agreement, and some analysis of why they failed.”</p>
-        <cite>Reviewer Xv61</cite>
-      </blockquote>
-      <p class="answer">Below are two episodes in which a simulator reports success but the real robot fails.</p>
+      <h2 id="q2">Question 2: Why does a simulator succeed when the real robot fails?</h2>
+      <p class="answer">
+        We show two such episodes with different causes: in Episode 1, SimFoundry reconstructs an
+        object too small; in Episode 2, the real camera image differs in appearance from both
+        simulated renderings.
+      </p>
 
-      <h3>LingBot-VLA 2.0, Everything-to-bin, episode 3</h3>
-      <p class="why">The pear starts near the far edge of the robot’s reach. In the real rollout, the gripper pushes it farther away, out of reach; SceneRig reproduces this, and both fail. SimFoundry reconstructs the pear smaller, which makes it easier to grasp, so its rollout succeeds. The simulated success comes from a reconstruction error that SceneRig avoids.</p>
+      <h3>Episode 1 (LingBot-VLA 2.0)</h3>
+      <p class="why"><b>Task:</b> put everything into the bin. <b>Watch the brown pear next to the banana.</b> It starts near the edge of the robot’s reach. The real gripper pushes it farther away, and the task fails; SceneRig reproduces this. <b>Why SimFoundry succeeds:</b> it reconstructs the pear smaller than the real one, so the gripper grasps it easily.</p>
       <div class="trio">
-        <figure><figcaption>Real: <span class="no">failure</span></figcaption>
-          <video src="media/everything-lingbot-ep03-real.mp4" poster="media/everything-lingbot-ep03-real.jpg" preload="none" controls muted playsinline></video></figure>
-        <figure><figcaption>SceneRig: <span class="no">failure</span></figcaption>
-          <video src="media/everything-lingbot-ep03-scenerig.mp4" poster="media/everything-lingbot-ep03-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+        <figure><figcaption>Real robot: <span class="no">failure</span></figcaption>
+          <video src="media/everything-lingbot-ep03-real-8x.mp4" poster="media/everything-lingbot-ep03-real-8x.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours): <span class="no">failure</span></figcaption>
+          <video src="media/everything-lingbot-ep03-scenerig-8x.mp4" poster="media/everything-lingbot-ep03-scenerig-8x.jpg" preload="auto" muted playsinline></video></figure>
         <figure><figcaption>SimFoundry: <span class="ok">success</span></figcaption>
-          <video src="media/everything-lingbot-ep03-simfoundry.mp4" poster="media/everything-lingbot-ep03-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          <video src="media/everything-lingbot-ep03-simfoundry-8x.mp4" poster="media/everything-lingbot-ep03-simfoundry-8x.jpg" preload="auto" muted playsinline></video></figure>
       </div>
 
-      <h3>π<sub>0.5</sub>, Fruit-to-plate, episode 0</h3>
-      <p class="why">The real robot places the banana and the pear but leaves the apple beside the plate, while both simulations succeed. A possible reason is appearance: in the real image, the red apple and the red plate look similar, which may make it hard for the policy to notice that the apple is still outside the plate. Both simulated renderings show slightly higher contrast between them.</p>
+      <h3>Episode 2 (π<sub>0.5</sub>)</h3>
+      <p class="why"><b>Task:</b> put all fruits on the red plate. <b>Watch the red apple.</b> The real robot places the banana and the pear but leaves the apple beside the plate; both simulators place all three fruits. <b>Why the simulators succeed (our hypothesis):</b> in the real camera image, the red apple and the red plate look alike, so the policy may not notice that the apple is still off the plate. Both simulated renderings show slightly more contrast between them.</p>
       <div class="trio">
-        <figure><figcaption>Real: <span class="no">failure</span></figcaption>
-          <video src="media/fruit-pi05-ep00-real.mp4" poster="media/fruit-pi05-ep00-real.jpg" preload="none" controls muted playsinline></video></figure>
-        <figure><figcaption>SceneRig: <span class="ok">success</span></figcaption>
-          <video src="media/fruit-pi05-ep00-scenerig.mp4" poster="media/fruit-pi05-ep00-scenerig.jpg" preload="none" controls muted playsinline></video></figure>
+        <figure><figcaption>Real robot: <span class="no">failure</span></figcaption>
+          <video src="media/fruit-pi05-ep00-real-8x.mp4" poster="media/fruit-pi05-ep00-real-8x.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours): <span class="ok">success</span></figcaption>
+          <video src="media/fruit-pi05-ep00-scenerig-8x.mp4" poster="media/fruit-pi05-ep00-scenerig-8x.jpg" preload="auto" muted playsinline></video></figure>
         <figure><figcaption>SimFoundry: <span class="ok">success</span></figcaption>
-          <video src="media/fruit-pi05-ep00-simfoundry.mp4" poster="media/fruit-pi05-ep00-simfoundry.jpg" preload="none" controls muted playsinline></video></figure>
+          <video src="media/fruit-pi05-ep00-simfoundry-8x.mp4" poster="media/fruit-pi05-ep00-simfoundry-8x.jpg" preload="auto" muted playsinline></video></figure>
       </div>
-
-      <p class="note">Videos are compressed (640 px, 15 fps). Outcomes follow the scoring protocol in the paper.</p>
     </main>
+
+    <script>
+      // Play the three videos of each row together; restart the row once all three have ended.
+      for (const row of document.querySelectorAll('.trio')) {
+        const vids = [...row.querySelectorAll('video')];
+        let timer;
+        const start = () => { for (const v of vids) { v.currentTime = 0; v.play().catch(() => {}); } };
+        const ready = v => v.readyState >= 3 ? Promise.resolve()
+          : new Promise(r => v.addEventListener('canplay', r, { once: true }));
+        const wait = new Promise(r => setTimeout(r, 3000));
+        Promise.race([Promise.all(vids.map(ready)), wait]).then(start);
+        for (const v of vids) {
+          v.muted = true;
+          v.addEventListener('ended', () => { if (vids.every(x => x.ended)) timer = setTimeout(start, 1500); });
+          v.addEventListener('click', () => {
+            clearTimeout(timer);
+            if (vids.some(x => !x.paused)) { for (const x of vids) x.pause(); }
+            else if (vids.every(x => x.ended)) start();
+            else { for (const x of vids) if (!x.ended) x.play().catch(() => {}); }
+          });
+        }
+      }
+    </script>
   </body>
 </html>
