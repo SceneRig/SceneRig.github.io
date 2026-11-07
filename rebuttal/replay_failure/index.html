@@ -69,7 +69,7 @@
       </p>
 
       <h3>Example: Marker-to-cup</h3>
-      <p class="why"><b>Task:</b> put the marker into the cup. <b>Watch the marker as it is lowered toward the cup.</b> In the real episode, the marker goes into the cup; in the SceneRig replay, the same commands leave it beside the cup. <b>Why:</b> the image-to-3D model generates the marker with a slightly different height-to-width ratio than the real one. SceneRig rescales each object uniformly, which matches its overall size but cannot correct its proportions. Because the marker is small and placing it into the cup requires high accuracy, this small shape error is enough to make the replay fail.</p>
+      <p class="why"><b>Task:</b> put the marker into the cup. <b>Watch the marker as it is lowered toward the cup.</b> In the real episode, the marker goes into the cup; in the SceneRig replay, the same commands leave it beside the cup. <b>Why:</b> the image-to-3D model generates the marker with a slightly different height-to-width ratio than the real one. SceneRig rescales each object uniformly, which matches its overall size but cannot correct its proportions, so the gripper contacts the marker at a slightly different position than in the real episode. Because the marker is small and placing it into the cup requires high accuracy, this small difference is enough to make the replay fail.</p>
       <div class="duo">
         <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
           <video src="media/marker-ep01-real.mp4" poster="media/marker-ep01-real.jpg" preload="auto" muted playsinline></video></figure>
