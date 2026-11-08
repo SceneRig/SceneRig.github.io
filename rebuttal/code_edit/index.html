@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Example for Reviewer Xv61: a physics-checked code edit after physics rejects a Move." />
+    <title>SceneRig · Rebuttal example for Reviewer Xv61</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #202b3e;
+        --muted: #647087;
+        --blue: #537fbc;
+        --coral: #c96a72;
+        --line: #dfe5ee;
+        --fail: #b0424f;
+        --pass: #2f7d5b;
+        font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #fcfdff; }
+      a { color: var(--blue); }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      main { padding-block: 8px 56px; }
+      h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
+      h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); }
+      .answer { margin: 0; }
+      h3 { font-size: 17px; margin: 24px 0 8px; }
+      .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      figure { margin: 0; min-width: 0; }
+      figcaption { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+      figcaption span { font-weight: 400; color: var(--muted); }
+      img.shot { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: #10141b; }
+      ol { margin: 14px 0 0; padding-left: 22px; }
+      li { margin-bottom: 6px; }
+      .no { color: var(--fail); font-weight: 700; }
+      .ok { color: var(--pass); font-weight: 700; }
+      @media (max-width: 720px) { .trio { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../">← Project page</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <h1>Rebuttal example for Reviewer Xv61</h1>
+
+      <h2>Question: How does Move differ from SceneConductor?</h2>
+      <p class="answer">
+        SceneConductor corrects poses by deterministic optimization without physics. In SceneRig, an
+        agent chooses each correction, and every edit, whether a bounded <b>Move</b> or a direct
+        <b>code edit</b>, is checked in simulation. Below, the agent switches to a code edit after
+        physics rejects a Move.
+      </p>
+
+      <h3>Example: placing a laptop on its stand</h3>
+      <div class="trio">
+        <figure><figcaption>Input photo</figcaption>
+          <img class="shot" src="media/laptop-input.jpg" alt="Input photo: the laptop rests on a black stand." /></figure>
+        <figure><figcaption>Before <span>— laptop under the stand, too small</span></figcaption>
+          <img class="shot" src="media/laptop-before.jpg" alt="Before pose refinement: the laptop is under the stand and too small." /></figure>
+        <figure><figcaption>After <span>— on the stand, settled in simulation</span></figcaption>
+          <img class="shot" src="media/laptop-after.jpg" alt="After the code edit: the laptop rests on the stand." /></figure>
+      </div>
+      <ol>
+        <li><b>Move (resize):</b> <span class="no">rejected by physics</span>. The enlarged laptop tips over in simulation (73° from upright), so the change is reverted.</li>
+        <li><b>Code edit:</b> the agent enlarges the laptop 1.28× and places it on the stand. The laptop is settled in simulation and shown to the agent, which <span class="ok">keeps</span> it: silhouette overlap with the photo rises from 0.54 to 0.64 IoU.</li>
+        <li><b>Refinement:</b> a Move on its position and a second code edit on its size, both settled in simulation, raise the overlap to 0.75 IoU. In the final whole-scene simulation the laptop moves only 0.2 mm.</li>
+      </ol>
+    </main>
+  </body>
+</html>
