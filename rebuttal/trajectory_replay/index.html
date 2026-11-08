@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Videos for Reviewer yuWZ: real and SceneRig open-loop trajectory replays, synchronized." />
+    <title>SceneRig · Rebuttal videos for Reviewer yuWZ</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #202b3e;
+        --muted: #647087;
+        --blue: #537fbc;
+        --coral: #c96a72;
+        --line: #dfe5ee;
+        --pass: #2f7d5b;
+        font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #fcfdff; }
+      a { color: var(--blue); }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      main { padding-block: 8px 56px; }
+      h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
+      .how { margin: 0; color: var(--muted); }
+      h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); }
+      .answer { margin: 0; }
+      h3 { font-size: 17px; margin: 24px 0 2px; }
+      .why { margin: 0 0 10px; }
+      .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      figure { margin: 0; min-width: 0; }
+      figcaption { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+      .ok { color: var(--pass); }
+      video { display: block; width: 100%; aspect-ratio: 640 / 332; background: #10141b; border-radius: 6px; cursor: pointer; }
+      .bar { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+      .bar button { font: inherit; font-size: 14px; font-weight: 700; width: 72px; padding: 4px 0; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+      .bar input { flex: 1; min-width: 0; margin: 0; accent-color: var(--blue); cursor: pointer; }
+      .bar .time { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      @media (max-width: 720px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../#robotics">← Project page</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <h1>Rebuttal videos for Reviewer yuWZ</h1>
+      <p class="how">In each row, the real robot and the SceneRig reconstruction execute the same recorded robot commands, so the two videos are synchronized and play at real speed. The slider under a row moves both videos.</p>
+
+      <h2>Question: Do reconstructed objects behave like the real ones during manipulation?</h2>
+      <p class="answer">
+        Open-loop trajectory replay runs the recorded joint and gripper commands without feedback from
+        object states, so each grasp, lift, and release succeeds only if the simulated object responds
+        to contact as the real one does. Below is one demonstration per task; in all five, the
+        simulated objects end where the real ones do.
+      </p>
+
+      <h3>Example 1: Cup-to-bowl</h3>
+      <p class="why">The arm picks up the orange cup and places it in the bowl.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/cup-in-bowl-real.mp4" poster="media/cup-in-bowl-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="ok">success</span></figcaption>
+          <video src="media/cup-in-bowl-scenerig.mp4" poster="media/cup-in-bowl-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+
+      <h3>Example 2: Everything-to-bin</h3>
+      <p class="why">The arms move three objects into the blue bin, one at a time.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/everything-in-bin-real.mp4" poster="media/everything-in-bin-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="ok">success</span></figcaption>
+          <video src="media/everything-in-bin-scenerig.mp4" poster="media/everything-in-bin-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+
+      <h3>Example 3: Marker-to-cup</h3>
+      <p class="why">The arm picks up the thin marker and drops it into the red cup, a placement that needs high accuracy.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/marker-in-cup-real.mp4" poster="media/marker-in-cup-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="ok">success</span></figcaption>
+          <video src="media/marker-in-cup-scenerig.mp4" poster="media/marker-in-cup-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+
+      <h3>Example 4: Mustard-to-bin</h3>
+      <p class="why">The arm grasps the mustard bottle and places it in the red bin.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/mustard-in-bin-real.mp4" poster="media/mustard-in-bin-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="ok">success</span></figcaption>
+          <video src="media/mustard-in-bin-scenerig.mp4" poster="media/mustard-in-bin-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+
+      <h3>Example 5: Fruits-to-bowl</h3>
+      <p class="why">The arm moves both fruits from the red plate to the small blue bowl.</p>
+      <div class="duo">
+        <figure><figcaption>Real robot: <span class="ok">success</span></figcaption>
+          <video src="media/fruits-to-bowl-real.mp4" poster="media/fruits-to-bowl-real.jpg" preload="auto" muted playsinline></video></figure>
+        <figure><figcaption>SceneRig (ours) replay: <span class="ok">success</span></figcaption>
+          <video src="media/fruits-to-bowl-scenerig.mp4" poster="media/fruits-to-bowl-scenerig.jpg" preload="auto" muted playsinline></video></figure>
+      </div>
+    </main>
+
+    <script>
+      // The videos of a row share one timeline, set by the longest video; seeking moves both, and a
+      // shorter video holds its last frame. Rows play when scrolled into view and restart after ending.
+      const BAR = '<div class="bar"><button type="button">Play</button>' +
+        '<input type="range" min="0" max="1" step="0.01" value="0" aria-label="Position of both videos">' +
+        '<span class="time">0:00 / 0:00</span></div>';
+      const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+      for (const row of document.querySelectorAll('.duo')) {
+        row.insertAdjacentHTML('afterend', BAR);
+        const bar = row.nextElementSibling;
+        const [btn, range, time] = [bar.querySelector('button'), bar.querySelector('input'), bar.querySelector('.time')];
+        const vids = [...row.querySelectorAll('video')];
+        let playing = false, dragging = false, wasPlaying = false, started = false, timer;
+        const master = () => vids.reduce((a, b) => ((b.duration || 0) > (a.duration || 0) ? b : a));
+        const atEnd = v => v.currentTime >= v.duration - 0.05;
+        const show = t => { time.textContent = `${fmt(t)} / ${fmt(master().duration || 0)}`; };
+        const setPlaying = p => { playing = p; btn.textContent = p ? 'Pause' : 'Play'; };
+        const seek = t => { for (const v of vids) if (v.duration) v.currentTime = Math.min(t, v.duration - 0.02); };
+        const pause = () => { clearTimeout(timer); setPlaying(false); for (const v of vids) v.pause(); };
+        const play = () => {
+          clearTimeout(timer);
+          if (atEnd(master())) seek(0);
+          setPlaying(true);
+          for (const v of vids) if (!atEnd(v)) v.play().catch(() => setPlaying(false));
+        };
+        btn.addEventListener('click', () => (playing ? pause() : play()));
+        range.addEventListener('input', () => {
+          if (!dragging) { dragging = true; wasPlaying = playing; pause(); }
+          seek(+range.value); show(+range.value);
+        });
+        range.addEventListener('change', () => {
+          dragging = false;
+          if (wasPlaying && +range.value < master().duration - 0.05) play();
+        });
+        for (const v of vids) {
+          v.muted = true;
+          v.addEventListener('click', () => (playing ? pause() : play()));
+          v.addEventListener('ended', () => { if (v === master() && playing) timer = setTimeout(play, 1500); });
+        }
+        const tick = () => {
+          const m = master();
+          if (!dragging && m.duration) {
+            range.max = m.duration; range.value = m.currentTime; show(m.currentTime);
+            if (playing) for (const v of vids)  // correct drift against the longest video
+              if (v !== m && !v.paused && Math.abs(v.currentTime - m.currentTime) > 0.3) v.currentTime = m.currentTime;
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        // Start each row the first time it scrolls into view, once both videos can play.
+        const ready = () => Promise.race([
+          Promise.all(vids.map(v => v.readyState >= 3 ? 1 : new Promise(r => v.addEventListener('canplay', r, { once: true })))),
+          new Promise(r => setTimeout(r, 3000)),
+        ]);
+        new IntersectionObserver((entries, obs) => {
+          if (!started && entries.some(e => e.isIntersecting)) { started = true; obs.disconnect(); ready().then(play); }
+        }, { threshold: 0.4 }).observe(row);
+      }
+    </script>
+  </body>
+</html>
