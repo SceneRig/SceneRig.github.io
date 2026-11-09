@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="description" content="Video for Reviewer GrF1: a failed open-loop trajectory replay in SceneRig next to the real episode." />
-    <title>SceneRig · Rebuttal video for Reviewer GrF1</title>
+    <title>SceneRig · Open-loop replay failure</title>
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <style>
       :root {
@@ -32,8 +32,9 @@
       .back:hover { color: var(--ink); }
       main { padding-block: 8px 56px; }
       h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
-      .how { margin: 0; color: var(--muted); }
+      .how { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
       h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); }
+      main > h2:first-child { border-top: 0; padding-top: 0; margin-top: 28px; }
       .answer { margin: 0; }
       h3 { font-size: 17px; margin: 24px 0 2px; }
       .why { margin: 0 0 10px; }
@@ -59,14 +60,12 @@
     </header>
 
     <main class="wrap">
-      <h1>Rebuttal video for Reviewer GrF1</h1>
-      <p class="how">Both videos execute the same recorded robot commands and play in sync at real speed. The slider under them moves both together.</p>
-
       <h2>Question: What prevents open-loop trajectory replay from reaching 100% success?</h2>
       <p class="answer">
         Open-loop replay executes the recorded commands without feedback, so a small geometric error in
         the reconstruction can change the outcome. Below is one such failure.
       </p>
+      <p class="how">Both videos execute the same recorded robot commands and play in sync at real speed. The slider under them moves both together.</p>
 
       <h3>Example: Marker-to-cup</h3>
       <p class="why"><b>Task:</b> put the marker into the cup. <b>Watch the marker as it is lowered toward the cup.</b> In the real episode, the marker goes into the cup; in the SceneRig replay, the same commands leave it beside the cup. <b>Why:</b> the image-to-3D model generates the marker with a slightly different height-to-width ratio than the real one. SceneRig rescales each object uniformly, which matches its overall size but cannot correct its proportions, so the gripper contacts the marker at a slightly different position than in the real episode. Because the marker is small and placing it into the cup requires high accuracy, this small difference is enough to make the replay fail.</p>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="description" content="Videos for Reviewer yuWZ: real and SceneRig open-loop trajectory replays, synchronized." />
-    <title>SceneRig · Rebuttal videos for Reviewer yuWZ</title>
+    <title>SceneRig · Synchronized trajectory replays</title>
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <style>
       :root {
@@ -31,8 +31,9 @@
       .back:hover { color: var(--ink); }
       main { padding-block: 8px 56px; }
       h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
-      .how { margin: 0; color: var(--muted); }
+      .how { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
       h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); }
+      main > h2:first-child { border-top: 0; padding-top: 0; margin-top: 28px; }
       .answer { margin: 0; }
       h3 { font-size: 17px; margin: 24px 0 2px; }
       .why { margin: 0 0 10px; }
@@ -57,9 +58,6 @@
     </header>
 
     <main class="wrap">
-      <h1>Rebuttal videos for Reviewer yuWZ</h1>
-      <p class="how">In each row, the real robot and the SceneRig reconstruction execute the same recorded robot commands, so the two videos are synchronized and play at real speed. The slider under a row moves both videos.</p>
-
       <h2>Question: Do reconstructed objects behave like the real ones during manipulation?</h2>
       <p class="answer">
         Open-loop trajectory replay runs the recorded joint and gripper commands without feedback from
@@ -67,6 +65,7 @@
         to contact as the real one does. Below is one demonstration per task; in all five, the
         simulated objects end where the real ones do.
       </p>
+      <p class="how">In each row, the real robot and the SceneRig reconstruction execute the same recorded robot commands, so the two videos are synchronized and play at real speed. The slider under a row moves both videos.</p>
 
       <h3>Example 1: Cup-to-bowl</h3>
       <p class="why">The arm picks up the orange cup and places it in the bowl.</p>

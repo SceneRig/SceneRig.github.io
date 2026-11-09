@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="description" content="Videos for Reviewer Xv61: real-world and simulated policy rollouts in SceneRig and SimFoundry." />
-    <title>SceneRig · Rebuttal videos for Reviewer Xv61</title>
+    <title>SceneRig · Real vs. simulated policy rollouts</title>
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <style>
       :root {
@@ -32,8 +32,9 @@
       .back:hover { color: var(--ink); }
       main { padding-block: 8px 56px; }
       h1 { font-size: 28px; line-height: 1.2; margin: 28px 0 6px; }
-      .how { margin: 0; color: var(--muted); }
+      .how { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
       h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--line); scroll-margin-top: 70px; }
+      main > h2:first-child { border-top: 0; padding-top: 0; margin-top: 28px; }
       .answer { margin: 0; }
       h3 { font-size: 17px; margin: 24px 0 2px; }
       .why { margin: 0 0 10px; }
@@ -59,14 +60,12 @@
     </header>
 
     <main class="wrap">
-      <h1>Rebuttal videos for Reviewer Xv61</h1>
-      <p class="how">Videos play at 8× speed. The slider under each row moves all three videos together; a video that ends early holds its last frame.</p>
-
       <h2 id="q1">Question 1: Is the SimFoundry mustard failure a coincidence?</h2>
       <p class="answer">
         We show two more episodes of the same task, <b>“put the mustard into the left bin.”</b> In both
         episodes, SceneRig matches the real outcome and SimFoundry does not.
       </p>
+      <p class="how">Videos play at 8× speed. The slider under each row moves all three videos together; a video that ends early holds its last frame.</p>
 
       <h3>Episode 1 (π<sub>0.5</sub>)</h3>
       <p class="why"><b>Watch the left bin.</b> The real robot and SceneRig put the mustard in the left bin. In SimFoundry, the left arm knocks the left bin over at the start; the mustard is first set on the fallen bin and finally ends up in the right bin.</p>
