@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Why a higher alignment score is not enough: visual review of simulated pose edits in SceneRig." />
+    <title>SceneRig · Visual review beyond alignment scores</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root { --ink:#202b3e; --muted:#647087; --blue:#537fbc; --coral:#c96a72; --line:#dfe5ee;
+        font-family:Avenir,"Avenir Next","Segoe UI",system-ui,sans-serif; color:var(--ink); line-height:1.55; }
+      * { box-sizing:border-box; }
+      body { margin:0; background:#fcfdff; }
+      a { color:var(--blue); }
+      a:focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+      .wrap { max-width:1180px; margin:0 auto; padding-inline:max(16px,env(safe-area-inset-left,0px)); }
+      .site-header { border-bottom:1px solid var(--line); background:#f8f9fcee; position:sticky; top:0; z-index:5; backdrop-filter:blur(8px); }
+      .site-header .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:14px; }
+      .wordmark { display:inline-flex; align-items:center; gap:9px; font-weight:800; font-size:19px; color:var(--ink); text-decoration:none; }
+      .wordmark i { font-style:normal; color:var(--coral); }
+      .back { font-size:14px; color:var(--muted); text-decoration:none; }
+      .back:hover { color:var(--ink); }
+      main { padding-block:8px 56px; }
+      h1 { font-size:23px; line-height:1.3; margin:28px 0 8px; }
+      h2 { font-size:18px; margin:28px 0 8px; }
+      p { margin:8px 0 14px; }
+      code { overflow-wrap:anywhere; font-size:.9em; }
+      .note { color:var(--muted); font-size:14px; }
+      .comparison { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+      figure { margin:0; min-width:0; }
+      figcaption { font-weight:700; font-size:15px; margin-bottom:7px; }
+      .shot { display:block; width:100%; height:auto; aspect-ratio:4/3; border-radius:6px; }
+      .detail { display:block; width:100%; aspect-ratio:230/265; margin-top:10px; border-radius:6px; background:#edf0f5; }
+      .outcome { margin:8px 0 0; font-size:14px; }
+      .score { color:var(--muted); font-size:13px; }
+      .explanation { border-top:1px solid var(--line); margin-top:26px; padding-top:8px; }
+      .loop { padding:12px 16px; background:#edf3fa; border-left:3px solid var(--blue); }
+      @media (max-width:900px) { .comparison { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 14px; } }
+      @media (max-width:520px) { .comparison { grid-template-columns:minmax(0,1fr); } h1 { font-size:21px; } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../">← Project page</a>
+      </div>
+    </header>
+    <main class="wrap">
+      <h1>Question: What does the agent contribute beyond the Move tool?</h1>
+      <p><strong>A higher alignment score alone does not guarantee a good move.</strong>
+        After simulation, the agent compares the resulting render with the input image to
+        decide whether to <strong>retain the edit, revert it, or correct a remaining mismatch</strong>.
+        An edit can pass physics checks and improve the score while still leaving the wrong object pose.</p>
+
+      <h2>Example: the mustard bottle should stand upright</h2>
+      <p class="note">Scene: <code>robolab_foodpacking_1bin_2box_2can</code>.
+        Each column shows the full source view and the same enlarged image region.
+        Select a full view to open the image.</p>
+      <div class="comparison">
+        <figure>
+          <figcaption>Input image</figcaption>
+          <a href="media/input.webp" target="_blank" rel="noopener"><img class="shot" src="media/input.webp" width="1280" height="960" alt="Input image: a mustard bottle stands upright inside a bin." /></a>
+          <svg class="detail" viewBox="235 420 230 265" role="img" aria-label="Input detail: upright mustard bottle"><image href="media/input.webp" width="1280" height="960" /></svg>
+          <p class="outcome">Upright in the input.</p>
+        </figure>
+        <figure>
+          <figcaption>Before refinement</figcaption>
+          <a href="media/start.webp" target="_blank" rel="noopener"><img class="shot" src="media/start.webp" width="1280" height="960" alt="Shared starting reconstruction: the mustard bottle is already lying on its side." /></a>
+          <svg class="detail" viewBox="235 420 230 265" role="img" aria-label="Starting detail: bottle already lying down"><image href="media/start.webp" width="1280" height="960" /></svg>
+          <p class="outcome">Already lying down.</p>
+          <div class="score">Bottle alignment score: 0.109</div>
+        </figure>
+        <figure>
+          <figcaption>Agent-free heuristic</figcaption>
+          <a href="media/heuristic.webp" target="_blank" rel="noopener"><img class="shot" src="media/heuristic.webp" width="1280" height="960" alt="Heuristic result: the bottle remains lying down despite an increased alignment score." /></a>
+          <svg class="detail" viewBox="235 420 230 265" role="img" aria-label="Heuristic detail: mustard bottle still lying down"><image href="media/heuristic.webp" width="1280" height="960" /></svg>
+          <p class="outcome">Score improves; pose remains wrong.</p>
+          <div class="score">Bottle alignment score: 0.223</div>
+        </figure>
+        <figure>
+          <figcaption>SceneRig (agent)</figcaption>
+          <a href="media/agent.webp" target="_blank" rel="noopener"><img class="shot" src="media/agent.webp" width="1280" height="960" alt="SceneRig result: the agent restores the mustard bottle to an upright pose." /></a>
+          <svg class="detail" viewBox="235 420 230 265" role="img" aria-label="Agent detail: upright bottle after pose correction"><image href="media/agent.webp" width="1280" height="960" /></svg>
+          <p class="outcome">Upright pose restored.</p>
+        </figure>
+      </div>
+
+      <section class="explanation" aria-label="What this example shows">
+        <p>The two runs start from the same reconstruction and share the <b>Move</b> tool and
+          physics checks. The heuristic accepts score-increasing moves: the bottle's score rises
+          from <b>0.109 to 0.223</b>, but it remains on its side. The agent compares the render
+          with the input, recognizes the upright target, and corrects the bottle through simulated
+          pose edits. It uses a direct <b>Edit</b> to change the bottle's attitude, then refines its
+          placement with <b>Move</b>.</p>
+        <p class="loop"><strong>Inspect → edit → simulate → inspect → retain, revert, or revise.</strong><br />
+          The score provides feedback; visual inspection determines whether the resulting scene
+          matches the intended pose.</p>
+      </section>
+    </main>
+  </body>
+</html>
