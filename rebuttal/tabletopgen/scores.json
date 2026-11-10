@@ -1,0 +1,295 @@
+{
+  "cohort": {
+    "attempted": 80,
+    "completed": [
+      "abc_1",
+      "abc_2",
+      "abc_3",
+      "abc_5",
+      "airoa_moma_000_row0",
+      "airoa_moma_005_row1379",
+      "airoa_moma_005_row1493",
+      "bridge_1",
+      "bridge_2",
+      "bridge_3",
+      "bridge_4",
+      "bridge_6",
+      "bridge_7",
+      "misc_IMG_8226",
+      "misc_IMG_8334",
+      "misc_IMG_9096",
+      "misc_genai2",
+      "misc_online2",
+      "misc_online3",
+      "misc_online5",
+      "misc_still_life",
+      "robodojo_arrange_largest_number_random",
+      "robodojo_arrange_largest_number_standard",
+      "robodojo_fold_clothes_random",
+      "robodojo_fold_clothes_standard",
+      "robodojo_hang_mugs_standard",
+      "robodojo_make_toast_random",
+      "robodojo_make_toast_standard",
+      "robodojo_pack_objects_into_box_random",
+      "robodojo_pack_objects_into_box_standard",
+      "robodojo_pour_liquid_into_cup_random",
+      "robodojo_pour_liquid_into_cup_standard",
+      "robodojo_push_T_random",
+      "robodojo_push_T_standard",
+      "robodojo_sort_nesting_dolls_by_size_random",
+      "robodojo_stack_blocks_random",
+      "robodojo_stack_blocks_standard",
+      "robodojo_stack_bowls_standard",
+      "robodojo_store_laptop_and_headphones_random",
+      "robodojo_store_laptop_and_headphones_standard",
+      "robodojo_sweep_blocks_random",
+      "robodojo_sweep_blocks_standard",
+      "robolab_bagel_plate_banana_bowl",
+      "robolab_bin_condiments",
+      "robolab_bin_mug_mustard_marker_bowl",
+      "robolab_breakfast_table",
+      "robolab_cartons_on_box",
+      "robolab_clutter_fruit_bottle_bluebin",
+      "robolab_clutter_shelf",
+      "robolab_cutlery_shelf",
+      "robolab_food_packing",
+      "robolab_food_packing_dense",
+      "robolab_foodpacking_1bin_3box_3can",
+      "robolab_mugs4_measuringcup_drill_bowl",
+      "robolab_mugs4_measuringcup_drill_bowl_v2",
+      "robolab_mugs_on_shelf",
+      "robolab_tools_container",
+      "robolab_workdesk_bin",
+      "robolab_workdesk_snacks"
+    ],
+    "synthetic": [
+      "robodojo_arrange_largest_number_random",
+      "robodojo_arrange_largest_number_standard",
+      "robodojo_fold_clothes_random",
+      "robodojo_fold_clothes_standard",
+      "robodojo_hang_mugs_standard",
+      "robodojo_make_toast_random",
+      "robodojo_make_toast_standard",
+      "robodojo_pack_objects_into_box_random",
+      "robodojo_pack_objects_into_box_standard",
+      "robodojo_pour_liquid_into_cup_random",
+      "robodojo_pour_liquid_into_cup_standard",
+      "robodojo_push_T_random",
+      "robodojo_push_T_standard",
+      "robodojo_sort_nesting_dolls_by_size_random",
+      "robodojo_stack_blocks_random",
+      "robodojo_stack_blocks_standard",
+      "robodojo_stack_bowls_standard",
+      "robodojo_store_laptop_and_headphones_random",
+      "robodojo_store_laptop_and_headphones_standard",
+      "robodojo_sweep_blocks_random",
+      "robodojo_sweep_blocks_standard",
+      "robolab_bagel_plate_banana_bowl",
+      "robolab_bin_condiments",
+      "robolab_bin_mug_mustard_marker_bowl",
+      "robolab_breakfast_table",
+      "robolab_cartons_on_box",
+      "robolab_clutter_fruit_bottle_bluebin",
+      "robolab_clutter_shelf",
+      "robolab_cutlery_shelf",
+      "robolab_food_packing",
+      "robolab_food_packing_dense",
+      "robolab_foodpacking_1bin_3box_3can",
+      "robolab_mugs4_measuringcup_drill_bowl",
+      "robolab_mugs4_measuringcup_drill_bowl_v2",
+      "robolab_mugs_on_shelf",
+      "robolab_tools_container",
+      "robolab_workdesk_bin",
+      "robolab_workdesk_snacks"
+    ],
+    "novel_views_per_scene": 35
+  },
+  "metrics": {
+    "TabletopGen": {
+      "source": {
+        "psnr": 7.9271312843694295,
+        "ssim": 0.5160368071312313,
+        "lpips": 0.7523205517712286,
+        "negative_clip": 0.22770805884215792,
+        "psnr_objects": 9.49907537937816,
+        "ssim_objects": 0.3577681605366798,
+        "lpips_obj_white": 0.30091078861342657,
+        "nclip_obj_white": 0.13214540235479558
+      },
+      "source_transferred": {
+        "psnr": 12.578208320300453,
+        "ssim": 0.6036176336612279,
+        "lpips": 0.6857961416244507,
+        "negative_clip": 0.17958936095237732
+      },
+      "novel_all": {
+        "psnr": 12.34144652320162,
+        "ssim": 0.6273099909988525,
+        "lpips": 0.6970112220237129,
+        "negative_clip": 0.18893440719833948
+      },
+      "instances": {
+        "ari": 0.506056035756546,
+        "fg_iou": 0.4183540955439134,
+        "count_mae": 2.8684210526315788
+      },
+      "layout": {
+        "ospa5": 0.0444,
+        "ospa10": 0.07283684210526316,
+        "f1_10": 0.5674473684210526
+      }
+    },
+    "SceneRig": {
+      "source": {
+        "psnr": 13.387694745762712,
+        "ssim": 0.5363015254237288,
+        "lpips": 0.5172927118644067,
+        "negative_clip": 0.12724830508474577,
+        "psnr_objects": 13.68075947368421,
+        "ssim_objects": 0.4407042105263158,
+        "lpips_obj_white": 0.16577184210526316,
+        "nclip_obj_white": 0.061464736842105266
+      },
+      "source_transferred": {
+        "psnr": 13.05418552631579,
+        "ssim": 0.519285,
+        "lpips": 0.5907118421052632,
+        "negative_clip": 0.12109421052631579
+      },
+      "novel_all": {
+        "psnr": 12.60044460150376,
+        "ssim": 0.5379923684210526,
+        "lpips": 0.6106322030075187,
+        "negative_clip": 0.12582933834586466
+      },
+      "instances": {
+        "ari": 0.8773000960547885,
+        "fg_iou": 0.8175626576141246,
+        "count_mae": 0.23684210526315788
+      },
+      "layout": {
+        "ospa5": 0.02459736842105263,
+        "ospa10": 0.03188421052631579,
+        "f1_10": 0.92595
+      }
+    }
+  },
+  "vlm": {
+    "methods": [
+      "scenerig",
+      "tabletopgen"
+    ],
+    "judges": [
+      "gpt-5.6-terra",
+      "qwen3.8-max-fireworks"
+    ],
+    "n_rows": 118,
+    "dimensions": {
+      "completeness": {
+        "flip_rate": 0.07627118644067798,
+        "win_matrix": {
+          "scenerig": {
+            "scenerig": 0.0,
+            "tabletopgen": 101.5
+          },
+          "tabletopgen": {
+            "scenerig": 7.5,
+            "tabletopgen": 0.0
+          }
+        },
+        "bt_strength": {
+          "scenerig": 1.2727656358022175,
+          "tabletopgen": -1.2727656358022177
+        },
+        "bt_ci95": {
+          "scenerig": [
+            1.0166988015892147,
+            1.6480336411909757
+          ],
+          "tabletopgen": [
+            -1.6480336411909762,
+            -1.0166988015892147
+          ]
+        },
+        "win_rate": {
+          "scenerig": 0.9311926605504587,
+          "tabletopgen": 0.06880733944954129
+        }
+      },
+      "layout": {
+        "flip_rate": 0.008474576271186418,
+        "win_matrix": {
+          "scenerig": {
+            "scenerig": 0.0,
+            "tabletopgen": 114.0
+          },
+          "tabletopgen": {
+            "scenerig": 3.0,
+            "tabletopgen": 0.0
+          }
+        },
+        "bt_strength": {
+          "scenerig": 1.743905927249463,
+          "tabletopgen": -1.743905927249463
+        },
+        "bt_ci95": {
+          "scenerig": [
+            1.2733420047421218,
+            2.7340300705675658
+          ],
+          "tabletopgen": [
+            -2.7340300705675658,
+            -1.2733420047421216
+          ]
+        },
+        "win_rate": {
+          "scenerig": 0.9743589743589743,
+          "tabletopgen": 0.02564102564102564
+        }
+      },
+      "appearance": {
+        "flip_rate": 0.016949152542372836,
+        "win_matrix": {
+          "scenerig": {
+            "scenerig": 0.0,
+            "tabletopgen": 115.0
+          },
+          "tabletopgen": {
+            "scenerig": 1.0,
+            "tabletopgen": 0.0
+          }
+        },
+        "bt_strength": {
+          "scenerig": 2.1719027109268416,
+          "tabletopgen": -2.171902710926842
+        },
+        "bt_ci95": {
+          "scenerig": [
+            1.7305181978281232,
+            2.7340300705675658
+          ],
+          "tabletopgen": [
+            -2.7340300705675658,
+            -1.7305181978281232
+          ]
+        },
+        "win_rate": {
+          "scenerig": 0.9913793103448276,
+          "tabletopgen": 0.008620689655172414
+        }
+      }
+    },
+    "cross_judge_kappa": 0.8158765159867691
+  },
+  "protocol": {
+    "aggregation": "Mean within scene, then mean across the matched scenes; failures excluded, not zero-filled.",
+    "source": "TabletopGen saved pyrender output; SceneRig existing Cycles rerenders from the agent arm.",
+    "novel": "35 held-out calibrated orbit views per synthetic scene; Cycles for both methods.",
+    "rendering_limit": "Renderer versions, samples, lights and backgrounds are not normalized across methods.",
+    "objects": "Source object pixels exclude table/background; per-object LPIPS/nCLIP use white masked crops.",
+    "layout": "Global scale alignment; OSPA stored in meters; table reports centimeters.",
+    "vlm": "GRASE rubric v4, both orders, discard flips, ties count one half; separate two-method evaluation, not the main paper's multi-method BT fit.",
+    "cameras": "Source-mask registration; supplied calibration for synthetic scenes, estimated intrinsics for real scenes.",
+    "visuals": "Four selected examples use the archived VLM Cycles views for both methods, not the saved pyrender source images scored in the source row."
+  }
+}
