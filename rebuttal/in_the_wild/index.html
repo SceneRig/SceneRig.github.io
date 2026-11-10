@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="SceneRig reconstructions of rooms and other scenes outside the benchmark, with interactive 3D viewers." />
+    <title>SceneRig · Scenes beyond tabletops</title>
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #202b3e;
+        --muted: #647087;
+        --blue: #537fbc;
+        --coral: #c96a72;
+        --line: #dfe5ee;
+        font-family: Avenir, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #fcfdff; }
+      a { color: var(--blue); }
+      .wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+      .site-header { border-bottom: 1px solid var(--line); background: #f8f9fcee; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+      .wordmark { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+      .wordmark i { font-style: normal; color: var(--coral); }
+      .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+      .back:hover { color: var(--ink); }
+      main { padding-block: 8px 56px; }
+      h2 { font-size: 21px; margin: 28px 0 6px; }
+      .answer { margin: 0; }
+      .how { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+      h3 { font-size: 17px; margin: 30px 0 2px; }
+      h3 span { font-weight: 400; font-size: 14px; color: var(--muted); }
+      .why { margin: 0 0 10px; }
+      .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+      figure { margin: 0; min-width: 0; }
+      figcaption { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+      figcaption span { font-weight: 400; color: var(--muted); }
+      img.input, .viewer { display: block; width: 100%; height: auto; border-radius: 6px; background: #edf0f5; }
+      .viewer { position: relative; overflow: hidden; touch-action: none; cursor: grab; }
+      .viewer:active { cursor: grabbing; }
+      .viewer img, .viewer canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .viewer canvas { opacity: 0; transition: opacity 0.3s; }
+      .viewer.ready canvas { opacity: 1; }
+      .viewer .status { position: absolute; left: 10px; bottom: 8px; font-size: 13px; color: #fff; background: #202b3ecc; padding: 2px 8px; border-radius: 4px; }
+      .viewer.ready .status { display: none; }
+      .bar { display: flex; align-items: center; gap: 12px; margin-top: 6px; font-size: 13px; color: var(--muted); }
+      .bar button { font: inherit; font-size: 13px; font-weight: 700; padding: 3px 10px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+      @media (max-width: 720px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="../../"><img src="../../assets/icon.svg" width="26" height="26" alt="" /><span>SceneRig<i>.</i></span></a>
+        <a class="back" href="../../">← Project page</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <h2>Question: How does SceneRig handle scenes beyond tabletops?</h2>
+      <p class="answer">
+        SceneRig is designed for tabletop scenes for robot manipulation. Below, we run it on five images
+        outside our benchmark, two of them rooms; four inputs come from related papers. Furniture and
+        objects are recovered, but in rooms, textiles such as blankets are segmented as separate objects
+        and reconstructed as rigid meshes, so they can look unnatural.
+      </p>
+      <p class="how">Each 3D viewer opens at the input camera; drag to orbit, scroll to zoom, and right-drag to pan. The viewer uses neutral lighting, so shading differs from the photo; walls between the camera and the scene are hidden while orbiting. Examples 1–4 use SceneRig's room mode; Example 5 uses the default tabletop mode.</p>
+
+      <h3>Example 1: Living room</h3>
+      <p class="why">The sofa, cabinet, rug, suitcases, bags, chairs, and floor lamp are recovered. The throws on the sofa become rigid meshes, and the paintings on the wall are not reconstructed.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/living-room-input.webp" width="1280" height="960" alt="Input photo of a living room with a striped sofa, suitcases, and a rug." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/living-room" style="aspect-ratio: 1280 / 960"></div></figure>
+      </div>
+
+      <h3>Example 2: Bedroom <span>· input from REST3D</span></h3>
+      <p class="why">The bed, pillows, side tables, lamp, plants, and rug are recovered. The folded blankets at the foot of the bed are segmented as separate objects; reconstructed as rigid meshes, one sticks up as a stiff slab instead of lying flat on the bed.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/bedroom-input.webp" width="1280" height="960" alt="Input photo of a bedroom with a bed, plants, and a rug." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/bedroom" style="aspect-ratio: 1536 / 1152"></div></figure>
+      </div>
+
+      <h3>Example 3: Garden stool <span>· input from φ-Scene</span></h3>
+      <p class="why">An outdoor scene: the potted plant and watering can on the stool, and the bucket and trowel below it, are recovered.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/garden-input.webp" width="1024" height="1024" alt="Input image of a wooden stool holding a potted plant and a watering can." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/garden" style="aspect-ratio: 1 / 1"></div></figure>
+      </div>
+
+      <h3>Example 4: Glove and ball on a bench <span>· input from SimFoundry</span></h3>
+      <p class="why">A real outdoor photo: the glove and ball are recovered on the bench.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/bench-input.webp" width="712" height="401" alt="Input photo of a baseball glove and ball on a concrete bench." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/bench" style="aspect-ratio: 712 / 401"></div></figure>
+      </div>
+
+      <h3>Example 5: Desk <span>· input from SimuScene</span></h3>
+      <p class="why">The monitor, laptop, stacked books, mug, and notebook are recovered on the desk.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/desk-input.webp" width="1254" height="1254" alt="Input image of a desk with a monitor, a laptop, and stacked books." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/desk" style="aspect-ratio: 1 / 1"></div></figure>
+      </div>
+    </main>
+
+    <script type="importmap">
+      { "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+    </script>
+    <script type="module">
+      // Each viewer loads its GLB when scrolled into view and starts at the source camera
+      // (saved by export_room_glb.py). Only on-screen viewers render.
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+      import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+      import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+      const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/');
+      const loader = new GLTFLoader().setDRACOLoader(draco);
+      const ray = new THREE.Ray(), local = new THREE.Ray(), inv = new THREE.Matrix4(), hit = new THREE.Vector3();
+
+      async function start(el) {
+        const base = el.dataset.scene;
+        const poster = Object.assign(document.createElement('img'), { src: `${base}-render.webp`, alt: '' });
+        const status = Object.assign(document.createElement('span'), { className: 'status', textContent: 'Loading 3D scene…' });
+        el.append(poster, status);
+        const meta = await (await fetch(`${base}.json`)).json();
+        const c = meta.camera;
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.toneMapping = THREE.NeutralToneMapping;
+        renderer.domElement.setAttribute('aria-label', 'Interactive 3D reconstruction. Drag to orbit, scroll to zoom.');
+        el.append(renderer.domElement);
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color().setRGB(...meta.background_linear, THREE.LinearSRGBColorSpace);
+        scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+        const camera = new THREE.PerspectiveCamera(c.vfov_deg, c.aspect, 0.02, 200);
+        camera.position.fromArray(c.position);
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.fromArray(c.target);
+        controls.enableDamping = true;
+        controls.update();
+        const s = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
+        Object.assign(controls, {
+          minAzimuthAngle: s.theta - 1.0, maxAzimuthAngle: s.theta + 1.0,
+          minPolarAngle: Math.max(0.05, s.phi - 0.8), maxPolarAngle: Math.min(Math.PI / 2 - 0.03, s.phi + 0.35),
+          minDistance: s.radius * 0.2, maxDistance: s.radius * 1.8,
+        });
+        controls.saveState();
+        const resize = () => {
+          const { clientWidth: w, clientHeight: h } = el;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        };
+        new ResizeObserver(resize).observe(el);
+        resize();
+
+        const gltf = await loader.loadAsync(`${base}.glb`);
+        scene.add(gltf.scene);
+        // Walls: hide any wall mesh whose own (oriented) box lies between the camera and the target.
+        const walls = [];
+        for (const root of gltf.scene.children.filter(o => /^wall/.test(o.name)))
+          root.traverse(o => { if (o.isMesh) { o.geometry.computeBoundingBox(); walls.push(o); } });
+        const hideOccluders = () => {
+          const dist = camera.position.distanceTo(controls.target);
+          ray.set(camera.position, controls.target.clone().sub(camera.position).normalize());
+          for (const w of walls) {
+            local.copy(ray).applyMatrix4(inv.copy(w.matrixWorld).invert());
+            const p = local.intersectBox(w.geometry.boundingBox, hit);
+            w.visible = !(p && hit.applyMatrix4(w.matrixWorld).distanceTo(camera.position) < dist - 0.05);
+          }
+        };
+        el.classList.add('ready');
+
+        const bar = el.parentElement.appendChild(document.createElement('div'));
+        bar.className = 'bar';
+        bar.innerHTML = '<button type="button">Reset view</button><span>Drag to orbit · scroll to zoom</span>';
+        bar.querySelector('button').addEventListener('click', () => controls.reset());
+
+        let visible = true;
+        new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(el);
+        renderer.setAnimationLoop(() => {
+          if (!visible) return;
+          controls.update();
+          hideOccluders();
+          renderer.render(scene, camera);
+        });
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) {
+          io.unobserve(e.target);
+          start(e.target).catch(err => {
+            const s = e.target.querySelector('.status');
+            if (s) s.textContent = '3D viewer could not load; showing the rendered source view.';
+            console.error(err);
+          });
+        }
+      }, { rootMargin: '200px' });
+      document.querySelectorAll('.viewer').forEach(el => io.observe(el));
+    </script>
+  </body>
+</html>
