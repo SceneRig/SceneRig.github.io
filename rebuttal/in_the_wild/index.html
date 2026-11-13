@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <meta name="description" content="SceneRig reconstructions of rooms and other scenes outside the benchmark, with interactive 3D viewers." />
+    <meta name="description" content="SceneRig reconstructions of rooms, other scenes outside the benchmark, and two benchmark dining scenes, with interactive 3D viewers." />
     <title>SceneRig · Scenes beyond tabletops</title>
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <style>
@@ -63,12 +63,13 @@
     <main class="wrap">
       <h2>Question: How does SceneRig handle scenes beyond tabletops?</h2>
       <p class="answer">
-        SceneRig is designed for tabletop scenes for robot manipulation. Below, we run it on five images
-        outside our benchmark, two of them rooms: one is our own photo, and four come from related papers. Furniture and
+        SceneRig is designed for tabletop scenes for robot manipulation. Examples 1–5 are images
+        outside our benchmark, two of them rooms: one is our own photo, and four come from related papers.
+        Examples 6–7 are dining scenes from our benchmark. Furniture and
         objects are recovered, but in rooms, textiles such as blankets are segmented as separate objects
         and reconstructed as rigid meshes, so they can look unnatural.
       </p>
-      <p class="how">Each 3D viewer opens at the input camera; drag to orbit, scroll to zoom, and right-drag to pan. The viewer uses neutral lighting, so shading differs from the photo; walls between the camera and the scene are hidden while orbiting. Examples 1–4 use SceneRig's room mode; Example 5 uses the default tabletop mode.</p>
+      <p class="how">Each 3D viewer opens at the input camera; drag to orbit, scroll to zoom, and right-drag to pan. The viewer uses neutral lighting, so shading differs from the photo; walls between the camera and the scene are hidden while orbiting.</p>
 
       <h3>Example 1: Living room <span>· our own photo</span></h3>
       <p class="why">The sofa, cabinet, rug, suitcases, bags, chairs, and floor lamp are recovered. The throws on the sofa become rigid meshes, and the paintings on the wall are not reconstructed.</p>
@@ -113,6 +114,23 @@
           <img class="input" src="media/desk-input.webp" width="1254" height="1254" alt="Input image of a desk with a monitor, a laptop, and stacked books." /></figure>
         <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
           <div class="viewer" data-scene="media/desk" style="aspect-ratio: 1 / 1"></div></figure>
+      </div>
+      <h3>Example 6: Round dining table <span>· from our benchmark</span></h3>
+      <p class="why">The table, four upholstered chairs, vase, open book, and cup are recovered; the chairs' fabric appears darker than in the photo.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/dining-round-input.webp" width="1254" height="1254" alt="Input image of a round wooden dining table with four upholstered chairs." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/dining-round" style="aspect-ratio: 1 / 1"></div></figure>
+      </div>
+
+      <h3>Example 7: Pedestal table <span>· from our benchmark</span></h3>
+      <p class="why">The pedestal table, three leather chairs, and the vase of flowers are recovered.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/dining-pedestal-input.webp" width="1280" height="854" alt="Input image of a round pedestal table with three leather chairs and a vase of pink flowers." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/dining-pedestal" style="aspect-ratio: 1500 / 1000"></div></figure>
       </div>
     </main>
 
