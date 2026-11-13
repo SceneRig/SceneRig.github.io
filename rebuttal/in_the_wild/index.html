@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <meta name="description" content="SceneRig reconstructions of rooms, other scenes outside the benchmark, and two benchmark dining scenes, with interactive 3D viewers." />
+    <meta name="description" content="SceneRig reconstructions of dining scenes, rooms, and other scenes, with interactive 3D viewers." />
     <title>SceneRig · Scenes beyond tabletops</title>
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <style>
@@ -63,59 +63,15 @@
     <main class="wrap">
       <h2>Question: How does SceneRig handle scenes beyond tabletops?</h2>
       <p class="answer">
-        SceneRig is designed for tabletop scenes for robot manipulation. Examples 1–5 are images
-        outside our benchmark, two of them rooms: one is our own photo, and four come from related papers.
-        Examples 6–7 are dining scenes from our benchmark. Furniture and
+        SceneRig is designed for tabletop scenes for robot manipulation. Below, we run it on seven images:
+        two dining scenes from the internet, our own photo of a living room, and four images from related
+        papers, including a bedroom. Furniture and
         objects are recovered, but in rooms, textiles such as blankets are segmented as separate objects
         and reconstructed as rigid meshes, so they can look unnatural.
       </p>
       <p class="how">Each 3D viewer opens at the input camera; drag to orbit, scroll to zoom, and right-drag to pan. The viewer uses neutral lighting, so shading differs from the photo; walls between the camera and the scene are hidden while orbiting.</p>
 
-      <h3>Example 1: Living room <span>· our own photo</span></h3>
-      <p class="why">The sofa, cabinet, rug, suitcases, bags, chairs, and floor lamp are recovered. The throws on the sofa become rigid meshes, and the paintings on the wall are not reconstructed.</p>
-      <div class="duo">
-        <figure><figcaption>Input image</figcaption>
-          <img class="input" src="media/living-room-input.webp" width="1280" height="960" alt="Input photo of a living room with a striped sofa, suitcases, and a rug." /></figure>
-        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
-          <div class="viewer" data-scene="media/living-room" style="aspect-ratio: 1280 / 960"></div></figure>
-      </div>
-
-      <h3>Example 2: Bedroom <span>· input from REST3D</span></h3>
-      <p class="why">The bed, pillows, side tables, lamp, plants, and rug are recovered. The folded blankets at the foot of the bed are segmented as separate objects; reconstructed as rigid meshes, one sticks up as a stiff slab instead of lying flat on the bed.</p>
-      <div class="duo">
-        <figure><figcaption>Input image</figcaption>
-          <img class="input" src="media/bedroom-input.webp" width="1280" height="960" alt="Input photo of a bedroom with a bed, plants, and a rug." /></figure>
-        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
-          <div class="viewer" data-scene="media/bedroom" style="aspect-ratio: 1536 / 1152"></div></figure>
-      </div>
-
-      <h3>Example 3: Garden stool <span>· input from φ-Scene</span></h3>
-      <p class="why">An outdoor scene: the potted plant and watering can on the stool, and the bucket and trowel below it, are recovered.</p>
-      <div class="duo">
-        <figure><figcaption>Input image</figcaption>
-          <img class="input" src="media/garden-input.webp" width="1024" height="1024" alt="Input image of a wooden stool holding a potted plant and a watering can." /></figure>
-        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
-          <div class="viewer" data-scene="media/garden" style="aspect-ratio: 1 / 1"></div></figure>
-      </div>
-
-      <h3>Example 4: Glove and ball on a bench <span>· input from SimFoundry</span></h3>
-      <p class="why">A real outdoor photo: the glove and ball are recovered on the bench.</p>
-      <div class="duo">
-        <figure><figcaption>Input image</figcaption>
-          <img class="input" src="media/bench-input.webp" width="712" height="401" alt="Input photo of a baseball glove and ball on a concrete bench." /></figure>
-        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
-          <div class="viewer" data-scene="media/bench" style="aspect-ratio: 712 / 401"></div></figure>
-      </div>
-
-      <h3>Example 5: Desk <span>· input from SimuScene</span></h3>
-      <p class="why">The monitor, laptop, stacked books, mug, and notebook are recovered on the desk.</p>
-      <div class="duo">
-        <figure><figcaption>Input image</figcaption>
-          <img class="input" src="media/desk-input.webp" width="1254" height="1254" alt="Input image of a desk with a monitor, a laptop, and stacked books." /></figure>
-        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
-          <div class="viewer" data-scene="media/desk" style="aspect-ratio: 1 / 1"></div></figure>
-      </div>
-      <h3>Example 6: Round dining table <span>· from our benchmark</span></h3>
+      <h3>Example 1: Round dining table <span>· internet image</span></h3>
       <p class="why">The table, four upholstered chairs, vase, open book, and cup are recovered; the chairs' fabric appears darker than in the photo.</p>
       <div class="duo">
         <figure><figcaption>Input image</figcaption>
@@ -124,13 +80,58 @@
           <div class="viewer" data-scene="media/dining-round" style="aspect-ratio: 1 / 1"></div></figure>
       </div>
 
-      <h3>Example 7: Pedestal table <span>· from our benchmark</span></h3>
+      <h3>Example 2: Pedestal table <span>· internet image</span></h3>
       <p class="why">The pedestal table, three leather chairs, and the vase of flowers are recovered.</p>
       <div class="duo">
         <figure><figcaption>Input image</figcaption>
           <img class="input" src="media/dining-pedestal-input.webp" width="1280" height="854" alt="Input image of a round pedestal table with three leather chairs and a vase of pink flowers." /></figure>
         <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
           <div class="viewer" data-scene="media/dining-pedestal" style="aspect-ratio: 1500 / 1000"></div></figure>
+      </div>
+
+      <h3>Example 3: Living room <span>· our own photo</span></h3>
+      <p class="why">The sofa, cabinet, rug, suitcases, bags, chairs, and floor lamp are recovered. The throws on the sofa become rigid meshes, and the paintings on the wall are not reconstructed.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/living-room-input.webp" width="1280" height="960" alt="Input photo of a living room with a striped sofa, suitcases, and a rug." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/living-room" style="aspect-ratio: 1280 / 960"></div></figure>
+      </div>
+
+      <h3>Example 4: Bedroom <span>· input from REST3D</span></h3>
+      <p class="why">The bed, pillows, side tables, lamp, plants, and rug are recovered. The folded blankets at the foot of the bed are segmented as separate objects; reconstructed as rigid meshes, one sticks up as a stiff slab instead of lying flat on the bed.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/bedroom-input.webp" width="1280" height="960" alt="Input photo of a bedroom with a bed, plants, and a rug." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/bedroom" style="aspect-ratio: 1536 / 1152"></div></figure>
+      </div>
+
+      <h3>Example 5: Garden stool <span>· input from φ-Scene</span></h3>
+      <p class="why">An outdoor scene: the potted plant and watering can on the stool, and the bucket and trowel below it, are recovered.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/garden-input.webp" width="1024" height="1024" alt="Input image of a wooden stool holding a potted plant and a watering can." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/garden" style="aspect-ratio: 1 / 1"></div></figure>
+      </div>
+
+      <h3>Example 6: Glove and ball on a bench <span>· input from SimFoundry</span></h3>
+      <p class="why">A real outdoor photo: the glove and ball are recovered on the bench.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/bench-input.webp" width="712" height="401" alt="Input photo of a baseball glove and ball on a concrete bench." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/bench" style="aspect-ratio: 712 / 401"></div></figure>
+      </div>
+
+      <h3>Example 7: Desk <span>· input from SimuScene</span></h3>
+      <p class="why">The monitor, laptop, stacked books, mug, and notebook are recovered on the desk.</p>
+      <div class="duo">
+        <figure><figcaption>Input image</figcaption>
+          <img class="input" src="media/desk-input.webp" width="1254" height="1254" alt="Input image of a desk with a monitor, a laptop, and stacked books." /></figure>
+        <figure><figcaption>SceneRig (ours) <span>· interactive 3D</span></figcaption>
+          <div class="viewer" data-scene="media/desk" style="aspect-ratio: 1 / 1"></div></figure>
       </div>
     </main>
 
